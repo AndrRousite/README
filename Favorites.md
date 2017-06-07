@@ -18,6 +18,7 @@
 * Android TV Launcher &nbsp;[--JackyAndroid](https://github.com/JackyAndroid/AndroidTVLauncher)
 * 垂直滚动的跑马灯效果 &nbsp;[--sfsheng0322](https://github.com/sfsheng0322/MarqueeView)
 * 一个为RecyclerView添加 swipe, click 以及其它功能的Library &nbsp; [nikhilpanju](https://github.com/nikhilpanju/RecyclerViewEnhanced)
+* 从顶部下拉出来的的提示控件 &nbsp; [Tapadoo](https://github.com/Tapadoo/Alerter)
 
 ## PHP
 
