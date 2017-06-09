@@ -19,6 +19,10 @@
 * 垂直滚动的跑马灯效果 &nbsp;[--sfsheng0322](https://github.com/sfsheng0322/MarqueeView)
 * 一个为RecyclerView添加 swipe, click 以及其它功能的Library &nbsp; [nikhilpanju](https://github.com/nikhilpanju/RecyclerViewEnhanced)
 * 从顶部下拉出来的的提示控件 &nbsp; [Tapadoo](https://github.com/Tapadoo/Alerter)
+* 智能电视，电视盒子开发SDK &nbsp; [boxmate](https://github.com/boxmate/tvframe)
+* Android TabLayout库,对TabLayout进行很漂亮的扩展 &nbsp;[H07000223](https://github.com/H07000223/FlycoTabLayout)
+* 很飘亮的ViewPager指示器，support2.2以上，并提供多种样式 &nbsp;[H07000223](https://github.com/H07000223/FlycoPageIndicator)
+* MagicaSakura 是 Android 多主题框架。 &nbsp;[Bilibili](https://github.com/Bilibili/MagicaSakura)
 
 ## PHP
 
