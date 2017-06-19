@@ -20,3 +20,29 @@
 3. gradle3.0 以下是需要引入apt插件才能编译的，每个库目录都需要引入，gradle3.0之后不需要引入
 4. apt目录生成了java文件，未生成class文件
     调试时只能在debug环境中才会生成class文件，所以需要在gradle中定义debug环境，且每个library都需要定义debug
+    
+## Lambda 常见问题
+Gradle 3.0之前使用Java8 Lambda 需要配置
+```angular2html
+jackOptions {
+        enabled true
+    }
+```
+```angular2html
+compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+```
+问题：当module中想要使用Lambda特性时 ，不能引入jackOptions，就会报错如下：
+```angular2html
+Error:Library projects cannot enable Jack. Jack is enabled in default config.
+```
+解决办法，在module的gradle中添加：
+```angular2html
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xbootclasspath/a:" + System.properties.get("java.home") + "/lib/rt.jar"
+    }
+}
+```
