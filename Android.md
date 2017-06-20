@@ -46,3 +46,42 @@ gradle.projectsEvaluated {
     }
 }
 ```
+
+## Bintray Gradle常见问题
+> Bintray中依赖的库必须为当前库中的Lib或者同样的Jcenter或者Maven中已经存在的库才行，分库无法依赖的，所以存在多个库，必须每个库都上传到Bintray，然后依赖
+
+详细教程  
+[Android Library项目发布到JCenter最简单的配置方法](http://www.cnblogs.com/shiwei-bai/archive/2015/11/24/4991636.html)
+<br>  
+坑一：错误: 编码GBK的不可映射字符->请正确配置javadoc编码
+```apple js
+//生成java文档
+task javadoc(type: Javadoc) {
+   options.encoding "UTF-8"
+   options.charSet 'UTF-8'
+}
+```
+坑二：错误: 不允许使用自关闭元素->请删除javadoc注释里面所有的含有html标签，
+```apple js
+
+```
+坑三： 错误: 程序包android.support.v7.widget不存在；错误: 找不到符号 ->在javadoc中加入忽略错误配置
+```apple js
+//生成文档
+task javadoc(type: Javadoc) {
+  failOnError false
+}
+```
+坑四：Could not create version ‘0.1’: HTTP/1.1 401 Unauthorized [message:This resource requires authentication]，->没有配置正确的API Key
+```apple js
+
+```
+坑五：没有有效的POM文件->一定要按步骤执行并没有配置正确的API Key:
+```apple js
+
+```
+坑六：没有Add to JCenter按钮：
+注意：在这个地址注册：https://bintray.com/signup/oss；不是https://bintray.com/signup；这两个地址不一样的
+```apple js
+
+```
