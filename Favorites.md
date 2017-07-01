@@ -27,6 +27,7 @@
 * 控制每个View的启动动画及顺序 &nbsp; [geftimov](https://github.com/geftimov/android-player)
 * API控制path画动画 &nbsp; [geftimov](https://github.com/geftimov/android-pathview)
 * AndroidTreeView，类似QQ通讯录 [bmelnychuk](https://github.com/bmelnychuk/AndroidTreeView)
+* 文件上传下载管理,多线程断点续传 &nbsp;[AriaLyy](https://github.com/AriaLyy/Aria)
 
 ## PHP
 
