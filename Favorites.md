@@ -24,6 +24,9 @@
 * 很飘亮的ViewPager指示器，support2.2以上，并提供多种样式 &nbsp;[H07000223](https://github.com/H07000223/FlycoPageIndicator)
 * MagicaSakura 是 Android 多主题框架。 &nbsp;[Bilibili](https://github.com/Bilibili/MagicaSakura)
 * 瀑布流式的时间轴 &nbsp;[vivian8725118](https://github.com/vivian8725118/TimeLine)
+* 控制每个View的启动动画及顺序 &nbsp; [geftimov](https://github.com/geftimov/android-player)
+* API控制path画动画 &nbsp; [geftimov](https://github.com/geftimov/android-pathview)
+* AndroidTreeView，类似QQ通讯录 [bmelnychuk](https://github.com/bmelnychuk/AndroidTreeView)
 
 ## PHP
 
