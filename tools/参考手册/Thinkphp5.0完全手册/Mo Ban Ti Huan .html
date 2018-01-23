@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>输出替换</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_126">输出替换</h1>
+<div class="book-content">
+    <h2 id="%E6%A8%A1%E6%9D%BF%E8%BE%93%E5%87%BA%E6%9B%BF%E6%8D%A2" class="calibre15">模板输出替换</h2>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">新增功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.4</td>
+<td class="calibre34 pcalibre1">增加<code class="calibre7">__ROOT__</code> <code class="calibre7">__STATIC__</code> <code class="calibre7">__JS__</code>和<code class="calibre7">__CSS__</code>内置替换规则</td>
+</tr></tbody></table><p class="calibre10">支持对视图输出的内容进行字符替换，例如：</p>
+<pre class="calibre21"><code class="calibre22">namespace index\app\controller;
+
+class Index extends \think\Controller
+{
+    public function index()
+    {
+        $this-&gt;assign('name','thinkphp');
+        return $this-&gt;fetch('index',[],['__PUBLIC__'=&gt;'/public/']);
+    }
+}</code></pre>
+<p class="calibre10">如果需要全局替换的话，可以直接在配置文件中添加：</p>
+<pre class="calibre21"><code class="calibre22">'view_replace_str'  =&gt;  [
+    '__PUBLIC__'=&gt;'/public/',
+    '__ROOT__' =&gt; '/',
+]</code></pre>
+<p class="calibre10">然后就可以直接使用</p>
+<pre class="calibre21"><code class="calibre22">namespace index\app\controller;
+
+class Index extends \think\Controller
+{
+    public function index()
+    {
+        $this-&gt;assign('name','thinkphp');
+        return $this-&gt;fetch('index');
+    }
+}</code></pre>
+<p class="calibre10">如果你手动实例化视图类，请确保在实例化的时候传入配置参数：</p>
+<pre class="calibre21"><code class="calibre22">$view = new View([],Config::get('view_replace_str'));
+return $view-&gt;fetch();</code></pre>
+<p class="calibre10">助手函数<code class="calibre7">view</code>也支持全局配置参数<code class="calibre7">view_replace_str</code>的设置，如果需要设置不同的替换参数，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">return view('index',['name'=&gt;'thinkphp'],['__PUBLIC__'=&gt;'/public/']);</code></pre>
+<p class="calibre10">在渲染模板或者内容输出的时候就会自动根据设置的替换规则自动替换。</p>
+<blockquote class="calibre5">
+<p class="calibre14">要使得你的全局替换生效，确保你的控制器类继承think\Controller或者使用view助手函数渲染输出。</p>
+</blockquote>
+</div>
+	
+</body></html>

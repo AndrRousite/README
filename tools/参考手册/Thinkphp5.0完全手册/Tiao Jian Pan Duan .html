@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>条件判断</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_146">条件判断</h1>
+<div class="book-content">
+    <h2 id="switch%E6%A0%87%E7%AD%BE" class="calibre15">SWITCH标签</h2>
+<p class="calibre10">用法：</p>
+<pre class="calibre21"><code class="calibre22">{switch name="变量" }
+    {case value="值1" break="0或1"}输出内容1{/case}
+    {case value="值2"}输出内容2{/case}
+    {default /}默认情况
+{/switch}</code></pre>
+<p class="calibre10">使用方法如下：</p>
+<pre class="calibre21"><code class="calibre22">{switch name="User.level"}
+    {case value="1"}value1{/case}
+    {case value="2"}value2{/case}
+    {default /}default
+{/switch}</code></pre>
+<p class="calibre10">其中name属性可以使用函数以及系统变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{switch name="Think.get.userId|abs"}
+    {case value="1"}admin{/case}
+    {default /}default
+{/switch}</code></pre>
+<p class="calibre10">对于case的value属性可以支持多个条件的判断，使用”|”进行分割，例如：</p>
+<pre class="calibre21"><code class="calibre22">{switch name="Think.get.type"}
+    {case value="gif|png|jpg"}图像格式{/case}
+    {default /}其他格式
+{/switch}</code></pre>
+<p class="calibre10">表示如果$_GET["type"] 是gif、png或者jpg的话，就判断为图像格式。</p>
+<p class="calibre10">Case标签还有一个break属性，表示是否需要break，默认是会自动添加break，如果不要break，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">{switch name="Think.get.userId|abs"}
+    {case value="1" break="0"}admin{/case}
+    {case value="2"}admin{/case}
+    {default /}default
+{/switch}</code></pre>
+<p class="calibre10">也可以对case的value属性使用变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{switch name="User.userId"}
+    {case value="$adminId"}admin{/case}
+    {case value="$memberId"}member{/case}
+    {default /}default
+{/switch}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">使用变量方式的情况下，不再支持多个条件的同时判断。</p>
+</blockquote>
+<p class="calibre10">简洁的用法</p>
+<pre class="calibre21"><code class="calibre22">{switch $User.userId}
+    {case $adminId}admin{/case}
+    {case $memberId}member{/case}
+{/switch}</code></pre>
+<h2 id="if%E6%A0%87%E7%AD%BE" class="calibre15">IF标签</h2>
+<p class="calibre10">用法示例：</p>
+<pre class="calibre21"><code class="calibre22">{if condition="($name == 1) OR ($name &gt; 100) "} value1
+{elseif condition="$name eq 2"/}value2
+{else /} value3
+{/if}</code></pre>
+<p class="calibre10">除此之外，我们可以在condition属性里面使用php代码，例如：</p>
+<pre class="calibre21"><code class="calibre22">{if condition="strtoupper($user['name']) neq 'THINKPHP'"}ThinkPHP
+{else /} other Framework
+{/if}</code></pre>
+<p class="calibre10">condition属性可以支持点语法和对象语法，例如： 自动判断user变量是数组还是对象</p>
+<pre class="calibre21"><code class="calibre22">{if condition="$user.name neq 'ThinkPHP'"}ThinkPHP
+{else /} other Framework
+{/if}</code></pre>
+<p class="calibre10">或者知道user变量是对象</p>
+<pre class="calibre21"><code class="calibre22">{if condition="$user:name neq 'ThinkPHP'"}ThinkPHP
+{else /} other Framework
+{/if}</code></pre>
+<p class="calibre10">由于if标签的condition属性里面基本上使用的是php语法，尽可能使用<strong class="calibre12">判断标签和Switch标签</strong>会更加简洁，原则上来说，能够用switch和比较标签解决的尽量不用if标签完成。因为switch和比较标签可以使用变量调节器和系统变量。如果某些特殊的要求下面，IF标签仍然无法满足要求的话，可以使用原生php代码或者PHP标签来直接书写代码。</p>
+<p class="calibre10">简洁的用法</p>
+<pre class="calibre21"><code class="calibre22">{if condition="表达式"}
+{if (表达式)}
+{if 表达式}</code></pre>
+<p class="calibre10">这三种写法结果是一样的</p>
+<h2 id="%E8%8C%83%E5%9B%B4%E5%88%A4%E6%96%AD" class="calibre15">范围判断</h2>
+<p class="calibre10">范围判断标签包括in notin between notbetween四个标签，都用于判断变量是否中某个范围。</p>
+<h2 id="in%E5%92%8Cnotin" class="calibre15">IN和NOTIN</h2>
+<p class="calibre10">用法： 假设我们中控制器中给id赋值为1：</p>
+<pre class="calibre21"><code class="calibre22">$id =    1;
+$this-&gt;assign('id',$id);</code></pre>
+<p class="calibre10">我们可以使用in标签来判断模板变量是否在某个范围内，例如：</p>
+<pre class="calibre21"><code class="calibre22">{in name="id" value="1,2,3"}
+id在范围内
+{/in}</code></pre>
+<p class="calibre10">最后会输出：<code class="calibre7">id在范围内</code>。</p>
+<p class="calibre10">如果判断不在某个范围内，可以使用notin标签：</p>
+<pre class="calibre21"><code class="calibre22">{notin name="id" value="1,2,3"}
+id不在范围内
+{/notin}</code></pre>
+<p class="calibre10">最后会输出：<code class="calibre7">id不在范围内</code>。</p>
+<p class="calibre10">可以把上面两个标签合并成为：</p>
+<pre class="calibre21"><code class="calibre22">{in name="id" value="1,2,3"}
+id在范围内
+{else/}
+id不在范围内
+{/in}</code></pre>
+<p class="calibre10">name属性还可以支持直接判断系统变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{in name="Think.get.id" value="1,2,3"}
+$_GET['id'] 在范围内
+{/in}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">更多的系统变量用法可以参考<a href="125004" class="pcalibre calibre13">系统变量</a>部分。</p>
+</blockquote>
+<p class="calibre10">value属性也可以使用变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{in name="id" value="$range"}
+id在范围内
+{/in}</code></pre>
+<p class="calibre10">$range变量可以是数组，也可以是以逗号分隔的字符串。</p>
+<p class="calibre10">value属性还可以使用系统变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{in name="id" value="$Think.post.ids"}
+id在范围内
+{/in}</code></pre>
+<h2 id="between+%E5%92%8C+notbetween" class="calibre15">BETWEEN 和 NOTBETWEEN</h2>
+<p class="calibre10">可以使用between标签来判断变量是否在某个区间范围内，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">{between name="id" value="1,10"}
+输出内容1
+{/between}</code></pre>
+<p class="calibre10">同样，也可以使用notbetween标签来判断变量不在某个范围内：</p>
+<pre class="calibre21"><code class="calibre22">{notbetween name="id" value="1,10"}
+输出内容2
+{/notbetween}</code></pre>
+<p class="calibre10">也可以使用else标签把两个用法合并，例如：</p>
+<pre class="calibre21"><code class="calibre22">{between name="id" value="1,10"}
+输出内容1
+{else/}
+输出内容2
+{/between}</code></pre>
+<p class="calibre10">当使用between标签的时候，value只需要一个区间范围，也就是只支持两个值，后面的值无效，例如</p>
+<pre class="calibre21"><code class="calibre22">{between name="id" value="1,3,10"}
+输出内容1
+{/between}</code></pre>
+<p class="calibre10">实际判断的范围区间是<code class="calibre7">1~3</code>，而不是<code class="calibre7">1~10</code>，也可以支持字符串判断，例如：</p>
+<pre class="calibre21"><code class="calibre22">{between name="id" value="A,Z"}
+输出内容1
+{/between}</code></pre>
+<p class="calibre10">name属性可以直接使用系统变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{between name="Think.post.id" value="1,5"}
+输出内容1
+{/between}</code></pre>
+<p class="calibre10">value属性也可以使用变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{between name="id" value="$range"}
+输出内容1
+{/between}</code></pre>
+<p class="calibre10">变量的值可以是字符串或者数组，还可以支持系统变量。</p>
+<pre class="calibre21"><code class="calibre22">{between name="id" value="$Think.get.range"}
+输出内容1
+{/between}</code></pre>
+<h2 id="range" class="calibre15">RANGE</h2>
+<p class="calibre10">也可以直接使用range标签，替换前面的判断用法：</p>
+<pre class="calibre21"><code class="calibre22">{range name="id" value="1,2,3" type="in"}
+输出内容1
+{/range}</code></pre>
+<p class="calibre10">其中type属性的值可以用in/notin/between/notbetween，其它属性的用法和IN或者BETWEEN一致。</p>
+<h2 id="present+notpresent%E6%A0%87%E7%AD%BE" class="calibre15">PRESENT NOTPRESENT标签</h2>
+<p class="calibre10">present标签用于判断某个变量是否已经定义，用法：</p>
+<pre class="calibre21"><code class="calibre22">{present name="name"}
+name已经赋值
+{/present}</code></pre>
+<p class="calibre10">如果判断没有赋值，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">{notpresent name="name"}
+name还没有赋值
+{/notpresent}</code></pre>
+<p class="calibre10">可以把上面两个标签合并成为：</p>
+<pre class="calibre21"><code class="calibre22">{present name="name"}
+name已经赋值
+{else /}
+name还没有赋值
+{/present}</code></pre>
+<p class="calibre10">present标签的name属性可以直接使用系统变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{present name="Think.get.name"}
+$_GET['name']已经赋值
+{/present}</code></pre>
+<h2 id="empty+notempty+%E6%A0%87%E7%AD%BE" class="calibre15">EMPTY NOTEMPTY 标签</h2>
+<p class="calibre10">empty标签用于判断某个变量是否为空，用法：</p>
+<pre class="calibre21"><code class="calibre22">{empty name="name"}
+name为空值
+{/empty}</code></pre>
+<p class="calibre10">如果判断没有赋值，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">{notempty name="name"}
+name不为空
+{/notempty}</code></pre>
+<p class="calibre10">可以把上面两个标签合并成为：</p>
+<pre class="calibre21"><code class="calibre22">{empty name="name"}
+name为空
+{else /}
+name不为空
+{/empty}</code></pre>
+<p class="calibre10">name属性可以直接使用系统变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">{empty name="Think.get.name"}
+$_GET['name']为空值
+{/empty}</code></pre>
+<h2 id="defined+%E6%A0%87%E7%AD%BE" class="calibre15">DEFINED 标签</h2>
+<p class="calibre10">DEFINED标签用于判断某个常量是否有定义，用法如下：</p>
+<pre class="calibre21"><code class="calibre22">{defined name="NAME"}
+NAME常量已经定义
+{/defined}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">name属性的值要注意严格大小写</p>
+</blockquote>
+<p class="calibre10">如果判断没有被定义，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">{notdefined name="NAME"}
+NAME常量未定义
+{/notdefined}</code></pre>
+<p class="calibre10">可以把上面两个标签合并成为：</p>
+<pre class="calibre21"><code class="calibre22">{defined name="NAME"}
+NAME常量已经定义
+{else /}
+NAME常量未定义
+{/defined}</code></pre>
+</div>
+	
+</body></html>

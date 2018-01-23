@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>独立配置</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_22">独立配置</h1>
+<div class="book-content">
+    <h2 id="%E7%8B%AC%E7%AB%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" class="calibre15">独立配置文件</h2>
+<p class="calibre10">配置文件支持分离（也称为扩展配置），只需要在公共配置文件配置<code class="calibre7">extra_config_list</code>参数(V5.0.1版本已经废除该写法）。</p>
+<p class="calibre10">例如，不使用独立配置文件的话，数据库配置信息应该是在<code class="calibre7">config.php</code>中配置如下：</p>
+<pre class="calibre21"><code class="calibre22">/* 数据库设置 */
+'database'              =&gt; [
+    // 数据库类型
+    'type'        =&gt; 'mysql',
+    // 服务器地址
+    'hostname'    =&gt; '127.0.0.1',
+    // 数据库名
+    'database'    =&gt; 'thinkphp',
+    // 数据库用户名
+    'username'    =&gt; 'root',
+    // 数据库密码
+    'password'    =&gt; '',
+    // 数据库连接端口
+    'hostport'    =&gt; '',
+    // 数据库连接参数
+    'params'      =&gt; [],
+    // 数据库编码默认采用utf8
+    'charset'     =&gt; 'utf8',
+    // 数据库表前缀
+    'prefix'      =&gt; '',
+    // 数据库调试模式
+    'debug'       =&gt; false,
+],</code></pre>
+<p class="calibre10">如果需要使用独立配置文件的话，则首先在config.php中添加配置：</p>
+<pre class="calibre21"><code class="calibre22">'extra_config_list'     =&gt; ['database'],</code></pre>
+<p class="calibre10">定义之后，数据库配置就可以独立使用<code class="calibre7">database.php</code>文件，配置内容如下：</p>
+<pre class="calibre21"><code class="calibre22">/* 数据库设置 */
+return [
+    // 数据库类型
+    'type'        =&gt; 'mysql',
+    // 服务器地址
+    'hostname'    =&gt; '127.0.0.1',
+    // 数据库名
+    'database'    =&gt; 'thinkphp',
+    // 数据库用户名
+    'username'    =&gt; 'root',
+    // 数据库密码
+    'password'    =&gt; '',
+    // 数据库连接端口
+    'hostport'    =&gt; '',
+    // 数据库连接参数
+    'params'      =&gt; [],
+    // 数据库编码默认采用utf8
+    'charset'     =&gt; 'utf8',
+    // 数据库表前缀
+    'prefix'      =&gt; '',
+    // 数据库调试模式
+    'debug'       =&gt; false,
+],</code></pre>
+<p class="calibre10">如果配置了<code class="calibre7">extra_config_list</code>参数，并同时在<code class="calibre7">config.php</code>和<code class="calibre7">database.php</code>文件中都配置的话，则<code class="calibre7">database.php</code>文件的配置会覆盖<code class="calibre7">config.php</code>中的设置。</p>
+<p class="calibre10">独立配置文件的参数获取都是二维配置方式，例如，要获取<code class="calibre7">database</code>独立配置文件的<code class="calibre7">type</code>参数，应该是：</p>
+<pre class="calibre21"><code class="calibre22">Config::get('database.type');</code></pre>
+<p class="calibre10">要获取完整的独立配置文件的参数，则使用：</p>
+<pre class="calibre21"><code class="calibre22">Config::get('database');</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">系统默认设置了2个独立配置文件，包括<code class="calibre7">database</code>和<code class="calibre7">validate</code>，分别用于设置数据库配置和验证规则定义。</p>
+</blockquote>
+<h2 id="%E8%87%AA%E5%8A%A8%E8%AF%BB%E5%8F%96%E6%89%A9%E5%B1%95%E9%85%8D%E7%BD%AE" class="calibre15">自动读取扩展配置</h2>
+<blockquote class="success">
+<h4 id="%E7%89%88%E6%9C%AC%E8%A6%81%E6%B1%82%60v5.0.1%60" class="calibre6">版本要求<code class="calibre7">V5.0.1</code></h4>
+</blockquote>
+<p class="calibre10"><code class="calibre7">5.0.1</code>以上版本支持自动读取扩展配置文件（<code class="calibre7">extra_config_list</code>配置参数废弃），只需要将扩展配置文件放入<code class="calibre7">application/extra</code>目录，即可自动读取。</p>
+<blockquote class="calibre5">
+<p class="calibre14">自动读取的配置文件都是二级配置参数，一级配置名称就是扩展配置的文件名。</p>
+</blockquote>
+<p class="calibre10">模块也可以支持自己的扩展配置文件，只需要放入 <code class="calibre7">application/模块名/extra</code>下面就可以自动加载。</p>
+<p class="calibre10">系统默认加载的独立配置文件不在此列，包括：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">文件名</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">config</td>
+<td class="calibre32 pcalibre1">应用或者模块配置文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">database</td>
+<td class="pcalibre1 calibre31">数据库配置文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">tags</td>
+<td class="pcalibre1 calibre31">行为定义文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">场景名</td>
+<td class="calibre33 pcalibre1">应用场景配置文件</td>
+</tr></tbody></table><blockquote class="calibre5">
+<p class="calibre14">如果你更改了<code class="calibre7">CONF_PATH</code>，那么扩展配置文件目录应该是<code class="calibre7">CONF_PATH/extra</code>，模块配置目录则变成 <code class="calibre7">CONF_PATH/module/</code>，模块的扩展配置目录则变成<code class="calibre7">CONF_PATH/module/extra</code>。</p>
+</blockquote>
+</div>
+	
+</body></html>

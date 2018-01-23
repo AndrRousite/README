@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>field</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">field</h1>
+<div class="book-content">
+    <p class="calibre10">field方法属于模型的连贯操作方法之一，主要目的是标识要返回或者操作的字段，可以用于查询和写入操作。</p>
+<h2 id="%E7%94%A8%E4%BA%8E%E6%9F%A5%E8%AF%A2" class="calibre15">用于查询</h2>
+<h5 id="%E6%8C%87%E5%AE%9A%E5%AD%97%E6%AE%B5" class="calibre35">指定字段</h5>
+<p class="calibre10">在查询操作中field方法是使用最频繁的。</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field('id,title,content')-&gt;select();</code></pre>
+<p class="calibre10">这里使用field方法指定了查询的结果集中包含id,title,content三个字段的值。执行的SQL相当于：</p>
+<pre class="calibre21"><code class="calibre22">SELECT id,title,content FROM table</code></pre>
+<p class="calibre10">可以给某个字段设置别名，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field('id,nickname as name')-&gt;select();</code></pre>
+<p class="calibre10">执行的SQL语句相当于：</p>
+<pre class="calibre21"><code class="calibre22">SELECT id,nickname as name FROM table</code></pre>
+<h5 id="%E4%BD%BF%E7%94%A8sql%E5%87%BD%E6%95%B0" class="calibre35">使用SQL函数</h5>
+<p class="calibre10">可以在field方法中直接使用函数，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field('id,SUM(score)')-&gt;select();</code></pre>
+<p class="calibre10">执行的SQL相当于：</p>
+<pre class="calibre21"><code class="calibre22">SELECT id,SUM(score) FROM table</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">除了select方法之外，所有的查询方法，包括find等都可以使用field方法。</p>
+</blockquote>
+<h5 id="%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E5%8F%82%E6%95%B0" class="calibre35">使用数组参数</h5>
+<p class="calibre10">field方法的参数可以支持数组，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field(['id','title','content'])-&gt;select();</code></pre>
+<p class="calibre10">最终执行的SQL和前面用字符串方式是等效的。</p>
+<p class="calibre10">数组方式的定义可以为某些字段定义别名，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field(['id','nickname'=&gt;'name'])-&gt;select();</code></pre>
+<p class="calibre10">执行的SQL相当于：</p>
+<pre class="calibre21"><code class="calibre22">SELECT id,nickname as name FROM table</code></pre>
+<p class="calibre10">对于一些更复杂的字段要求，数组的优势则更加明显，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field(['id','concat(name,"-",id)'=&gt;'truename','LEFT(title,7)'=&gt;'sub_title'])-&gt;select();</code></pre>
+<p class="calibre10">执行的SQL相当于：</p>
+<pre class="calibre21"><code class="calibre22">SELECT id,concat(name,'-',id) as truename,LEFT(title,7) as sub_title FROM table</code></pre>
+<h5 id="%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E5%AD%97%E6%AE%B5" class="calibre35">获取所有字段</h5>
+<p class="calibre10">如果有一个表有非常多的字段，需要获取所有的字段（这个也许很简单，因为不调用field方法或者直接使用空的field方法都能做到）：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;select();
+Db::table('think_user')-&gt;field('*')-&gt;select();</code></pre>
+<p class="calibre10">上面的用法是等效的，都相当于执行SQL：</p>
+<pre class="calibre21"><code class="calibre22">SELECT * FROM table</code></pre>
+<p class="calibre10">但是这并不是我说的获取所有字段，而是显式的调用所有字段（对于对性能要求比较高的系统，这个要求并不过分，起码是一个比较好的习惯），下面的用法可以完成预期的作用：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field(true)-&gt;select();</code></pre>
+<p class="calibre10"><code class="calibre7">field(true)</code>的用法会显式的获取数据表的所有字段列表，哪怕你的数据表有100个字段。</p>
+<h5 id="%E5%AD%97%E6%AE%B5%E6%8E%92%E9%99%A4" class="calibre35">字段排除</h5>
+<p class="calibre10">如果我希望获取排除数据表中的<code class="calibre7">content</code>字段（文本字段的值非常耗内存）之外的所有字段值，我们就可以使用field方法的排除功能，例如下面的方式就可以实现所说的功能：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field('content',true)-&gt;select();</code></pre>
+<p class="calibre10">则表示获取除了content之外的所有字段，要排除更多的字段也可以：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field('user_id,content',true)-&gt;select();
+//或者用
+Db::table('think_user')-&gt;field(['user_id','content'],true)-&gt;select();</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">注意的是 字段排除功能不支持跨表和join操作。</p>
+</blockquote>
+<h2 id="%E7%94%A8%E4%BA%8E%E5%86%99%E5%85%A5" class="calibre15">用于写入</h2>
+<p class="calibre10">除了查询操作之外，field方法还有一个非常重要的安全功能--<strong class="calibre12">字段合法性检测</strong>。field方法结合数据库的写入方法使用就可以完成表单提交的字段合法性检测，如果我们在表单提交的处理方法中使用了：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;field('title,email,content')-&gt;insert($data);</code></pre>
+<p class="calibre10">即表示表单中的合法字段只有<code class="calibre7">title</code>,<code class="calibre7">email</code>和<code class="calibre7">content</code>字段，无论用户通过什么手段更改或者添加了浏览器的提交字段，都会直接屏蔽。因为，其他是所有字段我们都不希望由用户提交来决定，你可以通过自动完成功能定义额外的字段写入。</p>
+</div>
+	
+</body></html>

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>路由地址</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_32">路由地址</h1>
+<div class="book-content">
+    <h2 id="%E8%B7%AF%E7%94%B1%E5%9C%B0%E5%9D%80%E5%AE%9A%E4%B9%89" class="calibre15">路由地址定义</h2>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">新增功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.4</td>
+<td class="calibre34 pcalibre1">路由到类和控制器的方法支持传入额外参数</td>
+</tr></tbody></table><p class="calibre10">路由地址表示定义的路由表达式最终需要路由到的地址以及一些需要的额外参数，支持下面5种方式定义：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">定义方式</th>
+<th class="calibre28">定义格式</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">方式1：路由到模块/控制器</td>
+<td class="calibre32 pcalibre1">'[模块/控制器/操作]?额外参数1=值1&amp;额外参数2=值2...'</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">方式2：路由到重定向地址</td>
+<td class="pcalibre1 calibre31">'外部地址'（默认301重定向） 或者 ['外部地址','重定向代码']</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">方式3：路由到控制器的方法</td>
+<td class="pcalibre1 calibre31">'@[模块/控制器/]操作'</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">方式4：路由到类的方法</td>
+<td class="pcalibre1 calibre31">'\完整的命名空间类::静态方法'  或者 '\完整的命名空间类@动态方法'</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">方式5：路由到闭包函数</td>
+<td class="calibre33 pcalibre1">闭包函数定义（支持参数传入）</td>
+</tr></tbody></table><p class="calibre10">其中方式5我们将会在下一个章节闭包支持中详细描述。</p>
+<h2 id="%E8%B7%AF%E7%94%B1%E5%88%B0%E6%A8%A1%E5%9D%97%2F%E6%8E%A7%E5%88%B6%E5%99%A8%2F%E6%93%8D%E4%BD%9C" class="calibre15">路由到模块/控制器/操作</h2>
+<p class="calibre10">这是最常用的一种路由方式，把满足条件的路由规则路由到相关的模块、控制器和操作，然后由App类调度执行相关的操作。</p>
+<p class="calibre10">同时会进行模块的初始化操作（包括配置读取、公共文件载入、行为定义载入、语言包载入等等）。</p>
+<p class="calibre10">路由地址的格式为：</p>
+<blockquote class="info">
+<h3 id="%5B%E6%A8%A1%E5%9D%97%2F%E6%8E%A7%E5%88%B6%E5%99%A8%2F%5D%E6%93%8D%E4%BD%9C%3F%E5%8F%82%E6%95%B01%3D%E5%80%BC1%26%E5%8F%82%E6%95%B02%3D%E5%80%BC2..." class="calibre17">[模块/控制器/]操作?参数1=值1&amp;参数2=值2...</h3>
+</blockquote>
+<p class="calibre10">解析规则是从操作开始解析，然后解析控制器，最后解析模块，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 路由到默认或者绑定模块
+'blog/:id'=&gt;'blog/read',
+// 路由到index模块
+'blog/:id'=&gt;'index/blog/read',</code></pre>
+<p class="calibre10">Blog类定义如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class Blog {
+    public function read($id){
+        return 'read:'.$id;
+    }
+}</code></pre>
+<p class="calibre10">路由地址中支持多级控制器，使用下面的方式进行设置：</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'index/group.blog/read'</code></pre>
+<p class="calibre10">表示路由到下面的控制器类，</p>
+<pre class="calibre21"><code class="calibre22">index/controller/group/Blog</code></pre>
+<p class="calibre10">Blog类定义如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller\group;
+
+class Blog {
+    public function read($id){
+        return 'read:'.$id;
+    }
+}</code></pre>
+<p class="calibre10">还可以支持路由到动态的模块、控制器或者操作，例如：</p>
+<pre class="calibre21"><code class="calibre22">// action变量的值作为操作方法传入
+':action/blog/:id' =&gt; 'index/blog/:action'
+// 变量传入index模块的控制器和操作方法
+':c/:a'=&gt; 'index/:c/:a'</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">如果关闭路由功能的话，默认也会按照该规则对URL进行解析调度。</p>
+</blockquote>
+<h3 id="%E9%A2%9D%E5%A4%96%E5%8F%82%E6%95%B0-1" class="calibre17">额外参数</h3>
+<p class="calibre10">在这种方式路由跳转的时候支持额外传入参数对（额外参数指的是不在URL里面的参数，隐式传入需要的操作中，有时候能够起到一定的安全防护作用，后面我们会提到）。例如：</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'blog/read?status=1&amp;app_id=5',</code></pre>
+<p class="calibre10">上面的路由规则定义中额外参数<code class="calibre7">status</code>和<code class="calibre7">app_id</code>参数都是URL里面不存在的，属于隐式传值，当然并不一定需要用到，只是在需要的时候可以使用。</p>
+<h2 id="%E8%B7%AF%E7%94%B1%E5%88%B0%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95" class="calibre15">路由到操作方法</h2>
+<p class="calibre10">路由地址的格式为：</p>
+<blockquote class="info">
+<h3 id="%40%5B%E6%A8%A1%E5%9D%97%2F%E6%8E%A7%E5%88%B6%E5%99%A8%2F%5D%E6%93%8D%E4%BD%9C" class="calibre17">@[模块/控制器/]操作</h3>
+</blockquote>
+<p class="calibre10">这种方式看起来似乎和第一种是一样的，本质的区别是直接执行某个控制器类的方法，而不需要去解析 <strong class="calibre12">模块/控制器/操作</strong>这些，同时也不会去初始化模块。<br class="calibre16"/>
+例如，定义如下路由后：</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'@index/blog/read',</code></pre>
+<p class="calibre10">系统会直接执行</p>
+<pre class="calibre21"><code class="calibre22">Loader::action('index/blog/read');</code></pre>
+<p class="calibre10">相当于直接调用 \app\index\controller\blog类的read方法。</p>
+<p class="calibre10">Blog类定义如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class Blog {
+    public function read($id){
+        return 'read:'.$id;
+    }
+}</code></pre>
+<p class="calibre10">通常这种方式下面，由于没有定义当前模块名、当前控制器名和当前方法名 ，从而导致视图的默认模板规则失效，所以这种情况下面，如果使用了视图模板渲染，则必须传入明确的参数。</p>
+<h2 id="%E8%B7%AF%E7%94%B1%E5%88%B0%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95" class="calibre15">路由到类的方法</h2>
+<p class="calibre10">路由地址的格式为（动态方法）：</p>
+<blockquote class="info">
+<h3 id="%5C%5C%E7%B1%BB%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%5C%5C%E7%B1%BB%E5%90%8D%40%E6%96%B9%E6%B3%95%E5%90%8D" class="calibre17">\类的命名空间\类名@方法名</h3>
+</blockquote>
+<p class="calibre10">或者（静态方法）</p>
+<blockquote class="info">
+<h3 id="%5C%5C%E7%B1%BB%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%5C%5C%E7%B1%BB%E5%90%8D%3A%3A%E6%96%B9%E6%B3%95%E5%90%8D" class="calibre17">\类的命名空间\类名::方法名</h3>
+</blockquote>
+<p class="calibre10">这种方式更进一步，可以支持执行任何类的方法，而不仅仅是执行控制器的操作方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'\app\index\service\Blog@read',</code></pre>
+<p class="calibre10">执行的是 <code class="calibre7">\app\index\service\Blog</code>类的<code class="calibre7">read</code>方法。<br class="calibre16"/>
+也支持执行某个静态方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'\app\index\service\Blog::read',</code></pre>
+<p class="calibre10"><code class="calibre7">V5.0.4+</code>版本开始，支持传入额外的参数作为方法的参数调用（用于参数绑定），例如：</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'\app\index\service\Blog::read?status=1',</code></pre>
+<h2 id="%E8%B7%AF%E7%94%B1%E5%88%B0%E9%87%8D%E5%AE%9A%E5%90%91%E5%9C%B0%E5%9D%80" class="calibre15">路由到重定向地址</h2>
+<p class="calibre10">重定向的外部地址必须以“/”或者http开头的地址。</p>
+<p class="calibre10">如果路由地址以“/”或者“http”开头则会认为是一个重定向地址或者外部地址，例如：</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'/blog/read/id/:id'</code></pre>
+<p class="calibre10">和</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'blog/read'</code></pre>
+<p class="calibre10">虽然都是路由到同一个地址，但是前者采用的是301重定向的方式路由跳转，这种方式的好处是URL可以比较随意（包括可以在URL里面传入更多的非标准格式的参数），而后者只是支持模块和操作地址。举个例子，如果我们希望<code class="calibre7">avatar/123</code>重定向到<br class="calibre16"/>
+/member/avatar/id/123_small的话，只能使用：</p>
+<pre class="calibre21"><code class="calibre22">'avatar/:id'=&gt;'/member/avatar/id/:id_small'</code></pre>
+<p class="calibre10">路由地址采用重定向地址的话，如果要引用动态变量，直接使用动态变量即可。</p>
+<p class="calibre10">采用重定向到外部地址通常对网站改版后的URL迁移过程非常有用，例如：</p>
+<pre class="calibre21"><code class="calibre22">'blog/:id'=&gt;'http://blog.thinkphp.cn/read/:id'</code></pre>
+<p class="calibre10">表示当前网站（可能是http://thinkphp.cn ）的 blog/123地址会直接重定向到 <a href="http://blog.thinkphp.cn/read/123" class="pcalibre calibre13">http://blog.thinkphp.cn/read/123</a>。</p>
+</div>
+	
+</body></html>

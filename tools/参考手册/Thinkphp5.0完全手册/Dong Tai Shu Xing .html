@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>动态属性</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_117">动态属性</h1>
+<div class="book-content">
+    <p class="calibre10">模型对象的关联属性可以直接作为当前模型对象的动态属性进行赋值或者取值操作（延迟查询），虽然该属性并非数据表字段，例如：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class User extends Model
+{
+    public function profile()
+    {
+        return $this-&gt;hasOne('Profile');
+    }
+}</code></pre>
+<p class="calibre10">我们在使用</p>
+<pre class="calibre21"><code class="calibre22">// 查询模型数据
+$user = User::find(1);
+// 获取动态属性
+dump($user-&gt;profile);
+// 给关联模型属性赋值
+$user-&gt;profile-&gt;phone = '1234567890';
+// 保存关联模型数据
+$user-&gt;profile-&gt;save();</code></pre>
+<p class="calibre10">在获取动态属性<code class="calibre7">profile</code>的同时，模型会通过定义的关联方法去查询关联对象的数据并赋值给该动态属性，这是一种关联数据的“惰性加载”，只有真正访问关联属性的时候才会进行关联查询。</p>
+<p class="calibre10">当有大量的关联数据需要查询的时候，一般都会考虑选择关联预载入的方式（参考下一节）。</p>
+</div>
+	
+</body></html>

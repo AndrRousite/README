@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>alias</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">alias</h1>
+<div class="book-content">
+    <p class="calibre10">alias用于设置当前数据表的别名，便于使用其他的连贯操作例如join方法等。</p>
+<p class="calibre10">示例：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;alias('a')-&gt;join('__DEPT__ b ','b.user_id= a.id')-&gt;select();</code></pre>
+<p class="calibre10">最终生成的SQL语句类似于：</p>
+<pre class="calibre21"><code class="calibre22">SELECT * FROM think_user a INNER JOIN think_dept b ON b.user_id= a.id</code></pre>
+<p class="calibre10"><code class="calibre7">v5.0.2+</code>版本开始，可以传入数组批量设置数据表以及别名，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;alias(['think_user'=&gt;'user','think_dept'=&gt;'dept'])-&gt;join('think_dept','dept.user_id= user.id')-&gt;select();</code></pre>
+<p class="calibre10">最终生成的SQL语句类似于：</p>
+<pre class="calibre21"><code class="calibre22">SELECT * FROM think_user user INNER JOIN think_dept dept ON dept.user_id= user.id</code></pre>
+</div>
+	
+</body></html>

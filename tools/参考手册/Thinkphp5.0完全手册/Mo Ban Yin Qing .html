@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>模板引擎</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_123">模板引擎</h1>
+<div class="book-content">
+    <h2 id="%E5%86%85%E7%BD%AE%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E" class="calibre15">内置模板引擎</h2>
+<p class="calibre10">视图的模板文件可以支持不同的解析规则，默认情况下无需手动初始化模板引擎。</p>
+<p class="calibre10">可以通过下面的几种方式对模板引擎进行初始化。</p>
+<h3 id="%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" class="calibre17">配置文件</h3>
+<p class="calibre10">在应用配置文件中配置<code class="calibre7">template</code>参数即可，例如：</p>
+<pre class="calibre21"><code class="calibre22">'template'               =&gt; [
+    // 模板引擎类型 支持 php think 支持扩展
+    'type'         =&gt; 'Think',
+    // 模板路径
+    'view_path'    =&gt; './template/',
+    // 模板后缀
+    'view_suffix'  =&gt; 'html',
+    // 模板文件名分隔符
+    'view_depr'    =&gt; DS,
+    // 模板引擎普通标签开始标记
+    'tpl_begin'    =&gt; '{',
+    // 模板引擎普通标签结束标记
+    'tpl_end'      =&gt; '}',
+    // 标签库标签开始标记
+    'taglib_begin' =&gt; '{',
+    // 标签库标签结束标记
+    'taglib_end'   =&gt; '}',
+],</code></pre>
+<p class="calibre10">调用视图类进行操作或者使用<code class="calibre7">view</code>助手函数的时候会自动实例化相关的模板引擎并传入参数。</p>
+<h3 id="%E8%A7%86%E5%9B%BE%E6%A0%B9%E7%9B%AE%E5%BD%95" class="calibre17">视图根目录</h3>
+<p class="calibre10">视图文件的根目录默认情况下位于模块的<code class="calibre7">view</code>目录，每个模块的视图目录可以通过模板参数<code class="calibre7">view_path</code>自定义。</p>
+<p class="calibre10"><code class="calibre7">V5.0.3+</code>版本开始，新增了<code class="calibre7">view_base</code>模板引擎参数，可以用于定义全局的视图根目录，然后模块作为子目录。</p>
+<h3 id="%E5%AE%9E%E4%BE%8B%E5%8C%96%E8%A7%86%E5%9B%BE" class="calibre17">实例化视图</h3>
+<p class="calibre10">可以在实例化视图的时候直接传入模板引擎配置参数，会在渲染输出的时候自动初始化模板引擎，例如：</p>
+<pre class="calibre21"><code class="calibre22">$view = new View([
+    'type'               =&gt; 'think',
+    'view_path'          =&gt; './template/',
+    'view_suffix'        =&gt; 'php',
+    'view_depr'          =&gt; DS,
+    'tpl_begin'          =&gt; '{', // 模板引擎普通标签开始标记
+    'tpl_end'            =&gt; '}', // 模板引擎普通标签结束标记
+    'strip_space'        =&gt; true, // 去除模板文件里面的html空格与换行
+    'tpl_cache'          =&gt; true, // 开启模板编译缓存
+    'taglib_pre_load'    =&gt; '', // 需要额外加载的标签库(须指定标签库名称)，多个以逗号分隔
+    'tpl_replace_string' =&gt; [],// 模板过滤输出（与输出替换章节不同，前者对模版进行过滤）
+]);</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14"><code class="calibre7">think</code>模板引擎是ThinkPHP内置的一个基于XML的高效的编译型模板引擎，系统默认使用的模板引擎是内置模板引擎，关于这个模板引擎的标签详细使用可以参考模板部分。</p>
+</blockquote>
+<h3 id="%E8%B0%83%E7%94%A8engine%E6%96%B9%E6%B3%95%E5%88%9D%E5%A7%8B%E5%8C%96" class="calibre17">调用engine方法初始化</h3>
+<p class="calibre10">视图类也提供了<code class="calibre7">engine</code>方法对模板解析引擎进行初始化或者切换不同的模板引擎，例如：</p>
+<pre class="calibre21"><code class="calibre22">$view = new View();
+return $view-&gt;engine('php')-&gt;fetch();</code></pre>
+<p class="calibre10">表示当前视图的模板文件使用原生php进行解析。</p>
+<h2 id="%E8%AE%BE%E7%BD%AE%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E5%8F%82%E6%95%B0" class="calibre15">设置模板引擎参数</h2>
+<p class="calibre10">除了在实例化的时候传入外，可以动态设置模板引擎的相关参数，例如：</p>
+<pre class="calibre21"><code class="calibre22">$view = new View();
+return $view-&gt;config('view_path','./template/')-&gt;fetch();</code></pre>
+<h2 id="%E4%BD%BF%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E" class="calibre15">使用第三方模板引擎</h2>
+<p class="calibre10">官方扩展库中提供了一个类似于<code class="calibre7">angularjs</code>语法的模板引擎<code class="calibre7">think-angular</code>，具体可以参考<a href="http://www.kancloud.cn/shuai/php-angular" class="pcalibre calibre13">参考手册</a>。</p>
+</div>
+	
+</body></html>

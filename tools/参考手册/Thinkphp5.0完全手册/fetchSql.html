@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>fetchSql</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">fetchSql</h1>
+<div class="book-content">
+    <p class="calibre10">fetchSql用于直接返回SQL而不是执行查询，适用于任何的CURD操作方法。 例如：</p>
+<pre class="calibre21"><code class="calibre22">$result = Db::table('think_user')-&gt;fetchSql(true)-&gt;find(1);</code></pre>
+<p class="calibre10">输出result结果为： <code class="calibre7">SELECT * FROM think_user where id = 1</code></p>
+</div>
+	
+</body></html>

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>模板标签</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_129">模板标签</h1>
+<div class="book-content">
+    <p class="calibre10">模板文件可以包含普通标签和标签库标签，标签的定界符都可以重新配置。</p>
+<h2 id="%E6%99%AE%E9%80%9A%E6%A0%87%E7%AD%BE" class="calibre15">普通标签</h2>
+<p class="calibre10">普通标签用于变量输出和模板注释，普通模板标签默认以<code class="calibre7">{</code> 和 <code class="calibre7">}</code> 作为开始和结束标识，并且在开始标记紧跟标签的定义，如果之间有空格或者换行则被视为非模板标签直接输出。 例如：<code class="calibre7">{$name}</code> 、<code class="calibre7">{$vo.name}</code> 、<code class="calibre7">{$vo['name']|strtoupper}</code> 都属于正确的标签，而<code class="calibre7">{ $name}</code> 、<code class="calibre7">{ $vo.name}</code>则不属于。</p>
+<p class="calibre10">要更改普通标签的起始标签和结束标签，可以更改下面的配置参数：</p>
+<pre class="calibre21"><code class="calibre22">'template'  =&gt; [
+    // 模板引擎
+    'type'   =&gt; 'think',
+    // 普通标签开始标记 
+    'tpl_begin' =&gt;    '&lt;{',
+    // 普通标签结束标记
+    'tpl_end'   =&gt;    '}&gt;'        
+],</code></pre>
+<p class="calibre10">普通标签的定界符就被修改了，原来的 <code class="calibre7">{$name}</code> 和 <code class="calibre7">{$vo.name}</code> 必须使用 <code class="calibre7">&lt;{$name}&gt;</code> 和 <code class="calibre7">&lt;{$vo.name}&gt;</code> 才能生效了。</p>
+<h2 id="%E6%A0%87%E7%AD%BE%E5%BA%93%E6%A0%87%E7%AD%BE" class="calibre15">标签库标签</h2>
+<p class="calibre10">标签库标签可以用于模板变量输出、文件包含、条件控制、循环输出等功能，而且完全可以自己扩展功能。</p>
+<p class="calibre10">5.0版本的标签库默认定界符和普通标签一样使用<code class="calibre7">{</code>和<code class="calibre7">}</code>，是为了便于在编辑器里面编辑不至于报错，当然，你仍然可以更改标签库标签的起始和结束标签，修改下面的配置参数：</p>
+<pre class="calibre21"><code class="calibre22">'template'      =&gt; [
+    // 模板引擎
+    'type'   =&gt; 'think',
+    //标签库标签开始标签 
+    'taglib_begin'  =&gt;  '&lt;',
+    //标签库标签结束标记
+    'taglib_end'    =&gt;  '&gt;',     
+],</code></pre>
+<p class="calibre10">原来的</p>
+<pre class="calibre21"><code class="calibre22">{eq name="name" value="value"}
+相等
+{else/}
+不相等
+{/eq}</code></pre>
+<p class="calibre10">就需要改成</p>
+<pre class="calibre21"><code class="calibre22">&lt;eq name="name" value="value"&gt;
+相等
+&lt;else/&gt;
+不相等
+&lt;/eq&gt;</code></pre>
+</div>
+	
+</body></html>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>distinct</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">distinct</h1>
+<div class="book-content">
+    <p class="calibre10">DISTINCT 方法用于返回唯一不同的值 。</p>
+<p class="calibre10">例如数据库表中有以下数据</p>
+<p class="calibre10"><img src="5743c9fa320ae.jpg" alt="" class="calibre11"/></p>
+<p class="calibre10">以下代码会返回<code class="calibre7">user_login</code>字段不同的数据</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;distinct(true)-&gt;field('user_login')-&gt;select();</code></pre>
+<p class="calibre10">生成的SQL语句是： <code class="calibre7">SELECT DISTINCT user_login FROM think_user</code></p>
+<p class="calibre10">返回以下数组</p>
+<pre class="calibre21"><code class="calibre22">array(2) {
+  [0] =&gt; array(1) {
+    ["user_login"] =&gt; string(7) "chunice"
+  }
+  [1] =&gt; array(1) {
+    ["user_login"] =&gt; string(5) "admin"
+  }
+}</code></pre>
+<p class="calibre10">distinct方法的参数是一个布尔值。</p>
+</div>
+	
+</body></html>

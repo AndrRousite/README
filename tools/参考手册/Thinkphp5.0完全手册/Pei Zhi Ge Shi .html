@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>配置格式</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_18">配置格式</h1>
+<div class="book-content">
+    <p class="calibre10">ThinkPHP支持多种格式的配置格式，但最终都是解析为PHP数组的方式。</p>
+<h2 id="php%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89" class="calibre15">PHP数组定义</h2>
+<p class="calibre10">返回<strong class="calibre12">PHP数组</strong>的方式是默认的配置定义格式，例如：</p>
+<pre class="calibre21"><code class="calibre22">//项目配置文件
+return [
+    // 默认模块名
+    'default_module'        =&gt; 'index',
+    // 默认控制器名
+    'default_controller'    =&gt; 'Index',
+    // 默认操作名
+    'default_action'        =&gt; 'index',
+    //更多配置参数
+    //...
+];</code></pre>
+<p class="calibre10">配置参数名不区分大小写（因为无论大小写定义都会转换成小写），新版的建议是使用小写定义配置参数的规范。</p>
+<p class="calibre10">还可以在配置文件中可以使用二维数组来配置更多的信息，例如：</p>
+<pre class="calibre21"><code class="calibre22">//项目配置文件
+return [
+    'cache'                 =&gt; [
+        'type'   =&gt; 'File',
+        'path'   =&gt; CACHE_PATH,
+        'prefix' =&gt; '',
+        'expire' =&gt; 0,
+    ],
+];</code></pre>
+<h2 id="%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE%E6%A0%BC%E5%BC%8F%E6%94%AF%E6%8C%81" class="calibre15">其他配置格式支持</h2>
+<p class="calibre10">默认方式为PHP数组方式定义配置文件，你可以在入口文件定义<code class="calibre7">CONF_EXT</code>常量来更改为其它的配置类型：</p>
+<pre class="calibre21"><code class="calibre22">// 更改配置格式为ini格式
+define('CONF_EXT', '.ini');</code></pre>
+<p class="calibre10">配置后，会自动解析支持的配置类型，包括<code class="calibre7">.ini</code>、<code class="calibre7">.xml</code>、<code class="calibre7">.json</code> 和 <code class="calibre7">.php</code> 在内的格式支持。</p>
+<blockquote class="danger">
+<p class="calibre14">5.0.2版本开始支持yaml配置格式支持</p>
+</blockquote>
+<p class="calibre10"><strong class="calibre12">ini格式</strong>配置示例：</p>
+<pre class="calibre21"><code class="calibre22">default_module=Index ;默认模块
+default_controller=index ;默认控制器
+default_action=index ;默认操作</code></pre>
+<p class="calibre10"><strong class="calibre12">xml格式</strong>配置示例：</p>
+<pre class="calibre21"><code class="calibre22">&lt;config&gt;
+&lt;default_module&gt;Index&lt;/default_module&gt;
+&lt;default_controller&gt;index&lt;/default_controller&gt;
+&lt;default_action&gt;index&lt;/default_action&gt;
+&lt;/config&gt;</code></pre>
+<p class="calibre10"><strong class="calibre12">json格式</strong>配置示例：</p>
+<pre class="calibre21"><code class="calibre22">{
+"default_module":"Index",
+"default_controller":"index",
+"default_action":"index"
+}</code></pre>
+<h2 id="%E4%BA%8C%E7%BA%A7%E9%85%8D%E7%BD%AE" class="calibre15">二级配置</h2>
+<p class="calibre10">配置参数支持二级，例如，下面是一个二级配置的设置和读取示例：</p>
+<pre class="calibre21"><code class="calibre22">$config = [
+    'user'  =&gt;  [
+        'type'  =&gt;  1,
+        'name'  =&gt;  'thinkphp',
+    ],
+    'db'    =&gt;  [
+        'type'      =&gt;  'mysql',
+        'user'      =&gt;  'root',
+        'password'  =&gt;  '',
+    ],
+];
+// 设置配置参数
+Config::set($config);
+// 读取二级配置参数
+echo Config::get('user.type');
+// 或者使用助手函数
+echo config('user.type');</code></pre>
+<p class="calibre10">系统不支持二级以上的配置参数读取，需要手动分步骤读取。<br class="calibre16"/>
+有作用域的情况下，仍然支持二级配置的操作。</p>
+<p class="calibre10">如果采用其他格式的配置文件的话，二级配置定义方式如下（以ini和xml为例）：</p>
+<pre class="calibre21"><code class="calibre22">[user]
+type=1
+name=thinkphp
+ [db]
+type=mysql
+user=rot
+password=''</code></pre>
+<p class="calibre10">标准的xml格式文件定义：</p>
+<pre class="calibre21"><code class="calibre22">&lt;config&gt;
+&lt;user&gt;
+&lt;type&gt;1&lt;/type&gt;
+&lt;name&gt;thinkphp&lt;/name&gt;
+&lt;/user&gt;
+&lt;db&gt;
+&lt;type&gt;mysql&lt;/type&gt;
+&lt;user&gt;root&lt;/user&gt;
+&lt;password&gt;&lt;/password&gt;
+&lt;/db&gt;
+&lt;/config&gt;</code></pre>
+<p class="calibre10">set方法也支持二级配置，例如：</p>
+<pre class="calibre21"><code class="calibre22">Config::set([
+    'type'      =&gt;  'file',
+    'prefix'    =&gt;  'think'
+],'cache');</code></pre>
+</div>
+	
+</body></html>

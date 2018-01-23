@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>数据集</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_89">数据集</h1>
+<div class="book-content">
+    <table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">功能调整</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.5</td>
+<td class="calibre34 pcalibre1">原生查询不支持返回数据集对象</td>
+</tr></tbody></table><p class="calibre10">数据库的查询结果也就是数据集，默认的配置下，数据集的类型是一个二维数组，我们可以配置成数据集类，就可以支持对数据集更多的对象化操作，需要使用数据集类功能，可以配置数据库的<code class="calibre7">resultset_type</code>参数如下：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    // 数据库类型
+    'type'        =&gt; 'mysql',
+    // 数据库连接DSN配置
+    'dsn'         =&gt; '',
+    // 服务器地址
+    'hostname'    =&gt; '127.0.0.1',
+    // 数据库名
+    'database'    =&gt; 'thinkphp',
+    // 数据库用户名
+    'username'    =&gt; 'root',
+    // 数据库密码
+    'password'    =&gt; '',
+    // 数据库连接端口
+    'hostport'    =&gt; '',
+    // 数据库连接参数
+    'params'      =&gt; [],
+    // 数据库编码默认采用utf8
+    'charset'     =&gt; 'utf8',
+    // 数据库表前缀
+    'prefix'      =&gt; 'think_',
+    // 数据集返回类型
+    'resultset_type' =&gt; 'collection',
+];</code></pre>
+<p class="calibre10">返回的数据集对象是<code class="calibre7">think\Collection</code>，提供了和数组无差别用法，并且另外封装了一些额外的方法。</p>
+<p class="calibre10">可以直接使用数组的方式操作数据集对象，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 获取数据集
+$users = Db::name('user')-&gt;select();
+// 直接操作第一个元素
+$item  = $users[0];
+// 获取数据集记录数
+$count = count($users);
+// 遍历数据集
+foreach($users as $user){
+    echo $user['name'];
+    echo $user['id'];
+}</code></pre>
+<p class="calibre10">需要注意的是，如果要判断数据集是否为空，不能直接使用<code class="calibre7">empty</code>判断，而必须使用数据集对象的<code class="calibre7">isEmpty</code>方法判断，例如：</p>
+<pre class="calibre21"><code class="calibre22">$users = Db::name('user')-&gt;select();
+if($users-&gt;isEmpty()){
+    echo '数据集为空';
+}</code></pre>
+<p class="calibre10"><code class="calibre7">Collection</code>类包含了下列主要方法：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">方法</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">isEmpty</td>
+<td class="calibre32 pcalibre1">是否为空</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">toArray</td>
+<td class="pcalibre1 calibre31">转换为数组</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">all</td>
+<td class="pcalibre1 calibre31">所有数据</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">merge</td>
+<td class="pcalibre1 calibre31">合并其它数据</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">diff</td>
+<td class="pcalibre1 calibre31">比较数组，返回差集</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">flip</td>
+<td class="pcalibre1 calibre31">交换数据中的键和值</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">intersect</td>
+<td class="pcalibre1 calibre31">比较数组，返回交集</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">keys</td>
+<td class="pcalibre1 calibre31">返回数据中的所有键名</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">pop</td>
+<td class="pcalibre1 calibre31">删除数据中的最后一个元素</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">shift</td>
+<td class="pcalibre1 calibre31">删除数据中的第一个元素</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">unshift</td>
+<td class="pcalibre1 calibre31">在数据开头插入一个元素</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">reduce</td>
+<td class="pcalibre1 calibre31">通过使用用户自定义函数，以字符串返回数组</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">reverse</td>
+<td class="pcalibre1 calibre31">数据倒序重排</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">chunk</td>
+<td class="pcalibre1 calibre31">数据分隔为多个数据块</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">each</td>
+<td class="pcalibre1 calibre31">给数据的每个元素执行回调</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">filter</td>
+<td class="pcalibre1 calibre31">用回调函数过滤数据中的元素</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">column</td>
+<td class="pcalibre1 calibre31">返回数据中的指定列</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">sort</td>
+<td class="pcalibre1 calibre31">对数据排序</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">shuffle</td>
+<td class="pcalibre1 calibre31">将数据打乱</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">slice</td>
+<td class="calibre33 pcalibre1">截取数据中的一部分</td>
+</tr></tbody></table><p class="calibre10">如果只是个别数据的查询需要返回数据集对象，则可以使用</p>
+<pre class="calibre21"><code class="calibre22">Db::name('user')
+    -&gt;fetchClass('\think\Collection')
+    -&gt;select();</code></pre>
+</div>
+	
+</body></html>

@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>资源文件加载</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_147">资源文件加载</h1>
+<div class="book-content">
+    <p class="calibre10">传统方式的导入外部<code class="calibre7">JS</code>和<code class="calibre7">CSS</code>文件的方法是直接在模板文件使用：</p>
+<pre class="calibre21"><code class="calibre22">&lt;script type='text/javascript' src='/static/js/common.js'&gt;
+&lt;link rel="stylesheet" type="text/css" href="/static/css/style.css" /&gt;</code></pre>
+<p class="calibre10">系统提供了专门的标签来简化上面的导入：</p>
+<pre class="calibre21"><code class="calibre22">{load href="/static/js/common.js" /}
+{load href="/static/css/style.css" /}</code></pre>
+<p class="calibre10">并且支持同时加载多个资源文件，例如：</p>
+<pre class="calibre21"><code class="calibre22">{load href="/static/js/common.js,/static/css/style.css" /}</code></pre>
+<p class="calibre10">系统还提供了两个标签别名<code class="calibre7">js</code>和<code class="calibre7">css</code> 用法和<code class="calibre7">load</code>一致，例如：</p>
+<pre class="calibre21"><code class="calibre22">{js href="/static/js/common.js" /}
+{css href="/static/css/style.css" /}</code></pre>
+</div>
+	
+</body></html>

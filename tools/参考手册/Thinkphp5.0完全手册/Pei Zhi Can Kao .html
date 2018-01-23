@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>配置参考</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_220">配置参考</h1>
+<div class="book-content">
+    <h2 id="%E6%83%AF%E4%BE%8B%E9%85%8D%E7%BD%AE-1" class="calibre15">惯例配置</h2>
+<h3 id="%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE" class="calibre17">应用设置</h3>
+<pre class="calibre21"><code class="calibre22">// 应用命名空间
+'app_namespace'          =&gt; 'app',
+// 应用调试模式
+'app_debug'              =&gt; true,
+// 应用模式状态
+'app_status'             =&gt; '',
+// 应用Trace 
+'app_trace'              =&gt; false, 
+// 是否支持多模块
+'app_multi_module'       =&gt; true,
+// 注册的根命名空间
+'root_namespace'         =&gt; [],
+// 扩展配置文件 （V5.0.1 已经废弃）
+'extra_config_list'      =&gt; ['database', 'route', 'validate'],
+// 扩展函数文件
+'extra_file_list'        =&gt; [THINK_PATH . 'helper' . EXT],
+// 默认输出类型
+'default_return_type'    =&gt; 'html',
+// 默认AJAX 数据返回格式,可选json xml ...
+'default_ajax_return'    =&gt; 'json',
+// 默认JSONP格式返回的处理方法
+'default_jsonp_handler'  =&gt; 'jsonpReturn',
+// 默认JSONP处理方法
+'var_jsonp_handler'      =&gt; 'callback',
+// 默认时区
+'default_timezone'       =&gt; 'PRC',
+// 是否开启多语言
+'lang_switch_on'         =&gt; false,
+// 默认全局过滤方法 用逗号分隔多个
+'default_filter'         =&gt; '',
+// 默认语言
+'default_lang'           =&gt; 'zh-cn',
+// 应用类库后缀
+'class_suffix'           =&gt; false,
+// 控制器类后缀
+'controller_suffix'      =&gt; false,</code></pre>
+<h3 id="%E6%A8%A1%E5%9D%97%E8%AE%BE%E7%BD%AE" class="calibre17">模块设置</h3>
+<pre class="calibre21"><code class="calibre22">// 默认模块名
+'default_module'         =&gt; 'index',
+// 禁止访问模块
+'deny_module_list'       =&gt; ['common'],
+// 默认控制器名
+'default_controller'     =&gt; 'Index',
+// 默认操作名
+'default_action'         =&gt; 'index',
+// 默认验证器
+'default_validate'       =&gt; '',
+// 默认的空控制器名
+'empty_controller'       =&gt; 'Error',
+// 操作方法后缀
+'action_suffix'          =&gt; '',
+// 自动搜索控制器
+'controller_auto_search' =&gt; false,</code></pre>
+<h3 id="url%E8%AE%BE%E7%BD%AE" class="calibre17">URL设置</h3>
+<pre class="calibre21"><code class="calibre22">// PATHINFO变量名 用于兼容模式
+'var_pathinfo'           =&gt; 's',
+// 兼容PATH_INFO获取
+'pathinfo_fetch'         =&gt; ['ORIG_PATH_INFO', 'REDIRECT_PATH_INFO', 'REDIRECT_URL'],
+// pathinfo分隔符
+'pathinfo_depr'          =&gt; '/',
+// URL伪静态后缀
+'url_html_suffix'        =&gt; 'html',
+// URL普通方式参数 用于自动生成
+'url_common_param'       =&gt; false,
+// URL参数方式 0 按名称成对解析 1 按顺序解析
+'url_param_type'         =&gt; 0,
+// 是否开启路由
+'url_route_on'           =&gt; true,
+// 是否强制使用路由
+'url_route_must'         =&gt; false,
+// 域名部署
+'url_domain_deploy'      =&gt; false,
+// 域名根，如thinkphp.cn
+'url_domain_root'        =&gt; '',
+// 是否自动转换URL中的控制器和操作名
+'url_convert'            =&gt; true,
+// 默认的访问控制器层
+'url_controller_layer'   =&gt; 'controller',
+// 表单请求类型伪装变量
+'var_method'             =&gt; '_method',
+// 表单ajax伪装变量 V5.0.2+
+'var_ajax'               =&gt; '_ajax',
+// 表单pjax伪装变量 V5.0.2+
+'var_pjax'               =&gt; '_pjax',
+// 是否开启请求缓存 true自动缓存 支持设置请求缓存规则 V5.0.3+
+'request_cache'          =&gt; false,
+// 请求缓存有效期 V5.0.3+
+'request_cache_expire'   =&gt; null,</code></pre>
+<h3 id="%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E8%AE%BE%E7%BD%AE" class="calibre17">模板引擎设置</h3>
+<pre class="calibre21"><code class="calibre22">'template'               =&gt; [
+    // 模板引擎类型 支持 php think 支持扩展
+    'type'         =&gt; 'Think',
+    // 模板路径
+    'view_path'    =&gt; '',
+    // 模板后缀
+    'view_suffix'  =&gt; 'html',
+    // 模板文件名分隔符
+    'view_depr'    =&gt; DS,
+    // 模板引擎普通标签开始标记
+    'tpl_begin'    =&gt; '{',
+    // 模板引擎普通标签结束标记
+    'tpl_end'      =&gt; '}',
+    // 标签库标签开始标记
+    'taglib_begin' =&gt; '{',
+    // 标签库标签结束标记
+    'taglib_end'   =&gt; '}',
+],
+
+// 视图输出字符串内容替换
+'view_replace_str'       =&gt; [],
+// 默认跳转页面对应的模板文件
+'dispatch_success_tmpl'  =&gt; THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+'dispatch_error_tmpl'    =&gt; THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',</code></pre>
+<h3 id="%E5%BC%82%E5%B8%B8%E5%8F%8A%E9%94%99%E8%AF%AF%E8%AE%BE%E7%BD%AE" class="calibre17">异常及错误设置</h3>
+<pre class="calibre21"><code class="calibre22">// 异常页面的模板文件
+'exception_tmpl'         =&gt; THINK_PATH . 'tpl' . DS . 'think_exception.tpl',
+
+// 错误显示信息,非调试模式有效
+'error_message'          =&gt; '页面错误！请稍后再试～',
+// 显示错误信息
+'show_error_msg'         =&gt; false,</code></pre>
+<h3 id="%E6%97%A5%E5%BF%97%E8%AE%BE%E7%BD%AE" class="calibre17">日志设置</h3>
+<pre class="calibre21"><code class="calibre22">'log'                    =&gt; [
+    // 日志记录方式，支持 file socket
+    'type' =&gt; 'File',
+    // 日志保存目录
+    'path' =&gt; LOG_PATH,
+],</code></pre>
+<h3 id="trace%E8%AE%BE%E7%BD%AE" class="calibre17">Trace设置</h3>
+<pre class="calibre21"><code class="calibre22">'trace'                  =&gt; [
+    // 内置Html Console 支持扩展 
+    'type' =&gt; 'Html', 
+],</code></pre>
+<h3 id="%E7%BC%93%E5%AD%98%E8%AE%BE%E7%BD%AE" class="calibre17">缓存设置</h3>
+<pre class="calibre21"><code class="calibre22">'cache'                  =&gt; [
+    // 驱动方式
+    'type'   =&gt; 'File',
+    // 缓存保存目录
+    'path'   =&gt; CACHE_PATH,
+    // 缓存前缀
+    'prefix' =&gt; '',
+    // 缓存有效期 0表示永久缓存
+    'expire' =&gt; 0,
+],</code></pre>
+<h3 id="%E4%BC%9A%E8%AF%9D%E8%AE%BE%E7%BD%AE" class="calibre17">会话设置</h3>
+<pre class="calibre21"><code class="calibre22">'session'                =&gt; [
+    'id'             =&gt; '',
+    // SESSION_ID的提交变量,解决flash上传跨域
+    'var_session_id' =&gt; '',
+    // SESSION 前缀
+    'prefix'         =&gt; 'think',
+    // 驱动方式 支持redis memcache memcached
+    'type'           =&gt; '',
+    // 是否自动开启 SESSION
+    'auto_start'     =&gt; true,
+],</code></pre>
+<h3 id="cookie%E8%AE%BE%E7%BD%AE" class="calibre17">Cookie设置</h3>
+<pre class="calibre21"><code class="calibre22">'cookie'                 =&gt; [
+    // cookie 名称前缀
+    'prefix'    =&gt; '',
+    // cookie 保存时间
+    'expire'    =&gt; 0,
+    // cookie 保存路径
+    'path'      =&gt; '/',
+    // cookie 有效域名
+    'domain'    =&gt; '',
+    //  cookie 启用安全传输
+    'secure'    =&gt; false,
+    // httponly设置
+    'httponly'  =&gt; '',
+    // 是否使用 setcookie
+    'setcookie' =&gt; true,
+],</code></pre>
+<h3 id="%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E7%BD%AE" class="calibre17">数据库设置</h3>
+<pre class="calibre21"><code class="calibre22">'database'               =&gt; [
+    // 数据库类型
+    'type'           =&gt; 'mysql',
+    // 数据库连接DSN配置
+    'dsn'            =&gt; '',
+    // 服务器地址
+    'hostname'       =&gt; 'localhost',
+    // 数据库名
+    'database'       =&gt; '',
+    // 数据库用户名
+    'username'       =&gt; 'root',
+    // 数据库密码
+    'password'       =&gt; '',
+    // 数据库连接端口
+    'hostport'       =&gt; '',
+    // 数据库连接参数
+    'params'         =&gt; [],
+    // 数据库编码默认采用utf8
+    'charset'        =&gt; 'utf8',
+    // 数据库表前缀
+    'prefix'         =&gt; '',
+    // 数据库调试模式
+    'debug'          =&gt; false,
+    // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+    'deploy'         =&gt; 0,
+    // 数据库读写是否分离 主从式有效
+    'rw_separate'    =&gt; false,
+    // 读写分离后 主服务器数量
+    'master_num'     =&gt; 1,
+    // 指定从服务器序号
+    'slave_no'       =&gt; '',
+    // 是否严格检查字段是否存在
+    'fields_strict'  =&gt; true,
+    // 数据集返回类型
+    'resultset_type' =&gt; 'array',
+    // 自动写入时间戳字段
+    'auto_timestamp' =&gt; false,
+    // 是否需要进行SQL性能分析
+    'sql_explain'    =&gt; false,
+],</code></pre>
+<h3 id="%E5%88%86%E9%A1%B5%E9%85%8D%E7%BD%AE" class="calibre17">分页配置</h3>
+<pre class="calibre21"><code class="calibre22">'paginate'               =&gt; [
+    'type'      =&gt; 'bootstrap',
+    'var_page'  =&gt; 'page',
+    'list_rows' =&gt; 15,
+],</code></pre>
+</div>
+	
+</body></html>

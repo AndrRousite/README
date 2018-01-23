@@ -1,0 +1,259 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>连接数据库</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_69">连接数据库</h1>
+<div class="book-content">
+    <blockquote class="calibre5">
+<p class="calibre14">ThinkPHP内置了抽象数据库访问层，把不同的数据库操作封装起来，我们只需要使用公共的Db类进行操作，而无需针对不同的数据库写不同的代码和底层实现，Db类会自动调用相应的数据库驱动来处理。采用PDO方式，目前包含了Mysql、SqlServer、PgSQL、Sqlite等数据库的支持。 </p>
+</blockquote>
+<p class="calibre10">如果应用需要使用数据库，必须配置数据库连接信息，数据库的配置文件有多种定义方式。 </p>
+<div class="markdown-toc"><ul class="calibre23"><li class="calibre20"><a href="#%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%AE%9A%E4%B9%89" class="pcalibre calibre13" level="2">一、配置文件定义</a></li><li class="calibre20"><a href="#%E4%BA%8C%E3%80%81%E6%96%B9%E6%B3%95%E9%85%8D%E7%BD%AE" class="pcalibre calibre13" level="2">二、方法配置</a></li><li class="calibre20"><a href="#%E4%B8%89%E3%80%81%E6%A8%A1%E5%9E%8B%E7%B1%BB%E5%AE%9A%E4%B9%89" class="pcalibre calibre13" level="2">三、模型类定义</a></li><li class="calibre20"><a href="#%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E5%8F%82%E8%80%83" class="pcalibre calibre13" level="2">配置参数参考</a></li></ul></div>
+<h2 id="%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%AE%9A%E4%B9%89" class="calibre15">一、配置文件定义</h2>
+<p class="calibre10">常用的配置方式是在应用目录或者模块目录下面的<code class="calibre7">database.php</code>中添加下面的配置参数：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    // 数据库类型
+    'type'        =&gt; 'mysql',
+    // 数据库连接DSN配置
+    'dsn'         =&gt; '',
+    // 服务器地址
+    'hostname'    =&gt; '127.0.0.1',
+    // 数据库名
+    'database'    =&gt; 'thinkphp',
+    // 数据库用户名
+    'username'    =&gt; 'root',
+    // 数据库密码
+    'password'    =&gt; '',
+    // 数据库连接端口
+    'hostport'    =&gt; '',
+    // 数据库连接参数
+    'params'      =&gt; [],
+    // 数据库编码默认采用utf8
+    'charset'     =&gt; 'utf8',
+    // 数据库表前缀
+    'prefix'      =&gt; 'think_',
+    // 数据库调试模式
+    'debug'       =&gt; false,
+    // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+    'deploy'      =&gt; 0,
+    // 数据库读写是否分离 主从式有效
+    'rw_separate' =&gt; false,
+    // 读写分离后 主服务器数量
+    'master_num'  =&gt; 1,
+    // 指定从服务器序号
+    'slave_no'    =&gt; '',
+    // 是否严格检查字段是否存在
+    'fields_strict'  =&gt; true,    
+];</code></pre>
+<p class="calibre10"><code class="calibre7">type</code>参数支持命名空间完整定义，不带命名空间定义的话，默认采用<code class="calibre7">\think\db\connector</code>作为命名空间，如果使用应用自己扩展的数据库驱动，可以配置为：</p>
+<pre class="calibre21"><code class="calibre22">// 数据库类型
+'type'        =&gt; '\org\db\Mysql',</code></pre>
+<p class="calibre10">表示数据库的连接器采用 <code class="calibre7">\org\db\Mysql</code>类作为数据库连接驱动，而不是默认的<code class="calibre7">\think\db\connector\Mysql</code>。</p>
+<p class="calibre10">每个模块可以设置独立的数据库连接参数，并且相同的配置参数可以无需重复设置，例如我们可以在admin模块的database.php配置文件中定义：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    // 服务器地址
+    'hostname'    =&gt; '192.168.1.100',
+    // 数据库名
+    'database'    =&gt; 'admin',    
+];</code></pre>
+<p class="calibre10">表示admin模块的数据库地址改成 <code class="calibre7">192.168.1.100</code>，数据库名改成<code class="calibre7">admin</code>，其它的连接参数和应用的<code class="calibre7">database.php</code>中的配置一样。</p>
+<p class="calibre10"><code class="calibre7">V5.0.6+</code>版本开始，支持Mysql的断线重连机制，默认关闭，需要的话，是数据库配置文件中添加：</p>
+<pre class="calibre21"><code class="calibre22">// 开启断线重连
+'break_reconnect' =&gt; true,</code></pre>
+<h3 id="%E8%BF%9E%E6%8E%A5%E5%8F%82%E6%95%B0" class="calibre17">连接参数</h3>
+<p class="calibre10">可以针对不同的连接需要添加数据库的连接参数（具体的连接参数可以参考PHP手册），内置采用的参数包括如下：</p>
+<pre class="calibre21"><code class="calibre22">PDO::ATTR_CASE              =&gt; PDO::CASE_NATURAL,
+PDO::ATTR_ERRMODE           =&gt; PDO::ERRMODE_EXCEPTION,
+PDO::ATTR_ORACLE_NULLS      =&gt; PDO::NULL_NATURAL,
+PDO::ATTR_STRINGIFY_FETCHES =&gt; false,
+PDO::ATTR_EMULATE_PREPARES  =&gt; false,</code></pre>
+<p class="calibre10">在database中设置的params参数中的连接配置将会和内置的设置参数合并，如果需要使用长连接，并且返回数据库的小写列名，可以采用下面的方式定义：</p>
+<pre class="calibre21"><code class="calibre22">'params' =&gt; [
+    \PDO::ATTR_PERSISTENT   =&gt; true,
+    \PDO::ATTR_CASE         =&gt; \PDO::CASE_LOWER,
+],</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">你可以在params里面配置任何PDO支持的连接参数。</p>
+</blockquote>
+<h2 id="%E4%BA%8C%E3%80%81%E6%96%B9%E6%B3%95%E9%85%8D%E7%BD%AE" class="calibre15">二、方法配置</h2>
+<p class="calibre10">我们可以在调用Db类的时候动态定义连接信息，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::connect([
+    // 数据库类型
+    'type'        =&gt; 'mysql',
+    // 数据库连接DSN配置
+    'dsn'         =&gt; '',
+    // 服务器地址
+    'hostname'    =&gt; '127.0.0.1',
+    // 数据库名
+    'database'    =&gt; 'thinkphp',
+    // 数据库用户名
+    'username'    =&gt; 'root',
+    // 数据库密码
+    'password'    =&gt; '',
+    // 数据库连接端口
+    'hostport'    =&gt; '',
+    // 数据库连接参数
+    'params'      =&gt; [],
+    // 数据库编码默认采用utf8
+    'charset'     =&gt; 'utf8',
+    // 数据库表前缀
+    'prefix'      =&gt; 'think_',
+]);</code></pre>
+<p class="calibre10">或者使用字符串方式：</p>
+<pre class="calibre21"><code class="calibre22">Db::connect('mysql://root:1234@127.0.0.1:3306/thinkphp#utf8');</code></pre>
+<p class="calibre10">字符串连接的定义格式为：</p>
+<blockquote class="info">
+<h4 id="%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B%3A%2F%2F%E7%94%A8%E6%88%B7%E5%90%8D%3A%E5%AF%86%E7%A0%81%40%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9C%B0%E5%9D%80%3A%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AB%AF%E5%8F%A3%2F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%23%E5%AD%97%E7%AC%A6%E9%9B%86" class="calibre6">数据库类型://用户名:密码@数据库地址:数据库端口/数据库名#字符集</h4>
+</blockquote>
+<p class="calibre10">注意：字符串方式可能无法定义某些参数，例如前缀和连接参数。</p>
+<p class="calibre10">如果我们已经在<strong class="calibre12">应用配置文件</strong>（注意这里不是数据库配置文件）中配置了额外的数据库连接信息，例如：</p>
+<pre class="calibre21"><code class="calibre22">//数据库配置1
+'db_config1' =&gt; [
+    // 数据库类型
+    'type'        =&gt; 'mysql',
+    // 服务器地址
+    'hostname'    =&gt; '127.0.0.1',
+    // 数据库名
+    'database'    =&gt; 'thinkphp',
+    // 数据库用户名
+    'username'    =&gt; 'root',
+    // 数据库密码
+    'password'    =&gt; '',
+    // 数据库编码默认采用utf8
+    'charset'     =&gt; 'utf8',
+    // 数据库表前缀
+    'prefix'      =&gt; 'think_',
+],
+//数据库配置2
+'db_config2' =&gt; 'mysql://root:1234@localhost:3306/thinkphp#utf8';</code></pre>
+<p class="calibre10">我们可以改成</p>
+<pre class="calibre21"><code class="calibre22">Db::connect('db_config1');
+Db::connect('db_config2');</code></pre>
+<h2 id="%E4%B8%89%E3%80%81%E6%A8%A1%E5%9E%8B%E7%B1%BB%E5%AE%9A%E4%B9%89" class="calibre15">三、模型类定义</h2>
+<p class="calibre10">如果在某个模型类里面定义了<code class="calibre7">connection</code>属性的话，则该模型操作的时候会自动连接给定的数据库连接，而不是配置文件中设置的默认连接信息，通常用于某些数据表位于当前数据库连接之外的其它数据库，例如：</p>
+<pre class="calibre21"><code class="calibre22">//在模型里单独设置数据库连接信息
+namespace app\index\model;
+
+use think\Model;
+
+class User extends Model
+{
+    protected $connection = [
+        // 数据库类型
+        'type'        =&gt; 'mysql',
+        // 数据库连接DSN配置
+        'dsn'         =&gt; '',
+        // 服务器地址
+        'hostname'    =&gt; '127.0.0.1',
+        // 数据库名
+        'database'    =&gt; 'thinkphp',
+        // 数据库用户名
+        'username'    =&gt; 'root',
+        // 数据库密码
+        'password'    =&gt; '',
+        // 数据库连接端口
+        'hostport'    =&gt; '',
+        // 数据库连接参数
+        'params'      =&gt; [],
+        // 数据库编码默认采用utf8
+        'charset'     =&gt; 'utf8',
+        // 数据库表前缀
+        'prefix'      =&gt; 'think_',
+    ];
+}</code></pre>
+<p class="calibre10">也可以采用DSN字符串方式定义，例如：</p>
+<pre class="calibre21"><code class="calibre22">//在模型里单独设置数据库连接信息
+namespace app\index\model;
+
+use think\Model;
+
+class User extends Model
+{
+    //或者使用字符串定义
+    protected $connection = 'mysql://root:1234@127.0.0.1:3306/thinkphp#utf8';
+}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">需要注意的是，ThinkPHP的数据库连接是惰性的，所以并不是在实例化的时候就连接数据库，而是在有实际的数据操作的时候才会去连接数据库。</p>
+</blockquote>
+<h2 id="%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E5%8F%82%E8%80%83" class="calibre15">配置参数参考</h2>
+<p class="calibre10">下面是默认支持的数据库连接信息：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">参数名</th>
+<th class="calibre28">描述</th>
+<th class="calibre28">默认值</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">type</td>
+<td class="pcalibre1 calibre31">数据库类型</td>
+<td class="calibre32 pcalibre1">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">hostname</td>
+<td class="pcalibre1 calibre31">数据库地址</td>
+<td class="pcalibre1 calibre31">127.0.0.1</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">database</td>
+<td class="pcalibre1 calibre31">数据库名称</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">username</td>
+<td class="pcalibre1 calibre31">数据库用户名</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">password</td>
+<td class="pcalibre1 calibre31">数据库密码</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">hostport</td>
+<td class="pcalibre1 calibre31">数据库端口号</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">dsn</td>
+<td class="pcalibre1 calibre31">数据库连接dsn信息</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">params</td>
+<td class="pcalibre1 calibre31">数据库连接参数</td>
+<td class="pcalibre1 calibre31">空</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">charset</td>
+<td class="pcalibre1 calibre31">数据库编码</td>
+<td class="pcalibre1 calibre31">utf8</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">prefix</td>
+<td class="pcalibre1 calibre31">数据库的表前缀</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">debug</td>
+<td class="pcalibre1 calibre31">是否调试模式</td>
+<td class="pcalibre1 calibre31">false</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">deploy</td>
+<td class="pcalibre1 calibre31">数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)</td>
+<td class="pcalibre1 calibre31">0</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">rw_separate</td>
+<td class="pcalibre1 calibre31">数据库读写是否分离 主从式有效</td>
+<td class="pcalibre1 calibre31">false</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">master_num</td>
+<td class="pcalibre1 calibre31">读写分离后 主服务器数量</td>
+<td class="pcalibre1 calibre31">1</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">slave_no</td>
+<td class="pcalibre1 calibre31">指定从服务器序号</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">fields_strict</td>
+<td class="pcalibre1 calibre31">是否严格检查字段是否存在</td>
+<td class="pcalibre1 calibre31">true</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">resultset_type</td>
+<td class="pcalibre1 calibre31">数据集返回类型</td>
+<td class="pcalibre1 calibre31">array</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">auto_timestamp</td>
+<td class="pcalibre1 calibre31">自动写入时间戳字段</td>
+<td class="pcalibre1 calibre31">false</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">sql_explain</td>
+<td class="pcalibre1 calibre31">是否需要进行SQL性能分析 开启调试有效</td>
+<td class="pcalibre1 calibre31">false</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">query</td>
+<td class="pcalibre1 calibre31">指定查询对象</td>
+<td class="pcalibre1 calibre31">think\db\Query</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">builder</td>
+<td class="pcalibre1 calibre31">指定数据库Builder对象</td>
+<td class="calibre33 pcalibre1">无</td>
+</tr></tbody></table><p class="calibre10">常用数据库连接参数（params）可以参考<a href="http://php.net/manual/zh/pdo.constants.php" class="pcalibre calibre13">PHP在线手册</a>中的以<code class="calibre7">PDO::ATTR_</code>开头的常量。</p>
+<blockquote class="danger">
+<h4 id="%E6%B3%A8%E6%84%8F%EF%BC%9A" class="calibre6">注意：</h4>
+<hr class="calibre8"/><p class="calibre14">如果是使用<code class="calibre7">pgsql</code>数据库驱动的话，请先导入 <code class="calibre7">thinkphp/library/think/db/connector/pgsql.sql</code>文件到数据库执行。</p>
+</blockquote>
+</div>
+	
+</body></html>

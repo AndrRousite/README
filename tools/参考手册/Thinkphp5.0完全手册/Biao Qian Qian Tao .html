@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>标签嵌套</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_148">标签嵌套</h1>
+<div class="book-content">
+    <p class="calibre10">模板引擎支持标签的多层嵌套功能，可以对标签库的标签指定可以嵌套。</p>
+<p class="calibre10">系统内置的标签中，volist、switch、if、elseif、else、foreach、compare（包括所有的比较标签）、（not）present、（not）empty、（not）defined等标签都可以嵌套使用。例如：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo"}
+    {volist name="vo['sub']" id="sub"}
+        {$sub.name}
+    {/volist}
+{/volist}</code></pre>
+<p class="calibre10">上面的标签可以用于输出双重循环。</p>
+</div>
+	
+</body></html>

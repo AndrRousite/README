@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>输入变量</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_57">输入变量</h1>
+<div class="book-content">
+    <h2 id="%E6%A6%82%E8%BF%B0-2" class="calibre15">概述</h2>
+<p class="calibre10">可以通过<code class="calibre7">Request</code>对象完成全局输入变量的检测、获取和安全过滤，支持包括<code class="calibre7">$_GET</code>、<code class="calibre7">$_POST</code>、<code class="calibre7">$_REQUEST</code>、<code class="calibre7">$_SERVER</code>、<code class="calibre7">$_SESSION</code>、<code class="calibre7">$_COOKIE</code>、<code class="calibre7">$_ENV</code>等系统变量，以及文件上传信息。</p>
+<h2 id="%E6%A3%80%E6%B5%8B%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E8%AE%BE%E7%BD%AE" class="calibre15">检测变量是否设置</h2>
+<p class="calibre10">可以使用<code class="calibre7">has</code>方法来检测一个变量参数是否设置，如下：</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;has('id','get');
+Request::instance()-&gt;has('name','post');</code></pre>
+<p class="calibre10">或者使用助手函数</p>
+<pre class="calibre21"><code class="calibre22">input('?get.id');
+input('?post.name');</code></pre>
+<p class="calibre10">变量检测可以支持所有支持的系统变量。</p>
+<h2 id="%E5%8F%98%E9%87%8F%E8%8E%B7%E5%8F%96" class="calibre15">变量获取</h2>
+<p class="calibre10">变量获取使用<code class="calibre7">\think\Request</code>类的如下方法及参数：</p>
+<blockquote class="info">
+<h3 id="%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E6%96%B9%E6%B3%95%28%27%E5%8F%98%E9%87%8F%E5%90%8D%2F%E5%8F%98%E9%87%8F%E4%BF%AE%E9%A5%B0%E7%AC%A6%27%2C%27%E9%BB%98%E8%AE%A4%E5%80%BC%27%2C%27%E8%BF%87%E6%BB%A4%E6%96%B9%E6%B3%95%27%29" class="calibre17">变量类型方法('变量名/变量修饰符','默认值','过滤方法')</h3>
+</blockquote>
+<p class="calibre10">变量类型方法包括：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">方法</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">param</td>
+<td class="calibre32 pcalibre1">获取当前请求的变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">get</td>
+<td class="pcalibre1 calibre31">获取 $_GET 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">post</td>
+<td class="pcalibre1 calibre31">获取 $_POST 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">put</td>
+<td class="pcalibre1 calibre31">获取 PUT 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">delete</td>
+<td class="pcalibre1 calibre31">获取 DELETE 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">session</td>
+<td class="pcalibre1 calibre31">获取 $_SESSION 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">cookie</td>
+<td class="pcalibre1 calibre31">获取 $_COOKIE 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">request</td>
+<td class="pcalibre1 calibre31">获取 $_REQUEST 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">server</td>
+<td class="pcalibre1 calibre31">获取 $_SERVER 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">env</td>
+<td class="pcalibre1 calibre31">获取 $_ENV 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">route</td>
+<td class="pcalibre1 calibre31">获取 路由（包括PATHINFO） 变量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">file</td>
+<td class="calibre33 pcalibre1">获取 $_FILES 变量</td>
+</tr></tbody></table><h3 id="%E8%8E%B7%E5%8F%96%60param%60%E5%8F%98%E9%87%8F" class="calibre17">获取<code class="calibre7">PARAM</code>变量</h3>
+<p class="calibre10">PARAM变量是框架提供的用于自动识别<code class="calibre7">GET</code>、<code class="calibre7">POST</code>或者<code class="calibre7">PUT</code>请求的一种变量获取方式，是系统推荐的获取请求参数的方法，用法如下：</p>
+<pre class="calibre21"><code class="calibre22">// 获取当前请求的name变量
+Request::instance()-&gt;param('name');
+// 获取当前请求的所有变量（经过过滤）
+Request::instance()-&gt;param();
+// 获取当前请求的所有变量（原始数据）
+Request::instance()-&gt;param(false);
+// 获取当前请求的所有变量（包含上传文件）
+Request::instance()-&gt;param(true);</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">param方法会把当前请求类型的参数和PATH_INFO变量以及GET请求合并。</p>
+</blockquote>
+<p class="calibre10">使用助手函数实现：</p>
+<pre class="calibre21"><code class="calibre22">input('param.name');
+input('param.');
+或者
+input('name');
+input('');</code></pre>
+<p class="calibre10">因为<code class="calibre7">input</code>函数默认就采用PARAM变量读取方式。</p>
+<h3 id="%E8%8E%B7%E5%8F%96%60get%60%E5%8F%98%E9%87%8F" class="calibre17">获取<code class="calibre7">GET</code>变量</h3>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;get('id'); // 获取某个get变量
+Request::instance()-&gt;get('name'); // 获取get变量
+Request::instance()-&gt;get(); // 获取所有的get变量（经过过滤的数组）
+Request::instance()-&gt;get(false); // 获取所有的get变量（原始数组）</code></pre>
+<p class="calibre10">或者使用内置的助手函数<code class="calibre7">input</code>方法实现相同的功能：</p>
+<pre class="calibre21"><code class="calibre22">input('get.id');
+input('get.name');
+input('get.');</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">注：pathinfo地址参数不能通过get方法获取，查看“获取PARAM变量”</p>
+</blockquote>
+<h3 id="%E8%8E%B7%E5%8F%96%60post%60%E5%8F%98%E9%87%8F" class="calibre17">获取<code class="calibre7">POST</code>变量</h3>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;post('name'); // 获取某个post变量
+Request::instance()-&gt;post(); // 获取经过过滤的全部post变量
+Request::instance()-&gt;post(false); // 获取全部的post原始变量</code></pre>
+<p class="calibre10">使用助手函数实现：</p>
+<pre class="calibre21"><code class="calibre22">input('post.name');
+input('post.');</code></pre>
+<h3 id="%E8%8E%B7%E5%8F%96%60put%60%E5%8F%98%E9%87%8F" class="calibre17">获取<code class="calibre7">PUT</code>变量</h3>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;put('name'); // 获取某个put变量
+Request::instance()-&gt;put(); // 获取全部的put变量（经过过滤）
+Request::instance()-&gt;put(false); // 获取全部的put原始变量</code></pre>
+<p class="calibre10">使用助手函数实现：</p>
+<pre class="calibre21"><code class="calibre22">input('put.name');
+input('put.');</code></pre>
+<h3 id="%E8%8E%B7%E5%8F%96%60request%60%E5%8F%98%E9%87%8F" class="calibre17">获取<code class="calibre7">REQUEST</code>变量</h3>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;request('id'); // 获取某个request变量
+Request::instance()-&gt;request(); // 获取全部的request变量（经过过滤）
+Request::instance()-&gt;request(false); // 获取全部的request原始变量数据</code></pre>
+<p class="calibre10">使用助手函数实现：</p>
+<pre class="calibre21"><code class="calibre22">input('request.id');
+input('request.');</code></pre>
+<h3 id="%E8%8E%B7%E5%8F%96%60server%60%E5%8F%98%E9%87%8F" class="calibre17">获取<code class="calibre7">SERVER</code>变量</h3>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;server('PHP_SELF'); // 获取某个server变量
+Request::instance()-&gt;server(); // 获取全部的server变量</code></pre>
+<p class="calibre10">使用助手函数实现：</p>
+<pre class="calibre21"><code class="calibre22">input('server.PHP_SELF');
+input('server.');</code></pre>
+<h3 id="%E8%8E%B7%E5%8F%96%60session%60%E5%8F%98%E9%87%8F" class="calibre17">获取<code class="calibre7">SESSION</code>变量</h3>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;session('user_id'); // 获取某个session变量
+Request::instance()-&gt;session(); // 获取全部的session变量</code></pre>
+<p class="calibre10">使用助手函数实现：</p>
+<pre class="calibre21"><code class="calibre22">input('session.user_id');
+input('session.');</code></pre>
+<h3 id="%E8%8E%B7%E5%8F%96%60cookie%60%E5%8F%98%E9%87%8F" class="calibre17">获取<code class="calibre7">Cookie</code>变量</h3>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;cookie('user_id'); // 获取某个cookie变量
+Request::instance()-&gt;cookie(); // 获取全部的cookie变量</code></pre>
+<p class="calibre10">使用助手函数实现：</p>
+<pre class="calibre21"><code class="calibre22">input('cookie.user_id');
+input('cookie.');</code></pre>
+<h2 id="%E5%8F%98%E9%87%8F%E8%BF%87%E6%BB%A4" class="calibre15">变量过滤</h2>
+<blockquote class="danger">
+<p class="calibre14">框架默认没有设置任何过滤规则，你可以是配置文件中设置全局的过滤规则：</p>
+<pre class="calibre24"><code class="calibre22">// 默认全局过滤方法 用逗号分隔多个
+'default_filter'         =&gt; 'htmlspecialchars',</code></pre>
+</blockquote>
+<p class="calibre10">也支持使用<code class="calibre7">Request</code>对象进行全局变量的获取过滤，过滤方式包括函数、方法过滤，以及PHP内置的Types of filters，我们可以设置全局变量过滤方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;filter('htmlspecialchars');</code></pre>
+<p class="calibre10">支持设置多个过滤方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;filter(['strip_tags','htmlspecialchars']),</code></pre>
+<p class="calibre10">也可以在获取变量的时候添加过滤方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;get('name','','htmlspecialchars'); // 获取get变量 并用htmlspecialchars函数过滤
+Request::instance()-&gt;param('username','','strip_tags'); // 获取param变量 并用strip_tags函数过滤
+Request::instance()-&gt;post('name','','org\Filter::safeHtml'); // 获取post变量 并用org\Filter类的safeHtml方法过滤</code></pre>
+<p class="calibre10">可以支持传入多个过滤规则，例如：</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;param('username','','strip_tags,strtolower'); // 获取param变量 并依次调用strip_tags、strtolower函数过滤</code></pre>
+<p class="calibre10">Request对象还支持PHP内置提供的Filter ID过滤，例如：</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;post('email','',FILTER_VALIDATE_EMAIL);</code></pre>
+<p class="calibre10">框架对FilterID做了转换支持，因此也可以使用字符串的方式，例如：</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;post('email','','email');</code></pre>
+<p class="calibre10">采用字符串方式定义<code class="calibre7">FilterID</code>的时候，系统会自动进行一次<code class="calibre7">filter_id</code>调用转换成<code class="calibre7">Filter</code>常量。</p>
+<p class="calibre10">具体的字符串根据<code class="calibre7">filter_list</code>函数的返回值来定义。</p>
+<blockquote class="calibre5">
+<p class="calibre14">需要注意的是，采用Filter ID 进行过滤的话，如果不符合过滤要求的话 会返回false，因此你需要配合默认值来确保最终的值符合你的规范。</p>
+</blockquote>
+<p class="calibre10">例如，</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;post('email','',FILTER_VALIDATE_EMAIL);</code></pre>
+<p class="calibre10">就表示，如果不是规范的email地址的话 返回空字符串。</p>
+<p class="calibre10">如果当前不需要进行任何过滤的话，可以使用（<code class="calibre7">V5.0.3+</code>版本）</p>
+<pre class="calibre21"><code class="calibre22">// 获取get变量 并且不进行任何过滤 即使设置了全局过滤
+Request::instance()-&gt;get('name','',false); </code></pre>
+<h2 id="%E8%8E%B7%E5%8F%96%E9%83%A8%E5%88%86%E5%8F%98%E9%87%8F" class="calibre15">获取部分变量</h2>
+<p class="calibre10">如果你只需要获取当前请求的部分参数，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">// 只获取当前请求的id和name变量
+Request::instance()-&gt;only('id,name');</code></pre>
+<p class="calibre10">或者使用数组方式</p>
+<pre class="calibre21"><code class="calibre22">// 只获取当前请求的id和name变量
+Request::instance()-&gt;only(['id','name']);</code></pre>
+<p class="calibre10">默认获取的是当前请求参数，如果需要获取其它类型的参数，可以使用第二个参数，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 只获取GET请求的id和name变量
+Request::instance()-&gt;only(['id','name'],'get');
+// 只获取POST请求的id和name变量
+Request::instance()-&gt;only(['id','name'],'post');</code></pre>
+<h2 id="%E6%8E%92%E9%99%A4%E9%83%A8%E5%88%86%E5%8F%98%E9%87%8F" class="calibre15">排除部分变量</h2>
+<p class="calibre10">也支持排除某些变量获取，例如</p>
+<pre class="calibre21"><code class="calibre22">// 排除id和name变量
+Request::instance()-&gt;except('id,name');</code></pre>
+<p class="calibre10">或者使用数组方式</p>
+<pre class="calibre21"><code class="calibre22">// 排除id和name变量
+Request::instance()-&gt;except(['id','name']);</code></pre>
+<p class="calibre10">同样支持指定变量类型获取：</p>
+<pre class="calibre21"><code class="calibre22">// 排除GET请求的id和name变量
+Request::instance()-&gt;except(['id','name'],'get');
+// 排除POST请求的id和name变量
+Request::instance()-&gt;except(['id','name'],'post');</code></pre>
+<h2 id="%E5%8F%98%E9%87%8F%E4%BF%AE%E9%A5%B0%E7%AC%A6" class="calibre15">变量修饰符</h2>
+<p class="calibre10"><code class="calibre7">input</code>函数支持对变量使用修饰符功能，可以更好的过滤变量。</p>
+<p class="calibre10">用法如下： </p>
+<blockquote class="info">
+<h3 id="input%28%27%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B.%E5%8F%98%E9%87%8F%E5%90%8D%2F%E4%BF%AE%E9%A5%B0%E7%AC%A6%27%29%3B" class="calibre17">input('变量类型.变量名/修饰符');</h3>
+</blockquote>
+<p class="calibre10">或者 </p>
+<blockquote class="info">
+<h3 id="request%3A%3Ainstance%28%29-%3E%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%28%27%E5%8F%98%E9%87%8F%E5%90%8D%2F%E4%BF%AE%E9%A5%B0%E7%AC%A6%27%29%3B" class="calibre17">Request::instance()-&gt;变量类型('变量名/修饰符');</h3>
+</blockquote>
+<p class="calibre10">例如：</p>
+<pre class="calibre21"><code class="calibre22">input('get.id/d');
+input('post.name/s');
+input('post.ids/a');
+Request::instance()-&gt;get('id/d');</code></pre>
+<p class="calibre10">ThinkPHP5.0版本默认的变量修饰符是<code class="calibre7">/s</code>，如果需要传入字符串之外的变量可以使用下面的修饰符，包括：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">修饰符</th>
+<th class="calibre28">作用</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">s</td>
+<td class="calibre32 pcalibre1">强制转换为字符串类型</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">d</td>
+<td class="pcalibre1 calibre31">强制转换为整型类型</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">b</td>
+<td class="pcalibre1 calibre31">强制转换为布尔类型</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">a</td>
+<td class="pcalibre1 calibre31">强制转换为数组类型</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">f</td>
+<td class="calibre33 pcalibre1">强制转换为浮点类型</td>
+</tr></tbody></table><blockquote class="danger">
+<p class="calibre14">如果你要获取的数据为数组，请一定注意要加上 <code class="calibre7">/a</code> 修饰符才能正确获取到。</p>
+</blockquote>
+</div>
+	
+</body></html>

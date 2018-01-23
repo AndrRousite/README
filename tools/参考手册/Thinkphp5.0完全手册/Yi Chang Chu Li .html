@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>异常处理</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_160">异常处理</h1>
+<div class="book-content">
+    <p class="calibre10">和PHP默认的异常处理不同，ThinkPHP抛出的不是单纯的错误信息，而是一个人性化的错误页面。</p>
+<h2 id="%E9%BB%98%E8%AE%A4%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86" class="calibre15">默认异常处理</h2>
+<p class="calibre10">在调试模式下，系统默认展示的错误页面：</p>
+<p class="calibre10"><img src="57d4c2706bf44.png" alt="" class="calibre11"/></p>
+<blockquote class="info">
+<p class="calibre14">只有在调试模式下面才能显示具体的错误信息，如果在部署模式下面，你可能看到的是一个简单的提示文字，例如：</p>
+</blockquote>
+<p class="calibre10"><img src="screenshot_1473560868070.png" alt="" class="calibre11"/></p>
+<blockquote class="danger">
+<h4 id="%E6%9C%AC%E7%9D%80%E4%B8%A5%E8%B0%A8%E7%9A%84%E5%8E%9F%E5%88%99%EF%BC%8C5.0%E7%89%88%E6%9C%AC%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%E4%BC%9A%E5%AF%B9%E4%BB%BB%E4%BD%95%E9%94%99%E8%AF%AF%EF%BC%88%E5%8C%85%E6%8B%AC%E8%AD%A6%E5%91%8A%E9%94%99%E8%AF%AF%EF%BC%89%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%B8%8C%E6%9C%9B%E5%A6%82%E6%AD%A4%E4%B8%A5%E8%B0%A8%E7%9A%84%E6%8A%9B%E5%87%BA%E5%BC%82%E5%B8%B8%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%9C%A8%E5%BA%94%E7%94%A8%E5%85%AC%E5%85%B1%E5%87%BD%E6%95%B0%E6%96%87%E4%BB%B6%E4%B8%AD%E6%88%96%E8%80%85%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8%60error_reporting%60%E6%96%B9%E6%B3%95%E8%AE%BE%E7%BD%AE%E9%94%99%E8%AF%AF%E6%8A%A5%E9%94%99%E7%BA%A7%E5%88%AB%EF%BC%88%E8%AF%B7%E6%B3%A8%E6%84%8F%EF%BC%8C%E5%9C%A8%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%E4%B8%AD%E8%AE%BE%E7%BD%AE%E6%98%AF%E6%97%A0%E6%95%88%E7%9A%84%EF%BC%89%EF%BC%8C%E4%BE%8B%E5%A6%82%EF%BC%9A" class="calibre6">本着严谨的原则，5.0版本默认情况下会对任何错误（包括警告错误）抛出异常，如果不希望如此严谨的抛出异常，可以在应用公共函数文件中或者配置文件中使用<code class="calibre7">error_reporting</code>方法设置错误报错级别（请注意，在入口文件中设置是无效的），例如：</h4>
+</blockquote>
+<pre class="calibre21"><code class="calibre22">// 异常错误报错级别,
+error_reporting(E_ERROR | E_PARSE );</code></pre>
+<h2 id="%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%8E%A5%E7%AE%A1" class="calibre15">异常处理接管</h2>
+<p class="calibre10">框架支持异常页面由开发者自定义类进行处理，需要配置参数<code class="calibre7">exception_handle</code></p>
+<pre class="calibre21"><code class="calibre22">    // 异常处理handle类 留空使用 \think\exception\Handle
+    'exception_handle'       =&gt; '\\app\\common\\exception\\Http',</code></pre>
+<p class="calibre10">自定义类需要继承<code class="calibre7">Handle</code>并且实现<code class="calibre7">render</code>方法，可以参考如下代码：</p>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+namespace app\common\exception;
+
+use Exception;
+use think\exception\Handle;
+use think\exception\HttpException;
+class Http extends Handle
+{
+
+    public function render(Exception $e)
+    {
+        if ($e instanceof HttpException) {
+            $statusCode = $e-&gt;getStatusCode();
+        }
+        //TODO::开发者对异常的操作
+        //可以在此交由系统处理
+        return parent::render($e);
+    }
+
+}</code></pre>
+<blockquote class="info">
+<p class="calibre14">需要注意的是，如果配置了'exception_handle'，且没有再次调用系统<code class="calibre7">render</code>的情况下，配置<code class="calibre7">http_exception_template</code>就不再生效，具体可以参考<code class="calibre7">Handle</code>类内实现的功能。</p>
+</blockquote>
+<h2 id="%E9%83%A8%E7%BD%B2%E6%A8%A1%E5%BC%8F%E5%BC%82%E5%B8%B8" class="calibre15">部署模式异常</h2>
+<p class="calibre10">一旦关闭调试模式，发生错误后不会提示具体的错误信息，如果你仍然希望看到具体的错误信息，那么可以如下设置：</p>
+<pre class="calibre21"><code class="calibre22">// 显示错误信息
+'show_error_msg'        =&gt;  true,    </code></pre>
+<p class="calibre10"><img src="screenshot_1473560923996.png" alt="" class="calibre11"/></p>
+<h2 id="%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7" class="calibre15">异常捕获</h2>
+<p class="calibre10">可以使用PHP的异常捕获进行必要的处理，但需要注意一点，在异常捕获中不要使用<code class="calibre7">think\Controller</code>类的error、success和redirect方法，因为上述三个方法会抛出<code class="calibre7">HttpResponseException</code>异常，从而影响正常的异常捕获，例如：</p>
+<pre class="calibre21"><code class="calibre22">try{
+    Db::name('user')-&gt;find();
+    $this-&gt;success('执行成功!');
+}catch(\Exception $e){
+    $this-&gt;error('执行错误');
+}</code></pre>
+<p class="calibre10">应该改成</p>
+<pre class="calibre21"><code class="calibre22">try{
+    Db::name('user')-&gt;find();
+}catch(\Exception $e){
+    $this-&gt;error('执行错误');
+}
+$this-&gt;success('执行成功!');</code></pre>
+</div>
+	
+</body></html>

@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>聚合模型</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_120">聚合模型</h1>
+<div class="book-content">
+    <h2 id="%E8%81%9A%E5%90%88%E6%A8%A1%E5%9E%8B" class="calibre15">聚合模型</h2>
+<blockquote class="danger">
+<p class="calibre14"><code class="calibre7">5.0.5+</code>版本一对一关联已经改进，支持关联属性绑定到主模型，以及支持自动关联写入，聚合模型的优势已经不复存在，后面版本不会再更新聚合模型了。</p>
+</blockquote>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">调整功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.3</td>
+<td class="calibre32 pcalibre1">支持使用<code class="calibre7">field</code>属性定义需要的字段</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">5.0.2</td>
+<td class="calibre33 pcalibre1"><code class="calibre7">relationModel</code> 属性改为非静态定义</td>
+</tr></tbody></table><p class="calibre10">通过聚合模型可以把<strong class="calibre12">一对一关联</strong>的操作更加简化，只需要把你的模型类继承<code class="calibre7">think\model\Merge</code>，就可以自动完成关联查询、关联保存和关联删除。</p>
+<p class="calibre10">例如下面的用户表关联了档案表，两个表信息如下：</p>
+<h3 id="think_user" class="calibre17">think_user</h3>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">字段名</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">id</td>
+<td class="calibre32 pcalibre1">主键</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">name</td>
+<td class="pcalibre1 calibre31">用户名</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">password</td>
+<td class="pcalibre1 calibre31">密码</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">nickname</td>
+<td class="calibre33 pcalibre1">昵称</td>
+</tr></tbody></table><h3 id="think_profile" class="calibre17">think_profile</h3>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">字段名</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">id</td>
+<td class="calibre32 pcalibre1">主键</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">truename</td>
+<td class="pcalibre1 calibre31">真实姓名</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">phone</td>
+<td class="pcalibre1 calibre31">电话</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">email</td>
+<td class="pcalibre1 calibre31">邮箱</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">user_id</td>
+<td class="calibre33 pcalibre1">用户ID</td>
+</tr></tbody></table><p class="calibre10">我们只需要定义好主表的模型，例如下面是User模型的定义：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\model\Merge;
+
+class User extends Merge
+{
+    // 定义关联模型列表
+    protected static $relationModel = ['Profile'];
+    // 定义关联外键
+    protected $fk = 'user_id';
+    protected $mapFields = [
+        // 为混淆字段定义映射
+        'id'        =&gt;  'User.id',
+        'profile_id' =&gt;  'Profile.id',
+    ];
+}</code></pre>
+<blockquote class="danger">
+<p class="calibre14"><code class="calibre7">V5.0.2+</code>版本<code class="calibre7">relationModel</code> 属性不再使用<code class="calibre7">static</code>定义了。</p>
+</blockquote>
+<p class="calibre10">如果需要单独设置关联数据表，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\model\Merge;
+
+class User extends Merge
+{
+    // 设置主表名
+    protected $table = 'think_user';
+    // 定义关联模型列表
+    protected static $relationModel = [
+        // 给关联模型设置数据表
+        'Profile'   =&gt;  'think_user_profile',
+    ];
+    // 定义关联外键
+    protected $fk = 'user_id';
+    protected $mapFields = [
+        // 为混淆字段定义映射
+        'id'        =&gt;  'User.id',
+        'profile_id' =&gt;  'Profile.id',
+    ];
+}</code></pre>
+<blockquote class="danger">
+<p class="calibre14">注意：对于关联表中存在混淆的字段名一定要通过mapFields属性定义。</p>
+</blockquote>
+<p class="calibre10">接下来，我们可以和使用普通模型一样的方法来操作用户模型及其关联数据。</p>
+<pre class="calibre21"><code class="calibre22">// 关联查询
+$user = User::get(1);
+echo $user-&gt;id;
+echo $user-&gt;name;
+echo $user-&gt;phone;
+echo $user-&gt;email;
+echo $user-&gt;profile_id;
+$user-&gt;email = 'thinkphp@qq.com';
+// 关联保存
+$user-&gt;save();
+// 关联删除
+$user-&gt;delete();
+// 根据主键关联删除
+User::destroy([1,2,3]);</code></pre>
+<p class="calibre10">操作两个数据表就和操作一个表一样的感觉，关联表的写入、更新和删除自动采用事务（只要数据库支持事务），一旦主表写入失败或者发生异常就会发生回滚。</p>
+<p class="calibre10">如果主表除了Profile关联之外，还有其他的一对多关联，一样可以定义额外的关联，例如：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+use think\model\Merge;
+
+class User extends Merge
+{
+    // 定义关联模型列表
+    protected static $relationModel = ['Profile'];
+    // 定义关联外键
+    protected $fk = 'user_id';
+    protected $mapFields = [
+        // 为混淆字段定义映射
+        'id'        =&gt;  'User.id',
+        'profile_id' =&gt;  'Profile.id',
+    ];
+
+    public function articles(){
+        return $this-&gt;hasMany('Article');
+    }
+}</code></pre>
+<p class="calibre10">对一对多关联进行操作，例如：</p>
+<pre class="calibre21"><code class="calibre22">$user = User::get(1);
+// 读取关联信息
+dump($user-&gt;articles);
+// 或者进行关联预载入
+$user = User::get(1,'articles');</code></pre>
+<blockquote class="danger">
+<p class="calibre14">注意：不能再次对 已经在<code class="calibre7">relationModel</code>属性中定义过的关联表进行关联定义和预载入查询。</p>
+</blockquote>
+</div>
+	
+</body></html>

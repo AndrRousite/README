@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>Traits引入</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_14">Traits引入</h1>
+<div class="book-content">
+    <p class="calibre10">ThinkPHP <code class="calibre7">5.0</code>开始采用<code class="calibre7">trait</code>功能（PHP5.4+）来作为一种扩展机制，可以方便的实现一个类库的多继承问题。</p>
+<blockquote class="calibre5">
+<p class="calibre14"><code class="calibre7">trait</code>是一种为类似 PHP 的单继承语言而准备的代码复用机制。<code class="calibre7">trait</code>为了减少单继承语言的限制，使开发人员能够自由地在不同层次结构内独立的类中复用方法集。<code class="calibre7">trait</code>和类组合的语义是定义了一种方式来减少复杂性，避免传统多继承和混入类（Mixin）相关的典型问题。</p>
+</blockquote>
+<p class="calibre10">但由于PHP5.4版本不支持<code class="calibre7">trait</code>的自动加载，因此如果是PHP5.4版本，必须手动导入<code class="calibre7">trait</code>类库，系统提供了一个助手函数<code class="calibre7">load_trait</code>，用于自动加载<code class="calibre7">trait</code>类库，例如，可以这样正确引入<code class="calibre7">trait</code>类库。</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+load_trait('controller/Jump');  // 引入traits\controller\Jump
+
+class index
+{
+     use \traits\controller\Jump;
+
+     public function index()
+     {
+         $this-&gt;assign('name','value');
+         $this-&gt;show('index');
+     }
+}</code></pre>
+<p class="calibre10">如果你的PHP版本大于<code class="calibre7">5.5</code>的话，则可以省略<code class="calibre7">load_trait</code>函数引入<code class="calibre7">trait</code>。</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class index
+{
+     use \traits\controller\Jump;
+
+     public function index()
+     {
+
+     }
+}</code></pre>
+<p class="calibre10">可以支持同时引入多个<code class="calibre7">trait</code>类库，例如：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+load_trait('controller/Other');
+load_trait('controller/Jump');
+
+class index
+{
+     use \traits\controller\Other;
+     use \traits\controller\Jump;
+
+     public function index()
+     {
+
+     }
+}</code></pre>
+<p class="calibre10">或者使用</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+load_trait('controller/Other');
+load_trait('controller/Jump');
+
+class index
+{
+     use \traits\controller\Other,\traits\controller\Jump;
+
+     public function index()
+     {
+
+     }
+}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">系统提供了一些封装好的<code class="calibre7">trait</code>类库，主要是用于控制器和模型类的扩展。这些系统内置的<code class="calibre7">trait</code>类库的根命名空间采用<code class="calibre7">traits</code>而不是<code class="calibre7">trait</code>，是为了避免和系统的关键字冲突。</p>
+</blockquote>
+<p class="calibre10"><code class="calibre7">trait</code>方式引入的类库需要注意优先级，从基类继承的成员将被 <code class="calibre7">trait</code> 插入的成员所覆盖。优先顺序是来自当前类的成员覆盖了 <code class="calibre7">trait</code>的方法，而 <code class="calibre7">trait</code>则覆盖了被继承的方法。 </p>
+<p class="calibre10"><code class="calibre7">trait</code>类中不支持定义类的常量，在<code class="calibre7">trait</code>中定义的属性将不能在当前类中或者继承的类中重新定义。</p>
+<h2 id="%E5%86%B2%E7%AA%81%E7%9A%84%E8%A7%A3%E5%86%B3" class="calibre15">冲突的解决</h2>
+<p class="calibre10">我们可以在一个类库中引入多个<code class="calibre7">trait</code>类库，如果两个<code class="calibre7">trait</code>都定义了一个同名的方法，如果没有明确解决冲突将会产生一个致命错误。 </p>
+<p class="calibre10">为了解决多个<code class="calibre7">trait</code>在同一个类中的命名冲突，需要使用 <code class="calibre7">insteadof</code>操作符来明确指定使用冲突方法中的哪一个。 </p>
+<p class="calibre10">以上方式仅允许排除掉其它方法，<code class="calibre7">as</code>操作符可以将其中一个冲突的方法以另一个名称来引入。 </p>
+<p class="calibre10">更多的关于<code class="calibre7">trait</code>内容可以参考<a href="http://php.net/manual/zh/language.oop5.traits.php" class="pcalibre calibre13">PHP官方手册</a>。</p>
+</div>
+	
+</body></html>

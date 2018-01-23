@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>模型分层</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_107">模型分层</h1>
+<div class="book-content">
+    <p class="calibre10">ThinkPHP支持模型的分层 ，除了Model层之外，我们可以项目的需要设计和创建其他的模型层。</p>
+<p class="calibre10">通常情况下，不同的分层模型仍然是继承系统的<code class="calibre7">\think\Model</code>类或其子类，所以，其基本操作和<code class="calibre7">Model</code>类的操作是一致的。</p>
+<p class="calibre10">例如在<code class="calibre7">index</code>模块的设计中需要区分数据层、逻辑层、服务层等不同的模型层，我们可以在模块目录下面创建<code class="calibre7">model</code>、<code class="calibre7">logic</code>和<code class="calibre7">service</code>目录，把对用户表的所有模型操作分成三层：</p>
+<ul class="calibre23"><li class="calibre20">数据层：app\index\model\User 用于定义数据相关的自动验证和自动完成和数据存取接口 </li>
+<li class="calibre20">逻辑层：app\index\logic\User 用于定义用户相关的业务逻辑 </li>
+<li class="calibre20">服务层：app\index\service\User 用于定义用户相关的服务接口等 </li>
+</ul><p class="calibre10">三个模型层的定义如下：</p>
+<p class="calibre10">app\index\model\User.php</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class User extends Model
+{
+}</code></pre>
+<p class="calibre10">实例化方法：<code class="calibre7">\think\Loader::model('User')</code></p>
+<p class="calibre10">Logic类：app\index\logic\User.php</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\logic;
+
+use think\Model;
+
+class User extends Model
+{
+}</code></pre>
+<p class="calibre10">实例化方法：<code class="calibre7">\think\Loader::model('User','logic');</code></p>
+<p class="calibre10">Service类：app\index\service\User.php</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\service;
+
+use think\Model;
+
+class User extends Model
+{
+}</code></pre>
+<p class="calibre10">实例化方法：<code class="calibre7">\think\Loader::model('User','service');</code></p>
+</div>
+	
+</body></html>

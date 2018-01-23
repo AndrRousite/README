@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>静态调用</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_176">静态调用</h1>
+<div class="book-content">
+    <p class="calibre10">如果需要使用内置的规则验证单个数据，可以使用静态调用的方式。</p>
+<pre class="calibre21"><code class="calibre22">// 日期格式验证
+Validate::dateFormat('2016-03-09','Y-m-d'); // true
+// 验证是否有效的日期
+Validate::is('2016-06-03','date'); // true
+// 验证是否有效邮箱地址
+Validate::is('thinkphp@qq.com','email'); // true
+// 验证是否在某个范围
+Validate::in('a',['a','b','c']); // true
+// 验证是否大于某个值
+Validate::gt(10,8); // true
+// 正则验证
+Validate::regex(100,'\d+'); // true</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">静态验证的返回值为布尔值，错误信息需要自己处理。</p>
+</blockquote>
+<p class="calibre10">更多验证规则可以参考前面的内置规则。</p>
+</div>
+	
+</body></html>

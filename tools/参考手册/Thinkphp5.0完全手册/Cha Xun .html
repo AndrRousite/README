@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>查询</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_97">查询</h1>
+<div class="book-content">
+    <h2 id="%E8%8E%B7%E5%8F%96%E5%8D%95%E4%B8%AA%E6%95%B0%E6%8D%AE" class="calibre15">获取单个数据</h2>
+<p class="calibre10">获取单个数据的方法包括：</p>
+<pre class="calibre21"><code class="calibre22">取出主键为1的数据
+$user = User::get(1);
+echo $user-&gt;name;
+
+// 使用数组查询
+$user = User::get(['name' =&gt; 'thinkphp']);
+
+// 使用闭包查询
+$user = User::get(function($query){
+    $query-&gt;where('name', 'thinkphp');
+});
+echo $user-&gt;name;</code></pre>
+<blockquote class="danger">
+<p class="calibre14">如果你是在模型内部，请不要使用<code class="calibre7">$this-&gt;name</code>的方式来获取数据，请使用<code class="calibre7">$this-&gt;getAttr('name')</code> 替代。</p>
+</blockquote>
+<p class="calibre10">或者在实例化模型后调用查询方法</p>
+<pre class="calibre21"><code class="calibre22">$user = new User();
+// 查询单个数据
+$user-&gt;where('name', 'thinkphp')
+    -&gt;find();</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14"><code class="calibre7">get</code>或者<code class="calibre7">find</code>方法返回的是当前模型的对象实例，可以使用模型的方法。</p>
+</blockquote>
+<h2 id="%E8%8E%B7%E5%8F%96%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE" class="calibre15">获取多个数据</h2>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">新增功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.4</td>
+<td class="calibre34 pcalibre1">支持在模型中设置<code class="calibre7">resultSetType</code>返回数据集对象的名称</td>
+</tr></tbody></table><p class="calibre10">取出多个数据：</p>
+<pre class="calibre21"><code class="calibre22">// 根据主键获取多个数据
+$list = User::all('1,2,3');
+// 或者使用数组
+$list = User::all([1,2,3]);
+foreach($list as $key=&gt;$user){
+    echo $user-&gt;name;
+}
+// 使用数组查询
+$list = User::all(['status'=&gt;1]);
+// 使用闭包查询
+$list = User::all(function($query){
+    $query-&gt;where('status', 1)-&gt;limit(3)-&gt;order('id', 'asc');
+});
+foreach($list as $key=&gt;$user){
+    echo $user-&gt;name;
+}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">数组方式和闭包方式的数据查询的区别在于，数组方式只能定义查询条件，闭包方式可以支持更多的连贯操作，包括排序、数量限制等。</p>
+</blockquote>
+<p class="calibre10">或者在实例化模型后调用查询方法</p>
+<pre class="calibre21"><code class="calibre22">$user = new User();
+// 查询数据集
+$user-&gt;where('name', 'thinkphp')
+    -&gt;limit(10)
+    -&gt;order('id', 'desc')
+    -&gt;select();</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">模型的<code class="calibre7">all</code>方法或者<code class="calibre7">select</code>方法返回的是一个包含模型对象的二维数组或者数据集对象。</p>
+</blockquote>
+<h2 id="%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%E5%AF%B9%E8%B1%A1" class="calibre15">自定义数据集对象</h2>
+<p class="calibre10"><code class="calibre7">V5.0.4+</code>版本开始，支持在模型中单独设置查询数据集的返回对象的名称（默认是数组），例如：</p>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+namespace app\index\model;
+
+use think\Model;
+
+class User extends Model
+{
+    // 设置返回数据集的对象名
+    protected $resultSetType = 'collection';
+}</code></pre>
+<p class="calibre10"><code class="calibre7">resultSetType</code>字段如果为空则使用数组作为数据集返回类型，如果设置为collection则表示使用<code class="calibre7">think\Collection</code>作为返回对象名，也可以设置自定义的数据集对象名称（使用完整的命名空间定义）。</p>
+<h2 id="%E8%8E%B7%E5%8F%96%E6%9F%90%E4%B8%AA%E5%AD%97%E6%AE%B5%E6%88%96%E8%80%85%E6%9F%90%E4%B8%AA%E5%88%97%E7%9A%84%E5%80%BC" class="calibre15">获取某个字段或者某个列的值</h2>
+<pre class="calibre21"><code class="calibre22">// 获取某个用户的积分
+User::where('id',10)-&gt;value('score');
+// 获取某个列的所有值
+User::where('status',1)-&gt;column('name');
+// 以id为索引
+User::where('status',1)-&gt;column('name','id');</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">注意<code class="calibre7">value</code>和<code class="calibre7">column</code>方法返回的不再是一个模型对象实例，而是单纯的值或者某个列的数组。</p>
+</blockquote>
+<h2 id="%E5%8A%A8%E6%80%81%E6%9F%A5%E8%AF%A2" class="calibre15">动态查询</h2>
+<p class="calibre10">支持动态查询方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 根据name字段查询用户
+$user = User::getByName('thinkphp');
+
+// 根据email字段查询用户
+$user = User::getByEmail('thinkphp@qq.com');</code></pre>
+<h2 id="%E9%80%9A%E8%BF%87query%E7%B1%BB%E6%9F%A5%E8%AF%A2" class="calibre15">通过Query类查询</h2>
+<p class="calibre10">或者使用数据库的查询方法进行更复杂的查询：</p>
+<pre class="calibre21"><code class="calibre22">User::where('id','&gt;',10)-&gt;select();
+User::where('name','thinkphp')-&gt;find();</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">可以在模型中直接使用所有数据库的链式操作方法。</p>
+</blockquote>
+<p class="calibre10">返回的查询结果是当前模型对应的对象或者包含模型对象的数据集。</p>
+<h2 id="%E6%95%B0%E6%8D%AE%E5%88%86%E6%89%B9%E5%A4%84%E7%90%86" class="calibre15">数据分批处理</h2>
+<p class="calibre10">模型也可以支持对返回的数据分批处理，这在处理大量数据的时候非常有用，例如：</p>
+<pre class="calibre21"><code class="calibre22">User::chunk(100,function($users){
+    foreach($users as $user){
+        // 处理user模型对象
+    }
+});</code></pre>
+<h2 id="%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98" class="calibre15">查询缓存</h2>
+<p class="calibre10"><code class="calibre7">get</code>方法和<code class="calibre7">all</code>方法的第三个参数表示是否使用查询缓存，或者设置缓存标识。</p>
+<pre class="calibre21"><code class="calibre22">$user = User::get(1,'',true);
+$list  = User::all('1,2,3','',true);</code></pre>
+<blockquote class="danger">
+<p class="calibre14">由于第二个参数是关联预载入定义，<code class="calibre7">V5.0.6+</code>版本开始，可以直接在第二个参数传入true表示开启查询缓存。</p>
+</blockquote>
+</div>
+	
+</body></html>

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>变量调试</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_163">变量调试</h1>
+<div class="book-content">
+    <p class="calibre10">除了Trace调试之外，系统还提供了<code class="calibre7">\think\Debug</code>类用于各种调试。</p>
+<p class="calibre10">输出某个变量是开发过程中经常会用到的调试方法，除了使用php内置的<code class="calibre7">var_dump</code>和<code class="calibre7">print_r</code>之外，ThinkPHP框架内置了一个对浏览器友好的<code class="calibre7">dump</code>方法，用于输出变量的信息到浏览器查看。</p>
+<p class="calibre10">用法：</p>
+<pre class="calibre21"><code class="calibre22">Debug::dump($var, $echo=true, $label=null)
+或者
+dump($var, $echo=true, $label=null)</code></pre>
+<p class="calibre10">相关参数的使用如下：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">参数</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">var（必须）</td>
+<td class="calibre32 pcalibre1">要输出的变量，支持所有变量类型</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">echo（可选）</td>
+<td class="pcalibre1 calibre31">是否直接输出，默认为true，如果为false则返回但不输出</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">label（可选）</td>
+<td class="calibre33 pcalibre1">变量输出的label标识，默认为空</td>
+</tr></tbody></table><p class="calibre10">如果echo参数为false 则返回要输出的字符串</p>
+<p class="calibre10">使用示例：</p>
+<pre class="calibre21"><code class="calibre22"> $blog = Db::name('blog')-&gt;where('id', 3)-&gt;find();
+
+ Debug::dump($blog);
+ // 下面的用法是等效的
+ dump($blog);</code></pre>
+<p class="calibre10">在浏览器输出的结果是：</p>
+<pre class="calibre21"><code class="calibre22">array(12) {
+   ["id"]            =&gt; string(1) "3"
+   ["name"]          =&gt; string(0) ""
+   ["user_id"]       =&gt; string(1) "0"
+   ["cate_id"]       =&gt; string(1) "0"
+   ["title"]         =&gt; string(4) "test"
+   ["content"]       =&gt; string(4) "test"
+   ["create_time"]   =&gt; string(1) "0"
+   ["update_time"]   =&gt; string(1) "0"
+   ["status"]        =&gt; string(1) "0"
+   ["read_count"]    =&gt; string(1) "0"
+   ["comment_count"] =&gt; string(1) "0"
+   ["tags"]          =&gt; string(0) ""
+}</code></pre>
+<p class="calibre10">如果需要在调试变量输出后中止程序的执行，可以使用<code class="calibre7">halt</code>函数，例如：</p>
+<pre class="calibre21"><code class="calibre22"> $blog = Db::name('blog')-&gt;where('id', 3)-&gt;find();
+
+ halt($blog);
+ echo '这里的信息是看不到的';</code></pre>
+<p class="calibre10">执行后会输出</p>
+<pre class="calibre21"><code class="calibre22">array(12) {
+   ["id"]            =&gt; string(1) "3"
+   ["name"]          =&gt; string(0) ""
+   ["user_id"]       =&gt; string(1) "0"
+   ["cate_id"]       =&gt; string(1) "0"
+   ["title"]         =&gt; string(4) "test"
+   ["content"]       =&gt; string(4) "test"
+   ["create_time"]   =&gt; string(1) "0"
+   ["update_time"]   =&gt; string(1) "0"
+   ["status"]        =&gt; string(1) "0"
+   ["read_count"]    =&gt; string(1) "0"
+   ["comment_count"] =&gt; string(1) "0"
+   ["tags"]          =&gt; string(0) ""
+}</code></pre>
+<p class="calibre10">并中止执行后续的程序。</p>
+</div>
+	
+</body></html>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>page</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">page</h1>
+<div class="book-content">
+    <p class="calibre10">page方法也是模型的连贯操作方法之一，是完全为分页查询而诞生的一个人性化操作方法。</p>
+<p class="calibre10">我们在前面已经了解了关于limit方法用于分页查询的情况，而page方法则是更人性化的进行分页查询的方法，例如还是以文章列表分页为例来说，如果使用limit方法，我们要查询第一页和第二页（假设我们每页输出10条数据）写法如下：</p>
+<pre class="calibre21"><code class="calibre22">// 查询第一页数据
+Db::table('think_article')-&gt;limit('0,10')-&gt;select(); 
+// 查询第二页数据
+Db::table('think_article')-&gt;limit('10,10')-&gt;select(); </code></pre>
+<p class="calibre10">虽然利用扩展类库中的分页类Page可以自动计算出每个分页的limit参数，但是如果要自己写就比较费力了，如果用page方法来写则简单多了，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 查询第一页数据
+Db::table('think_article')-&gt;page('1,10')-&gt;select(); 
+// 查询第二页数据
+Db::table('think_article')-&gt;page('2,10')-&gt;select(); </code></pre>
+<p class="calibre10">显而易见的是，使用page方法你不需要计算每个分页数据的起始位置，page方法内部会自动计算。</p>
+<p class="calibre10">和limit方法一样，page方法也支持2个参数的写法，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_article')-&gt;page(1,10)-&gt;select();
+// 和下面的用法等效
+Db::table('think_article')-&gt;page('1,10')-&gt;select();</code></pre>
+<p class="calibre10">page方法还可以和limit方法配合使用，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_article')-&gt;limit(25)-&gt;page(3)-&gt;select();</code></pre>
+<p class="calibre10">当page方法只有一个值传入的时候，表示第几页，而limit方法则用于设置每页显示的数量，也就是说上面的写法等同于：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_article')-&gt;page('3,25')-&gt;select(); </code></pre>
+</div>
+	
+</body></html>

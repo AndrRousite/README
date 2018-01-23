@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>聚合</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_98">聚合</h1>
+<div class="book-content">
+    <table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">在模型中也可以调用数据库的聚合方法进行查询，例如：</th>
+<th class="calibre28">方法</th>
+<th class="calibre28">说明</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">Count</td>
+<td class="calibre32 pcalibre1">统计数量，参数是要统计的字段名（可选）</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">Max</td>
+<td class="pcalibre1 calibre31">获取最大值，参数是要统计的字段名（必须）</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">Min</td>
+<td class="pcalibre1 calibre31">获取最小值，参数是要统计的字段名（必须）</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">Avg</td>
+<td class="pcalibre1 calibre31">获取平均值，参数是要统计的字段名（必须）</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">Sum</td>
+<td class="calibre33 pcalibre1">获取总分，参数是要统计的字段名（必须）</td>
+</tr></tbody></table><p class="calibre10">静态调用：</p>
+<pre class="calibre21"><code class="calibre22">User::count();
+User::where('status','&gt;',0)-&gt;count();
+User::where('status',1)-&gt;avg('score');
+User::max('score');</code></pre>
+<p class="calibre10">动态调用：</p>
+<pre class="calibre21"><code class="calibre22">$user = new User;
+$user-&gt;count();
+$user-&gt;where('status','&gt;',0)-&gt;count();
+$user-&gt;where('status',1)-&gt;avg('score');
+$user-&gt;max('score');</code></pre>
+</div>
+	
+</body></html>

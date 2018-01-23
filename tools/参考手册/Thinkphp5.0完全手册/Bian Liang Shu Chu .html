@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>变量输出</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_130">变量输出</h1>
+<div class="book-content">
+    <p class="calibre10">在模板中输出变量的方法很简单，例如，在控制器中我们给模板变量赋值：</p>
+<pre class="calibre21"><code class="calibre22">$view = new View();
+$view-&gt;name = 'thinkphp';
+return $view-&gt;fetch();</code></pre>
+<p class="calibre10">然后就可以在模板中使用：</p>
+<pre class="calibre21"><code class="calibre22">Hello,{$name}！</code></pre>
+<p class="calibre10">模板编译后的结果就是：</p>
+<pre class="calibre21"><code class="calibre22">Hello,&lt;?php echo($name);?&gt;！</code></pre>
+<p class="calibre10">这样，运行的时候就会在模板中显示： <code class="calibre7">Hello,ThinkPHP！</code></p>
+<p class="calibre10">注意模板标签的<code class="calibre7">{</code>和<code class="calibre7">$</code>之间不能有任何的空格，否则标签无效。所以，下面的标签</p>
+<pre class="calibre21"><code class="calibre22">Hello,{ $name}！</code></pre>
+<p class="calibre10">将不会正常输出name变量，而是直接保持不变输出： <code class="calibre7">Hello,{ $name}！</code></p>
+<p class="calibre10">模板标签的变量输出根据变量类型有所区别，刚才我们输出的是字符串变量，如果是数组变量，</p>
+<pre class="calibre21"><code class="calibre22">$data['name'] = 'ThinkPHP';
+$data['email'] = 'thinkphp@qq.com';
+$view-&gt;assign('data',$data);</code></pre>
+<p class="calibre10">那么，在模板中我们可以用下面的方式输出：</p>
+<pre class="calibre21"><code class="calibre22">Name：{$data.name}
+Email：{$data.email}</code></pre>
+<p class="calibre10">或者用下面的方式也是有效：</p>
+<pre class="calibre21"><code class="calibre22">Name：{$data['name']}
+Email：{$data['email']}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">当我们要输出多维数组的时候，往往要采用后面一种方式。</p>
+</blockquote>
+<p class="calibre10">如果data变量是一个对象（并且包含有name和email两个属性），那么可以用下面的方式输出：</p>
+<pre class="calibre21"><code class="calibre22">Name：{$data:name}
+Email：{$data:email}</code></pre>
+<p class="calibre10">或者</p>
+<pre class="calibre21"><code class="calibre22">Name：{$data-&gt;name}
+Email：{$data-&gt;email}</code></pre>
+</div>
+	
+</body></html>

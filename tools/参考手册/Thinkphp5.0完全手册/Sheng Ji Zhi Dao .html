@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>升级指导</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_223">升级指导</h1>
+<div class="book-content">
+    <h1 id="%E5%8D%87%E7%BA%A7%E6%8C%87%E5%AF%BC" class="calibre9">升级指导</h1>
+<div class="markdown-toc"><ul class="calibre23"><li class="calibre20"><a href="#%E4%BB%8Ev5.0.5%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.6" class="pcalibre calibre13" level="2">从V5.0.5升级到V5.0.6</a></li><li class="calibre20"><a href="#%E4%BB%8Ev5.0.4%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.5" class="pcalibre calibre13" level="2">从V5.0.4升级到V5.0.5</a></li><li class="calibre20"><a href="#%E4%BB%8Ev5.0.3%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.4" class="pcalibre calibre13" level="2">从V5.0.3升级到V5.0.4</a></li><li class="calibre20"><a href="#%E4%BB%8Ev5.0.2%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.3" class="pcalibre calibre13" level="2">从V5.0.2升级到V5.0.3</a></li><li class="calibre20"><a href="#%E4%BB%8Ev5.0.1%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.2" class="pcalibre calibre13" level="2">从V5.0.1升级到V5.0.2</a></li><li class="calibre20"><a href="#%E4%BB%8Ev5.0%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.1" class="pcalibre calibre13" level="2">从V5.0升级到V5.0.1</a></li><li class="calibre20"><a href="#%E4%BB%8Ev5.0rc4%E5%8D%87%E7%BA%A7%E5%88%B0v5.0" class="pcalibre calibre13" level="2">从V5.0RC4升级到V5.0</a></li><li class="calibre20"><a href="#%E4%BB%8Ev3.2%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E5%88%B0v5.0" class="pcalibre calibre13" level="2">从V3.2版本升级到V5.0</a></li></ul></div>
+<h2 id="%E4%BB%8Ev5.0.5%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.6" class="calibre15">从V5.0.5升级到V5.0.6</h2>
+<p class="calibre10"><code class="calibre7">V5.0.5</code>可以无缝升级到<code class="calibre7">V5.0.6</code>。</p>
+<p class="calibre10">由于数据库缓存策略的改进，之前如果使用了数据缓存，请先清空下数据缓存。</p>
+<p class="calibre10">之前因为升级到5.0.5版本后 时间字段使用整型后也会自动格式化输出的问题，现在可以设置数据库的配置参数 <code class="calibre7">datetime_format</code>值为<code class="calibre7">false</code>即可关闭自动转换。</p>
+<p class="calibre10">另外，注意，如果使用了MongoDb数据库扩展的话，请删除数据库配置文件中的<code class="calibre7">query</code>参数。</p>
+<h2 id="%E4%BB%8Ev5.0.4%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.5" class="calibre15">从V5.0.4升级到V5.0.5</h2>
+<p class="calibre10">从<code class="calibre7">V5.0.4</code>升级到<code class="calibre7">V5.0.5</code>需要注意如下事项：</p>
+<p class="calibre10">模型的时间日期字段会自动进行格式化输出，不需要进行额外处理。<br class="calibre16"/>
+原生查询不再支持返回数据集对象。<br class="calibre16"/><code class="calibre7">Connection</code>类的<code class="calibre7">model</code>方法已经更改为<code class="calibre7">getQuery</code>。<br class="calibre16"/>
+关联定义方法的<code class="calibre7">alias</code>参数已经废弃。<br class="calibre16"/>
+分页查询返回类型变成<code class="calibre7">think\Paginator</code>（用法不变）。<br class="calibre16"/>
+数据缓存自动采用子目录方式避免缓存数据文件过多影响性能。<br class="calibre16"/>
+Session类添加了<code class="calibre7">secure</code>和<code class="calibre7">httponly</code>参数，并且默认是true，如果不支持请手动关闭。</p>
+<h2 id="%E4%BB%8Ev5.0.3%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.4" class="calibre15">从V5.0.3升级到V5.0.4</h2>
+<p class="calibre10">从<code class="calibre7">V5.0.3</code>升级到<code class="calibre7">V5.0.4</code>需要注意如下事项：</p>
+<p class="calibre10">模型的关联定义方法必须采用驼峰法（小写字母打头）命名规范，但关联调用可以支持驼峰和小写方式。</p>
+<p class="calibre10">行为类的方法必须使用驼峰法命名，如果你使用了钩子位作为行为执行方法入口，请修改为驼峰法，例如 <code class="calibre7">app_init</code>钩子位对应的行为方法名应该是 <code class="calibre7">appInit</code>。</p>
+<p class="calibre10">如果你使用了Query类的<code class="calibre7">fetchClass</code>方法自定义数据集返回对象的话，请改为在模型中设置<code class="calibre7">resultSetType</code>属性，数据库类不再支持自定义查询数据集对象（只支持数组和系统的<code class="calibre7">think\Collection</code>数据集对象）</p>
+<h2 id="%E4%BB%8Ev5.0.2%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.3" class="calibre15">从V5.0.2升级到V5.0.3</h2>
+<p class="calibre10">从<code class="calibre7">V5.0.2</code>升级到<code class="calibre7">V5.0.3</code>需要注意如下事项：</p>
+<p class="calibre10">对于join方法和view方法使用子查询的情况，请尽量使用数组方式：</p>
+<blockquote class="info">
+<p class="calibre14">['子查询'=&gt;'别名']</p>
+</blockquote>
+<h2 id="%E4%BB%8Ev5.0.1%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.2" class="calibre15">从V5.0.1升级到V5.0.2</h2>
+<p class="calibre10">从<code class="calibre7">V5.0.1</code>升级到<code class="calibre7">V5.0.2</code>需要注意如下事项：</p>
+<p class="calibre10">下列模型属性和方法由原来的静态（static）定义改为动态定义：</p>
+<ul class="calibre23"><li class="calibre20">聚合模型的<code class="calibre7">relationModel</code>属性</li>
+<li class="calibre20">Model类的<code class="calibre7">useGlobalScope</code> 属性</li>
+<li class="calibre20">软删除属性 <code class="calibre7">deleteTime</code>属性</li>
+<li class="calibre20">全局查询范围方法<code class="calibre7">base</code>改为动态方法</li>
+</ul><p class="calibre10">原来的<code class="calibre7">join</code>方法和<code class="calibre7">view</code>方法的第一个参数规范化，支持下面三种用法：</p>
+<blockquote class="info">
+<h4 id="%E7%94%A8%E6%B3%95%E4%B8%80%EF%BC%9A%5B+%27%E5%B8%A6%E5%89%8D%E7%BC%80%E8%A1%A8%E5%90%8D%27%3D%3E%27%E5%88%AB%E5%90%8D%27+%5D" class="calibre6">用法一：[ '带前缀表名'=&gt;'别名' ]</h4>
+<h4 id="%E7%94%A8%E6%B3%95%E4%BA%8C%EF%BC%9A%27%E5%B8%A6%E5%89%8D%E7%BC%80%E8%A1%A8%E5%90%8D+%E5%88%AB%E5%90%8D%27" class="calibre6">用法二：'带前缀表名 别名'</h4>
+<h4 id="%E7%94%A8%E6%B3%95%E4%B8%89%EF%BC%9A%27%E4%B8%8D%E5%B8%A6%E5%89%8D%E7%BC%80%E7%9A%84%E8%A1%A8%E5%90%8D%27" class="calibre6">用法三：'不带前缀的表名'</h4>
+</blockquote>
+<p class="calibre10">如果有其它用法注意调整，下面的用法不再支持：</p>
+<blockquote class="info">
+<h4 id="%27%E4%B8%8D%E5%B8%A6%E5%89%8D%E7%BC%80%E8%A1%A8%E5%90%8D+%E5%88%AB%E5%90%8D%27" class="calibre6">'不带前缀表名 别名'</h4>
+</blockquote>
+<p class="calibre10">如果使用了空操作方法，无需给<code class="calibre7">_empty</code>方法添加任何参数，当前操作名的获取直接使用请求对象的<code class="calibre7">action</code>函数获取。</p>
+<h2 id="%E4%BB%8Ev5.0%E5%8D%87%E7%BA%A7%E5%88%B0v5.0.1" class="calibre15">从V5.0升级到V5.0.1</h2>
+<p class="calibre10">从<code class="calibre7">V5.0</code>升级到<code class="calibre7">V5.0.1</code>需要注意如下事项：</p>
+<ul class="calibre23"><li class="calibre20">扩展配置参数<code class="calibre7">extra_config_list</code>废弃，除了数据库配置之外的扩展配置放入<code class="calibre7">application/extra</code>目录自动识别加载。</li>
+<li class="calibre20">模型的<code class="calibre7">field</code>属性无需配置字段类型</li>
+<li class="calibre20">查询构建器使用手动参数绑定的时候不要使用<code class="calibre7">？</code>号占位绑定，使用命名参数绑定</li>
+<li class="calibre20">如果使用了<code class="calibre7">file_get_contents('php://input')</code>请改为<code class="calibre7">Request</code>对象的<code class="calibre7">getInput()</code> 方法获取</li>
+<li class="calibre20">文件<code class="calibre7">File</code>类取消<code class="calibre7">md5()</code>和<code class="calibre7">sha1()</code>方法，请使用<code class="calibre7">hash('md5')</code>和<code class="calibre7">hash('sha1')</code>方法替代</li>
+</ul><h2 id="%E4%BB%8Ev5.0rc4%E5%8D%87%E7%BA%A7%E5%88%B0v5.0" class="calibre15">从V5.0RC4升级到V5.0</h2>
+<p class="calibre10">可以轻松的从RC4版本升级到正式版，不过请注意如下事项：</p>
+<ul class="calibre23"><li class="calibre20">如果定义了路由映射（静态路由）的则改为普通路由规则定义</li>
+<li class="calibre20">定义了路由规则之后，原来的URL地址被禁止访问，请注意检查是否还有这种情况</li>
+<li class="calibre20">如果配置了url_deny_suffix参数，改为路由的deny_ext参数设置</li>
+<li class="calibre20">模型save方法返回值改为影响的记录数，并且方法参数中取消了getId参数</li>
+<li class="calibre20">Request对象controller方法返回驼峰控制器名，如果使用该方法渲染模板的话，请使用Loader::parseName(Request::instance()-&gt;controller())转换</li>
+<li class="calibre20">如果使用了Sqlsrv驱动则，原来自动转换小写数据表字段默认不对数据表字段进行小写转换，请更改PDO::ATTR_CASE参数</li>
+<li class="calibre20">如果部署在sae 需要使用sae扩展包</li>
+<li class="calibre20">如果使用了Sqlsrv/Orace/Firebird驱动，则自行添加原来的驱动文件</li>
+<li class="calibre20">配置参数读取的时候取消环境变量判断，需要读取环境变量的时候改用Env类</li>
+<li class="calibre20">环境变量定义文件更改为 .env 由原来的PHP数组改为ini格式定义（支持数组方式）</li>
+<li class="calibre20">状态配置和扩展配置的加载顺序调整 便于状态配置文件中可以更改扩展配置的参数</li>
+<li class="calibre20">取消域名绑定到路由分组功能</li>
+<li class="calibre20">控制器类的success和error方法url参数支持传入空字符串，则不做任何处理</li>
+</ul><blockquote class="danger">
+<h3 id="%E5%85%B3%E9%94%AE%E5%87%A0%E7%82%B9%EF%BC%9A" class="calibre17">关键几点：</h3>
+<p class="calibre14">默认模板目录全部是小写+下滑线规范；<br class="calibre16"/>
+控制器类的success、error和redirect方法无需使用return；<br class="calibre16"/>
+模型的save方法返回值更改为影响的记录数，而非主键，使用model-&gt;id方式获取主键；<br class="calibre16"/>
+路由定义后不能再使用原来URL地址访问；</p>
+</blockquote>
+<h2 id="%E4%BB%8Ev3.2%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E5%88%B0v5.0" class="calibre15">从V3.2版本升级到V5.0</h2>
+<p class="calibre10">3.2版本无法直接升级到5.0版本，这里只是给出了升级指导思想和为了使用<code class="calibre7">3.X</code>版本的开发者更快的熟悉并上手这个全新的版本。同时也强烈建议开发者抛弃之前旧的思维模式，因为<code class="calibre7">5.0</code>是一个全新的颠覆重构版本。</p>
+<h3 id="%E9%9C%80%E8%A6%81%E6%91%92%E5%BC%83%E7%9A%843.x%E6%97%A7%E6%80%9D%E6%83%B3" class="calibre17">需要摒弃的3.X旧思想</h3>
+<h3 id="url%E7%9A%84%E5%8F%98%E5%8A%A8" class="calibre17">URL的变动</h3>
+<p class="calibre10">首先对3.X的不严谨给开发者们带来的不正确的引导表示歉意，在5.0版本正式废除类似/id/1方式 可以通过‘get’获取到‘id’的方法，严格来讲这样的url是不属于$_GET的，现在可以通过‘param’获取，具体使用可以通过请求部分查询。</p>
+<h3 id="%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%98%E5%8A%A8" class="calibre17">模型的变动</h3>
+<p class="calibre10">新版的模型查询返回默认‘对象’，系统默认增加了'toArray'方法，许多开发者在'all'或'select'尝试使用'toArray'来转换为数组，在此希望开发者能理解‘对象’的概念，尝试使用‘对象’进行数据的使用，或者使用'db'方法进行数据库的操作，也提醒一下部分‘滥用’'toArray'的开发者，'all'或'select'结果是对象的数组集合，是无法使用'toArray'进行转换的。 </p>
+<h3 id="%E6%96%B0%E7%89%88%E5%8F%98%E5%8C%96" class="calibre17">新版变化</h3>
+<h3 id="%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83-1" class="calibre17">命名规范</h3>
+<ul class="calibre23"><li class="calibre20">目录和文件名采用‘小写+下划线’，并且以小写字母开头；</li>
+<li class="calibre20">类库、函数文件统一以.php为后缀；</li>
+<li class="calibre20">类的文件名均以命名空间定义，并且命名空间的路径和类库文件所在路径一致（包括大小写）；</li>
+<li class="calibre20">类名和类文件名保持一致，并统一采用驼峰法命名（首字母大写）</li>
+</ul><h3 id="%E5%87%BD%E6%95%B0" class="calibre17">函数</h3>
+<ul class="calibre23"><li class="calibre20">系统已经不依赖任何函数，只是对常用的操作封装提供了助手函数；</li>
+<li class="calibre20">单字母函数废弃，默认系统加载助手函数，具体参考上一个章节‘助手函数’；</li>
+</ul><h3 id="%E8%B7%AF%E7%94%B1" class="calibre17">路由</h3>
+<p class="calibre10">5.0的URL访问不再支持普通URL模式，路由也不支持正则路由定义，而是全部改为规则路由配合变量规则（正则定义）的方式，具体这里不再赘述。</p>
+<h3 id="%E6%8E%A7%E5%88%B6%E5%99%A8-1" class="calibre17">控制器</h3>
+<p class="calibre10">控制器的命名空间有所调整，并且可以无需继承任何的控制器类。</p>
+<ul class="calibre23"><li class="calibre20">应用类库的命名空间统一为app（可修改）而不是模块名；</li>
+<li class="calibre20">控制器的类名默认不带<code class="calibre7">Controller</code>后缀，可以配置开启<code class="calibre7">controller_suffix</code>参数启用控制器类后缀；</li>
+<li class="calibre20">控制器操作方法采用<code class="calibre7">return</code>方式返回数据，而非直接输出；</li>
+<li class="calibre20">废除原来的操作前后置方法；</li>
+</ul><h3 id="%E7%89%88%E6%9C%AC%E5%AF%B9%E6%AF%94" class="calibre17">版本对比</h3>
+<p class="calibre10">3.2版本控制器写法</p>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+namespace Home\Controller;
+
+use Think\Controller;
+
+class IndexController extends Controller 
+{
+    public function hello()
+    {
+        echo 'hello,thinkphp!';
+    }
+}</code></pre>
+<p class="calibre10">5.0版本控制器写法</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class Index 
+{
+    public function index()
+    {
+        return 'hello,thinkphp!';
+    }
+}</code></pre>
+<p class="calibre10">3.2版本控制器命名</p>
+<pre class="calibre21"><code class="calibre22">IndexController.class.php</code></pre>
+<p class="calibre10">5.0版本控制器命名</p>
+<pre class="calibre21"><code class="calibre22">Index.php</code></pre>
+<p class="calibre10">怎么才能在控制器中正确的输出模板<br class="calibre16"/>
+5.0在控制器中输出模板，使用方法如下：<br class="calibre16"/>
+如果你继承<code class="calibre7">think\Controller</code>的话，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">return $this-&gt;fetch('index/hello');</code></pre>
+<p class="calibre10">如果你的控制器没有继承 <code class="calibre7">think\Controller</code>的话，使用：</p>
+<pre class="calibre21"><code class="calibre22">return view('index/hello');</code></pre>
+<h3 id="%E6%A8%A1%E5%9E%8B-1" class="calibre17">模型</h3>
+<p class="calibre10">如果非要对比与旧版本的改进，模型被分为数据库、模型、验证器三部分，分别对应M方法、模型、自动验证，同时均有所加强，下面做简单介绍。</p>
+<h3 id="%E6%95%B0%E6%8D%AE%E5%BA%93" class="calibre17">数据库</h3>
+<p class="calibre10">5.0的数据库查询功能增强，原先需要通过模型才能使用的链式查询可以直接通过Db类调用，原来的M函数调用可以改用db函数，例如：<br class="calibre16"/>
+3.2版本</p>
+<pre class="calibre21"><code class="calibre22">M('User')-&gt;where(['name'=&gt;'thinkphp'])-&gt;find();</code></pre>
+<p class="calibre10">5.0版本</p>
+<pre class="calibre21"><code class="calibre22">db('User')-&gt;where('name','thinkphp')-&gt;find();</code></pre>
+<h3 id="%E6%A8%A1%E5%9E%8B-2" class="calibre17">模型</h3>
+<p class="calibre10">新版的模型查询增加了静态方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">User::get(1); 
+User::all();
+User::where('id','&gt;',10)-&gt;find(); </code></pre>
+<p class="calibre10">模型部分增强了很多功能，具体请查阅“模型章节”。</p>
+<h3 id="%E8%87%AA%E5%8A%A8%E9%AA%8C%E8%AF%81" class="calibre17">自动验证</h3>
+<p class="calibre10">对比旧的版本，可以理解为之前的自动验证且不同于之前的验证；<br class="calibre16"/>
+ThinkPHP5.0验证使用独立的<code class="calibre7">\think\Validate</code>类或者<strong class="calibre12">验证器</strong>进行验证，不仅适用于模型，在控制器也可直接调用，具体使用规则请参考“验证”章节，这里不再赘述。</p>
+<h3 id="%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-1" class="calibre17">配置文件</h3>
+<p class="calibre10">新版对配置很多的配置参数或者配置层次都和之前不同了，建议大家要么看看代码，要么仔细通读下官方的开发手册，不要因为配置的问题浪费自己一整天的时间。</p>
+<h3 id="%E5%BC%82%E5%B8%B8" class="calibre17">异常</h3>
+<p class="calibre10">5.0对错误零容忍，默认情况下会对任何级别的错误抛出异常，并且重新设计了异常页面，展示了详尽的错误信息，便于调试。</p>
+<h3 id="%E7%B3%BB%E7%BB%9F%E5%B8%B8%E9%87%8F%E7%9A%84%E5%BA%9F%E5%BC%83" class="calibre17">系统常量的废弃</h3>
+<p class="calibre10">5.0版本相对于之前版本对系统变化进行了大量的废弃，用户如果有相关需求可以自行定义<br class="calibre16"/>
+下面是废除常量</p>
+<pre class="calibre21"><code class="calibre22">REQUEST_METHOD IS_GET IS_POST IS_PUT IS_DELETE IS_AJAX __EXT__ COMMON_MODULE MODULE_NAME CONTROLLER_NAME ACTION_NAME APP_NAMESPACE APP_DEBUG MODULE_PATH等</code></pre>
+<p class="calibre10">部分常量可以在Request里面进行获取，具体参考“请求章节”。</p>
+<blockquote class="calibre5">
+<p class="calibre14">再次说明本章节仅仅为之前使用3.X版本开发者快速理解5.0所写，具体5.0的功能还需要开发者通读手册。</p>
+</blockquote>
+<h3 id="%E5%8A%A9%E6%89%8B%E5%87%BD%E6%95%B0-12" class="calibre17">助手函数</h3>
+<p class="calibre10"><code class="calibre7">5.0</code>助手函数和<code class="calibre7">3.2</code>版本的单字母函数对比如下：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28"><code class="calibre7">3.2</code>版本</th>
+<th class="calibre28"><code class="calibre7">5.0</code>版本</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">C</td>
+<td class="calibre32 pcalibre1">config</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">E</td>
+<td class="pcalibre1 calibre31">exception</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">G</td>
+<td class="pcalibre1 calibre31">debug</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">L</td>
+<td class="pcalibre1 calibre31">lang</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">T</td>
+<td class="pcalibre1 calibre31">废除</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">I</td>
+<td class="pcalibre1 calibre31">input</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">N</td>
+<td class="pcalibre1 calibre31">废除</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">D</td>
+<td class="pcalibre1 calibre31">model</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">M</td>
+<td class="pcalibre1 calibre31">db</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">A</td>
+<td class="pcalibre1 calibre31">controller</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">R</td>
+<td class="pcalibre1 calibre31">action</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">B</td>
+<td class="pcalibre1 calibre31">废除</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">U</td>
+<td class="pcalibre1 calibre31">url</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">W</td>
+<td class="pcalibre1 calibre31">widget</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">S</td>
+<td class="pcalibre1 calibre31">cache</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">F</td>
+<td class="calibre33 pcalibre1">废除</td>
+</tr></tbody></table></div>
+	
+</body></html>

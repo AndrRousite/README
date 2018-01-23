@@ -1,0 +1,522 @@
+#######################################################
+
+Intellij快捷键
+
+#######################################################
+Ctrl + N : 查找类
+Ctrl+Shift+N 查找文件
+Ctrl+Alt+O 优化导入的类和包
+Alt+Insert 生成代码(如get,set方法,构造函数等)
+Ctrl+E或者Alt+Shift+C 最近更改的代码 （最近打开的文件）
+Ctrl+Shift+Space 自动补全代码
+Ctrl+P 方法参数提示
+Shift+F6 重构-重命名
+Ctrl+J 自动代码
+Ctrl+H 显示类结构图
+F2 或Shift+F2 快速定位错误
+Ctrl+W 选中代码，连续按会有其他效果
+Shift+Click 快速关闭文件
+Ctrl+F12，可以显示当前文件的结构
+Ctrl+Alt+T可以把代码包在一块内，例如try/catch
+Ctrl+Alt+M 可以把代码块生成方法
+Ctrl+O可以选择父类的方法进行重写
+Ctrl+Shift+J可以整合两行
+Alt+Shift+↑/↓
+Ctrl+Shift+U大小写切换
+Alt+F7找到当前类/方法被引用位置
+Alt+7列举出当前类的方法和变量
+Ctrl+Alt+Left/Right 返回上一次/下一次浏览位置
+
+
+
+不透明度16进制值
+不透明度 	16进制值
+100% 	FF
+95% 	F2
+90% 	E6
+85% 	D9
+80% 	CC
+75% 	BF
+70% 	B3
+65% 	A6
+60% 	99
+55% 	8C
+50% 	80
+45% 	73
+40% 	66
+35% 	59
+30% 	4D
+25% 	40
+20% 	33
+15% 	26
+10% 	1A
+5% 	0D
+0% 	00    
+
+studio获取SHA1值
+keytool -list -keystore vforum.jks  
+studio获取keystore详细信息
+keytool -list -v -keystore vforum.jks
+
+PengXunCN168     
+
+
+####################
+
+wx keymap
+
+####################
+1. 格式调整
+Ctrl+S：保存文件
+Ctrl+[， Ctrl+]：代码行缩进
+Ctrl+Shift+[， Ctrl+Shift+]：折叠打开代码块
+Ctrl+C Ctrl+V：复制粘贴，如果没有选中任何文字则复制粘贴一行
+Shift+Alt+F：代码格式化
+Alt+Up，Alt+Down：上下移动一行
+Shift+Alt+Up，Shift+Alt+Down：向上向下复制一行
+Ctrl+Shift+Enter：在当前行上方插入一行
+Ctrl+Shift+F：全局搜索      
+
+2. 光标相关
+Ctrl+End：移动到文件结尾
+Ctrl+Home：移动到文件开头
+Ctrl+i：选中当前行
+Shift+End：选择从光标到行尾
+Shift+Home：选择从行首到光标处
+Ctrl+Shift+L：选中所有匹配
+Ctrl+D：选中匹配
+Ctrl+U：光标回退 
+
+3. 界面相关
+Ctrl + \：隐藏侧边栏
+Ctrl + m: 打开或者隐藏模拟器 
+
+4. WebStorm高亮显示级别设置Ctrl+Alt+Shift+H
+
+
+
+
+
+###################################
+
+CMD命令大全
+
+###################################
+    winver---------检查Windows版本
+　　wmimgmt.msc----打开windows管理体系结构(WMI)
+　　wupdmgr--------windows更新程序
+　　wscript--------windows脚本宿主设置
+　　write----------写字板
+　　winmsd---------系统信息
+　　wiaacmgr-------扫描仪和照相机向导
+　　winchat--------XP自带局域网聊天
+cmd命令大全（第二部分）
+　　mem.exe--------显示内存使用情况
+　　Msconfig.exe---系统配置实用程序
+　　mplayer2-------简易widnows media player
+　　mspaint--------画图板
+　　mstsc----------远程桌面连接
+　　mplayer2-------媒体播放机
+　　magnify--------放大镜实用程序
+　　mmc------------打开控制台
+　　mobsync--------同步命令
+cmd命令大全（第三部分）
+　　dxdiag---------检查DirectX信息
+　　drwtsn32------ 系统医生
+　　devmgmt.msc--- 设备管理器
+　　dfrg.msc-------磁盘碎片整理程序
+　　diskmgmt.msc---磁盘管理实用程序
+　　dcomcnfg-------打开系统组件服务
+　　ddeshare-------打开DDE共享设置
+　　dvdplay--------DVD播放器
+cmd命令大全（第四部分）
+　　net stop messenger-----停止信使服务
+　　net start messenger----开始信使服务
+　　notepad--------打开记事本
+　　nslookup-------网络管理的工具向导
+　　ntbackup-------系统备份和还原
+　　narrator-------屏幕“讲述人”
+　　ntmsmgr.msc----移动存储管理器
+　　ntmsoprq.msc---移动存储管理员操作请求
+　　netstat -an----(TC)命令检查接口
+cmd命令大全（第五部分）
+　　syncapp--------创建一个公文包
+　　sysedit--------系统配置编辑器
+　　sigverif-------文件签名验证程序
+　　sndrec32-------录音机
+　　shrpubw--------创建共享文件夹
+　　secpol.m转载自电脑十万个为什么http://www.qq880.com，请保留此标记sc-----本地安全策略
+　　syskey---------系统加密，一旦加密就不能解开，保护windows xp系统的双重密码
+　　services.msc---本地服务设置
+　　Sndvol32-------音量控制程序
+　　sfc.exe--------系统文件检查器
+　　sfc /scannow---windows文件保护
+cmd命令大全（第六部分）
+　　tsshutdn-------60秒倒计时关机命令
+　　tourstart------xp简介（安装完成后出现的漫游xp程序）
+　　taskmgr--------任务管理器
+　　eventvwr-------事件查看器
+　　eudcedit-------造字程序
+　　explorer-------打开资源管理器
+　　packager-------对象包装程序
+　　perfmon.msc----计算机性能监测程序
+　　progman--------程序管理器
+　　regedit.exe----注册表
+　　rsop.msc-------组策略结果集
+　　regedt32-------注册表编辑器
+　　rononce -p ----15秒关机
+　　regsvr32 /u *.dll----停止dll文件运行
+　　regsvr32 /u zipfldr.dll------取消ZIP支持
+cmd命令大全（第七部分）
+　　cmd.exe--------CMD命令提示符
+　　chkdsk.exe-----Chkdsk磁盘检查
+　　certmgr.msc----证书管理实用程序
+　　calc-----------启动计算器
+　　charmap--------启动字符映射表
+　　cliconfg-------SQL SERVER 客户端网络实用程序
+　　Clipbrd--------剪贴板查看器
+　　conf-----------启动netmeeting
+　　compmgmt.msc---计算机管理
+　　cleanmgr-------垃圾整理
+　　ciadv.msc------索引服务程序
+　　osk------------打开屏幕键盘
+　　odbcad32-------ODBC数据源管理器
+　　oobe/msoobe /a----检查XP是否激活
+　　lusrmgr.msc----本机用户和组
+　　logoff---------注销命令
+　　iexpress-------木马捆绑工具，系统自带
+　　Nslookup-------IP地址侦测器
+　　fsmgmt.msc-----共享文件夹管理器
+　　utilman--------辅助工具管理器
+　　gpedit.msc-----组策略
+
+
+
+
+####################################################
+
+git 常用命令
+
+####################################################
+一、新建代码库
+
+
+    # 在当前目录新建一个Git代码库
+    $ git init
+
+    # 新建一个目录，将其初始化为Git代码库
+    $ git init [project-name]
+
+    # 下载一个项目和它的整个代码历史
+    $ git clone [url]
+
+二、配置
+
+Git的设置文件为.gitconfig，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。
+
+
+    # 显示当前的Git配置
+    $ git config --list
+
+    # 编辑Git配置文件
+    $ git config -e [--global]
+
+    # 设置提交代码时的用户信息
+    $ git config [--global] user.name "[name]"
+    $ git config [--global] user.email "[email address]"
+
+三、增加/删除文件
+
+
+    # 添加指定文件到暂存区
+    $ git add [file1] [file2] ...
+
+    # 添加指定目录到暂存区，包括子目录
+    $ git add [dir]
+
+    # 添加当前目录的所有文件到暂存区
+    $ git add .
+
+    # 添加每个变化前，都会要求确认
+    # 对于同一个文件的多处变化，可以实现分次提交
+    $ git add -p
+
+    # 删除工作区文件，并且将这次删除放入暂存区
+    $ git rm [file1] [file2] ...
+
+    # 停止追踪指定文件，但该文件会保留在工作区
+    $ git rm --cached [file]
+
+    # 改名文件，并且将这个改名放入暂存区
+    $ git mv [file-original] [file-renamed]
+
+四、代码提交
+
+
+    # 提交暂存区到仓库区
+    $ git commit -m [message]
+
+    # 提交暂存区的指定文件到仓库区
+    $ git commit [file1] [file2] ... -m [message]
+
+    # 提交工作区自上次commit之后的变化，直接到仓库区
+    $ git commit -a
+
+    # 提交时显示所有diff信息
+    $ git commit -v
+
+    # 使用一次新的commit，替代上一次提交
+    # 如果代码没有任何新变化，则用来改写上一次commit的提交信息
+    $ git commit --amend -m [message]
+
+    # 重做上一次commit，并包括指定文件的新变化
+    $ git commit --amend [file1] [file2] ...
+
+五、分支
+
+
+    # 列出所有本地分支
+    $ git branch
+
+    # 列出所有远程分支
+    $ git branch -r
+
+    # 列出所有本地分支和远程分支
+    $ git branch -a
+
+    # 新建一个分支，但依然停留在当前分支
+    $ git branch [branch-name]
+
+    # 新建一个分支，并切换到该分支
+    $ git checkout -b [branch]
+
+    # 新建一个分支，指向指定commit
+    $ git branch [branch] [commit]
+
+    # 新建一个分支，与指定的远程分支建立追踪关系
+    $ git branch --track [branch] [remote-branch]
+
+    # 切换到指定分支，并更新工作区
+    $ git checkout [branch-name]
+
+    # 切换到上一个分支
+    $ git checkout -
+
+    # 建立追踪关系，在现有分支与指定的远程分支之间
+    $ git branch --set-upstream [branch] [remote-branch]
+
+    # 合并指定分支到当前分支
+    $ git merge [branch]
+
+    # 选择一个commit，合并进当前分支
+    $ git cherry-pick [commit]
+
+    # 删除分支
+    $ git branch -d [branch-name]
+
+    # 删除远程分支
+    $ git push origin --delete [branch-name]
+    $ git branch -dr [remote/branch]
+
+六、标签
+
+
+    # 列出所有tag
+    $ git tag
+
+    # 新建一个tag在当前commit
+    $ git tag [tag]
+
+    # 新建一个tag在指定commit
+    $ git tag [tag] [commit]
+
+    # 删除本地tag
+    $ git tag -d [tag]
+
+    # 删除远程tag
+    $ git push origin :refs/tags/[tagName]
+
+    # 查看tag信息
+    $ git show [tag]
+
+    # 提交指定tag
+    $ git push [remote] [tag]
+
+    # 提交所有tag
+    $ git push [remote] --tags
+
+    # 新建一个分支，指向某个tag
+    $ git checkout -b [branch] [tag]
+
+七、查看信息
+
+
+    # 显示有变更的文件
+    $ git status
+
+    # 显示当前分支的版本历史
+    $ git log
+
+    # 显示commit历史，以及每次commit发生变更的文件
+    $ git log --stat
+
+    # 搜索提交历史，根据关键词
+    $ git log -S [keyword]
+
+    # 显示某个commit之后的所有变动，每个commit占据一行
+    $ git log [tag] HEAD --pretty=format:%s
+
+    # 显示某个commit之后的所有变动，其"提交说明"必须符合搜索条件
+    $ git log [tag] HEAD --grep feature
+
+    # 显示某个文件的版本历史，包括文件改名
+    $ git log --follow [file]
+    $ git whatchanged [file]
+
+    # 显示指定文件相关的每一次diff
+    $ git log -p [file]
+
+    # 显示过去5次提交
+    $ git log -5 --pretty --oneline
+
+    # 显示所有提交过的用户，按提交次数排序
+    $ git shortlog -sn
+
+    # 显示指定文件是什么人在什么时间修改过
+    $ git blame [file]
+
+    # 显示暂存区和工作区的差异
+    $ git diff
+
+    # 显示暂存区和上一个commit的差异
+    $ git diff --cached [file]
+
+    # 显示工作区与当前分支最新commit之间的差异
+    $ git diff HEAD
+
+    # 显示两次提交之间的差异
+    $ git diff [first-branch]...[second-branch]
+
+    # 显示今天你写了多少行代码
+    $ git diff --shortstat "@{0 day ago}"
+
+    # 显示某次提交的元数据和内容变化
+    $ git show [commit]
+
+    # 显示某次提交发生变化的文件
+    $ git show --name-only [commit]
+
+    # 显示某次提交时，某个文件的内容
+    $ git show [commit]:[filename]
+
+    # 显示当前分支的最近几次提交
+    $ git reflog
+
+八、远程同步
+
+
+    # 下载远程仓库的所有变动
+    $ git fetch [remote]
+
+    # 显示所有远程仓库
+    $ git remote -v
+
+    # 显示某个远程仓库的信息
+    $ git remote show [remote]
+
+    # 增加一个新的远程仓库，并命名
+    $ git remote add [shortname] [url]
+
+    # 取回远程仓库的变化，并与本地分支合并
+    $ git pull [remote] [branch]
+
+    # 上传本地指定分支到远程仓库
+    $ git push [remote] [branch]
+
+    # 强行推送当前分支到远程仓库，即使有冲突
+    $ git push [remote] --force
+
+    # 推送所有分支到远程仓库
+    $ git push [remote] --all
+
+九、撤销
+
+
+    # 恢复暂存区的指定文件到工作区
+    $ git checkout [file]
+
+    # 恢复某个commit的指定文件到暂存区和工作区
+    $ git checkout [commit] [file]
+
+    # 恢复暂存区的所有文件到工作区
+    $ git checkout .
+
+    # 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变
+    $ git reset [file]
+
+    # 重置暂存区与工作区，与上一次commit保持一致
+    $ git reset --hard
+
+    # 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
+    $ git reset [commit]
+
+    # 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
+    $ git reset --hard [commit]
+
+    # 重置当前HEAD为指定commit，但保持暂存区和工作区不变
+    $ git reset --keep [commit]
+
+    # 新建一个commit，用来撤销指定commit
+    # 后者的所有变化都将被前者抵消，并且应用到当前分支
+    $ git revert [commit]
+
+    # 暂时将未提交的变化移除，稍后再移入
+    $ git stash
+    $ git stash pop
+
+十、其他
+
+
+    # 生成一个可供发布的压缩包
+    $ git archive
+
+
+
+###################################################
+
+Sublime text3 快捷键
+
+###################################################
+Ctrl+L 选择整行（按住-继续选择下行）
+Ctrl+KK 从光标处删除至行尾
+Ctrl+Shift+K 删除整行
+Ctrl+Shift+D 复制光标所在整行，插入在该行之前
+Ctrl+J 合并行（已选择需要合并的多行时）
+Ctrl+KU 改为大写
+Ctrl+KL 改为小写
+Ctrl+D 选词 （按住-继续选择下个相同的字符串）
+Ctrl+M 光标移动至括号内开始或结束的位置
+Ctrl+Shift+M 选择括号内的内容（按住-继续选择父括号）
+Ctrl+/ 注释整行（如已选择内容，同“Ctrl+Shift+/”效果）
+Ctrl+Shift+/ 注释已选择内容
+Ctrl+Z 撤销
+Ctrl+Y 恢复撤销
+Ctrl+M 光标跳至对应的括号
+Alt+. 闭合当前标签
+Ctrl+Shift+A 选择光标位置父标签对儿
+Ctrl+Shift+[ 折叠代码
+Ctrl+Shift+] 展开代码
+Ctrl+KT 折叠属性
+Ctrl+K0 展开所有
+Ctrl+U 软撤销
+Ctrl+T 词互换
+Tab 缩进 自动完成
+Shift+Tab 去除缩进
+Ctrl+Shift+↑ 与上行互换
+Ctrl+Shift+↓ 与下行互换
+Ctrl+K Backspace 从光标处删除至行首
+Ctrl+Enter 光标后插入行
+Ctrl+Shift+Enter 光标前插入行
+Ctrl+F2 设置书签
+F2 下一个书签
+Shift+F2 上一个书签

@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>循环输出标签</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_144">循环输出标签</h1>
+<div class="book-content">
+    <h2 id="volist%E6%A0%87%E7%AD%BE" class="calibre15">VOLIST标签</h2>
+<p class="calibre10">volist标签通常用于查询数据集（select方法）的结果输出，通常模型的select方法返回的结果是一个二维数组，可以直接使用volist标签进行输出。 在控制器中首先对模版赋值：</p>
+<pre class="calibre21"><code class="calibre22">$list = User::all();
+$this-&gt;assign('list',$list);</code></pre>
+<p class="calibre10">在模版定义如下，循环输出用户的编号和姓名：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo"}
+{$vo.id}:{$vo.name}&lt;br/&gt;
+{/volist}</code></pre>
+<p class="calibre10">Volist标签的name属性表示模板赋值的变量名称，因此不可随意在模板文件中改变。id表示当前的循环变量，可以随意指定，但确保不要和name属性冲突，例如：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="data"}
+{$data.id}:{$data.name}&lt;br/&gt;
+{/volist}</code></pre>
+<p class="calibre10">支持输出查询结果中的部分数据，例如输出其中的第5～15条记录</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo" offset="5" length='10'}
+{$vo.name}
+{/volist}</code></pre>
+<p class="calibre10">输出偶数记录</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo" mod="2" }
+{eq name="mod" value="1"}{$vo.name}{/eq}
+{/volist}</code></pre>
+<p class="calibre10">Mod属性还用于控制一定记录的换行，例如：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo" mod="5" }
+{$vo.name}
+{eq name="mod" value="4"}&lt;br/&gt;{/eq}
+{/volist}</code></pre>
+<p class="calibre10">为空的时候输出提示：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo" empty="暂时没有数据" }
+{$vo.id}|{$vo.name}
+{/volist}</code></pre>
+<p class="calibre10">empty属性不支持直接传入html语法，但可以支持变量输出，例如：</p>
+<pre class="calibre21"><code class="calibre22">$this-&gt;assign('empty','&lt;span class="empty"&gt;没有数据&lt;/span&gt;');
+$this-&gt;assign('list',$list);</code></pre>
+<p class="calibre10">然后在模板中使用：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo" empty="$empty" }
+{$vo.id}|{$vo.name}
+{/volist}</code></pre>
+<p class="calibre10">输出循环变量：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo" key="k" }
+{$k}.{$vo.name}
+{/volist}</code></pre>
+<p class="calibre10">如果没有指定key属性的话，默认使用循环变量i，例如：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo"  }
+{$i}.{$vo.name}
+{/volist}</code></pre>
+<p class="calibre10">如果要输出数组的索引，可以直接使用key变量，和循环变量不同的是，这个key是由数据本身决定，而不是循环控制的，例如：</p>
+<pre class="calibre21"><code class="calibre22">{volist name="list" id="vo"  }
+{$key}.{$vo.name}
+{/volist}</code></pre>
+<p class="calibre10">模板中可以直接使用函数设定数据集，而不需要在控制器中给模板变量赋值传入数据集变量，如：</p>
+<pre class="calibre21"><code class="calibre22">{volist name=":fun('arg')" id="vo"}
+{$vo.name}
+{/volist}</code></pre>
+<h2 id="foreach%E6%A0%87%E7%AD%BE" class="calibre15">FOREACH标签</h2>
+<p class="calibre10">foreach标签类似与volist标签，只是更加简单，没有太多额外的属性，最简单的用法是：</p>
+<pre class="calibre21"><code class="calibre22">{foreach $list as $vo} 
+    {$vo.id}:{$vo.name}
+{/foreach}</code></pre>
+<p class="calibre10">该用法解析后是最简洁的。</p>
+<p class="calibre10">也可以使用下面的用法：  </p>
+<pre class="calibre21"><code class="calibre22">{foreach name="list" item="vo"}
+    {$vo.id}:{$vo.name}
+{/foreach}</code></pre>
+<p class="calibre10">name表示数据源 item表示循环变量。</p>
+<p class="calibre10">可以输出索引，如下：</p>
+<pre class="calibre21"><code class="calibre22">{foreach name="list" item="vo" }
+    {$key}|{$vo}
+{/foreach}</code></pre>
+<p class="calibre10">也可以定义索引的变量名</p>
+<pre class="calibre21"><code class="calibre22">{foreach name="list" item="vo" key="k" }
+   {$k}|{$vo}
+{/foreach}</code></pre>
+<h2 id="for%E6%A0%87%E7%AD%BE" class="calibre15">FOR标签</h2>
+<p class="calibre10">用法：</p>
+<pre class="calibre21"><code class="calibre22">{for start="开始值" end="结束值" comparison="" step="步进值" name="循环变量名" }
+{/for}</code></pre>
+<p class="calibre10">开始值、结束值、步进值和循环变量都可以支持变量，开始值和结束值是必须，其他是可选。comparison 的默认值是lt，name的默认值是i，步进值的默认值是1，举例如下：</p>
+<pre class="calibre21"><code class="calibre22">{for start="1" end="100"}
+{$i}
+{/for}</code></pre>
+<p class="calibre10">解析后的代码是</p>
+<pre class="calibre21"><code class="calibre22">for ($i=1;$i&lt;100;$i+=1){
+    echo $i;
+} </code></pre>
+</div>
+	
+</body></html>

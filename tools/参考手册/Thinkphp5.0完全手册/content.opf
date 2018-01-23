@@ -1,0 +1,556 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+  <metadata xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata">
+    <dc:contributor opf:role="bkp">看云</dc:contributor>
+    <dc:identifier id="uuid_id" opf:scheme="uuid">de3f9954-19c6-4933-a5cf-b965168d6fbc</dc:identifier>
+    <meta name="calibre:timestamp" content="2017-02-09T07:58:50.156129+00:00"/>
+    <meta name="cover" content="cover"/>
+    <dc:publisher>看云</dc:publisher>
+    <dc:title>ThinkPHP5.0完全开发手册</dc:title>
+    <dc:description>ThinkPHP V5.0是一个为API开发而设计的高性能框架——是一个颠覆和重构版本，采用全新的架构思想，引入了很多的PHP新特性，优化了核心，减少了依赖，实现了真正的惰性加载，支持composer，并针对API开发做了大量的优化。&#13;
+&#13;
+ThinkPHP5是一个全新的里程碑版本，包括路由、日志、异常、模型、数据库、模板引擎和验证等模块都已经重构，不适合原有3.2项目的升级，请慎重考虑商业项目升级，但绝对是新项目的首选（无论是WEB还是API开发），而且最好是忘记3.2版本的思维习惯，重新理解TP5。&#13;
+</dc:description>
+    <dc:language>zh</dc:language>
+    <dc:creator opf:file-as="Unknown" opf:role="aut">官方手册</dc:creator>
+  </metadata>
+  <manifest>
+    <item href="cover.jpg" id="cover" media-type="image/jpeg"/>
+    <item href="404Ye Mian .html" id="html190" media-type="application/xhtml+xml"/>
+    <item href="414538ba82f5e96ec9431352ab014f03" id="added1" media-type="image/png"/>
+    <item href="56e2726c5e51e.png" id="added8" media-type="image/png"/>
+    <item href="56e274950e6da.png" id="added17" media-type="image/png"/>
+    <item href="56e3b14589919.png" id="added13" media-type="image/png"/>
+    <item href="56e3b15ca5299.png" id="added14" media-type="image/png"/>
+    <item href="56e3b416c8978.png" id="added15" media-type="image/png"/>
+    <item href="56ef61c30154e.jpg" id="added30" media-type="image/jpeg"/>
+    <item href="5727f862a4817.jpg" id="added4" media-type="image/jpeg"/>
+    <item href="573eb53697ab9.png" id="added18" media-type="image/png"/>
+    <item href="5743c9fa320ae.jpg" id="added9" media-type="image/jpeg"/>
+    <item href="5773d218790c4.png" id="added16" media-type="image/png"/>
+    <item href="577f8c616034c.jpg" id="added3" media-type="image/jpeg"/>
+    <item href="5785e2b823603.png" id="added19" media-type="image/png"/>
+    <item href="5785e459c8690.jpg" id="added20" media-type="image/jpeg"/>
+    <item href="5785e4b746880.jpg" id="added21" media-type="image/jpeg"/>
+    <item href="5785e621a44dc.png" id="added22" media-type="image/png"/>
+    <item href="5785e7472b540.png" id="added23" media-type="image/png"/>
+    <item href="5785ea3065562.png" id="added27" media-type="image/png"/>
+    <item href="5785ef60e524f.png" id="added29" media-type="image/png"/>
+    <item href="5785f58e74945.png" id="added28" media-type="image/png"/>
+    <item href="5787328a88004.png" id="added24" media-type="image/png"/>
+    <item href="578732cb8a296.png" id="added25" media-type="image/png"/>
+    <item href="5787334e08e03.png" id="added26" media-type="image/png"/>
+    <item href="57d4c2706bf44.png" id="added10" media-type="image/png"/>
+    <item href="APIYou Hao .html" id="html15" media-type="application/xhtml+xml"/>
+    <item href="ActionCan Shu Bang Ding .html" id="html65" media-type="application/xhtml+xml"/>
+    <item href="An Quan .html" id="html201" media-type="application/xhtml+xml"/>
+    <item href="An Zhuang .html" id="html226" media-type="application/xhtml+xml"/>
+    <item href="An Zhuang ThinkPHP.html" id="html3" media-type="application/xhtml+xml"/>
+    <item href="Bang Ding Mo Xing .html" id="html40" media-type="application/xhtml+xml"/>
+    <item href="Bao Han Wen Jian .html" id="html164" media-type="application/xhtml+xml"/>
+    <item href="Bi Bao Zhi Chi .html" id="html38" media-type="application/xhtml+xml"/>
+    <item href="Bi Jiao Biao Qian .html" id="html168" media-type="application/xhtml+xml"/>
+    <item href="Bian Liang Diao Shi .html" id="html186" media-type="application/xhtml+xml"/>
+    <item href="Bian Liang Gui Ze .html" id="html29" media-type="application/xhtml+xml"/>
+    <item href="Bian Liang Shu Chu .html" id="html153" media-type="application/xhtml+xml"/>
+    <item href="Biao Dan Ling Pai .html" id="html200" media-type="application/xhtml+xml"/>
+    <item href="Biao Qian Ku .html" id="html165" media-type="application/xhtml+xml"/>
+    <item href="Biao Qian Kuo Zhan .html" id="html228" media-type="application/xhtml+xml"/>
+    <item href="Biao Qian Qian Tao .html" id="html171" media-type="application/xhtml+xml"/>
+    <item href="Bu Shu .html" id="html238" media-type="application/xhtml+xml"/>
+    <item href="Cha Xun .html" id="html120" media-type="application/xhtml+xml"/>
+    <item href="Cha Xun Fang Fa .html" id="html76" media-type="application/xhtml+xml"/>
+    <item href="Cha Xun Gou Zao Qi .html" id="html71" media-type="application/xhtml+xml"/>
+    <item href="Cha Xun Shi Jian .html" id="html108" media-type="application/xhtml+xml"/>
+    <item href="Cha Xun Shu Ju .html" id="html72" media-type="application/xhtml+xml"/>
+    <item href="Cha Xun Yu Fa .html" id="html77" media-type="application/xhtml+xml"/>
+    <item href="Chang Liang Can Kao .html" id="html244" media-type="application/xhtml+xml"/>
+    <item href="Chuang Jian Kong Zhi Qi Lei .html" id="html231" media-type="application/xhtml+xml"/>
+    <item href="ComposerBao .html" id="html222" media-type="application/xhtml+xml"/>
+    <item href="ConsoleYing Yong .html" id="html229" media-type="application/xhtml+xml"/>
+    <item href="Cookie.html" id="html209" media-type="application/xhtml+xml"/>
+    <item href="Cun Chu Guo Cheng .html" id="html111" media-type="application/xhtml+xml"/>
+    <item href="Cuo Wu He Diao Shi .html" id="html181" media-type="application/xhtml+xml"/>
+    <item href="Cuo Wu Xin Xi .html" id="html194" media-type="application/xhtml+xml"/>
+    <item href="Dan Yuan Ce Shi .html" id="html216" media-type="application/xhtml+xml"/>
+    <item href="Diao Shi Mo Shi .html" id="html182" media-type="application/xhtml+xml"/>
+    <item href="Ding Yi .html" id="html115" media-type="application/xhtml+xml"/>
+    <item href="Dong Tai Pei Zhi .html" id="html21" media-type="application/xhtml+xml"/>
+    <item href="Dong Tai Shu Xing .html" id="html140" media-type="application/xhtml+xml"/>
+    <item href="Du Li Pei Zhi .html" id="html22" media-type="application/xhtml+xml"/>
+    <item href="Du Li Ri Zhi .html" id="html178" media-type="application/xhtml+xml"/>
+    <item href="Du Qu Pei Zhi .html" id="html20" media-type="application/xhtml+xml"/>
+    <item href="Duo Ceng Kong Zhi Qi .html" id="html50" media-type="application/xhtml+xml"/>
+    <item href="Duo Dui Duo Guan Lian .html" id="html138" media-type="application/xhtml+xml"/>
+    <item href="Duo Tai Yi Dui Duo .html" id="html139" media-type="application/xhtml+xml"/>
+    <item href="Duo Yu Yan .html" id="html210" media-type="application/xhtml+xml"/>
+    <item href="Fang Fa Zhu Ru .html" id="html63" media-type="application/xhtml+xml"/>
+    <item href="Fen Bu Shi Shu Ju Ku .html" id="html113" media-type="application/xhtml+xml"/>
+    <item href="Fen Ceng Kong Zhi Qi .html" id="html51" media-type="application/xhtml+xml"/>
+    <item href="Fen Ye .html" id="html211" media-type="application/xhtml+xml"/>
+    <item href="Fu Lu .html" id="html242" media-type="application/xhtml+xml"/>
+    <item href="Fu Zhi Biao Qian .html" id="html173" media-type="application/xhtml+xml"/>
+    <item href="Gao Ji Cha Xun .html" id="html104" media-type="application/xhtml+xml"/>
+    <item href="Geng Gai Bian Liang .html" id="html58" media-type="application/xhtml+xml"/>
+    <item href="Geng Xin .html" id="html118" media-type="application/xhtml+xml"/>
+    <item href="Geng Xin Ri Zhi .html" id="html247" media-type="application/xhtml+xml"/>
+    <item href="Geng Xin Shu Ju .html" id="html74" media-type="application/xhtml+xml"/>
+    <item href="Guan Lian .html" id="html134" media-type="application/xhtml+xml"/>
+    <item href="Guan Lian Tong Ji .html" id="html142" media-type="application/xhtml+xml"/>
+    <item href="Guan Lian Yu Zai Ru .html" id="html141" media-type="application/xhtml+xml"/>
+    <item href="Han Shu .html" id="html218" media-type="application/xhtml+xml"/>
+    <item href="Huan Cun .html" id="html207" media-type="application/xhtml+xml"/>
+    <item href="Huan Jing Bian Liang Pei Zhi .html" id="html24" media-type="application/xhtml+xml"/>
+    <item href="Huo Qu HeaderXin Xi .html" id="html61" media-type="application/xhtml+xml"/>
+    <item href="Huo Qu Qi .html" id="html122" media-type="application/xhtml+xml"/>
+    <item href="JSONXu Lie Hua .html" id="html132" media-type="application/xhtml+xml"/>
+    <item href="Ji Ben Shi Yong .html" id="html70" media-type="application/xhtml+xml"/>
+    <item href="Ji Chu .html" id="html2" media-type="application/xhtml+xml"/>
+    <item href="Jia Gou .html" id="html6" media-type="application/xhtml+xml"/>
+    <item href="Jia Gou Zong Lan .html" id="html7" media-type="application/xhtml+xml"/>
+    <item href="Jian Ting SQL.html" id="html110" media-type="application/xhtml+xml"/>
+    <item href="Jing Tai Diao Yong .html" id="html199" media-type="application/xhtml+xml"/>
+    <item href="Ju He .html" id="html121" media-type="application/xhtml+xml"/>
+    <item href="Ju He Cha Xun .html" id="html102" media-type="application/xhtml+xml"/>
+    <item href="Ju He Mo Xing .html" id="html143" media-type="application/xhtml+xml"/>
+    <item href="Kai Fa Gui Fan .html" id="html4" media-type="application/xhtml+xml"/>
+    <item href="Kong Cao Zuo .html" id="html48" media-type="application/xhtml+xml"/>
+    <item href="Kong Kong Zhi Qi .html" id="html49" media-type="application/xhtml+xml"/>
+    <item href="Kong Zhi Qi .html" id="html43" media-type="application/xhtml+xml"/>
+    <item href="Kong Zhi Qi Chu Shi Hua .html" id="html45" media-type="application/xhtml+xml"/>
+    <item href="Kong Zhi Qi Ding Yi .html" id="html44" media-type="application/xhtml+xml"/>
+    <item href="Kong Zhi Qi Yan Zheng .html" id="html196" media-type="application/xhtml+xml"/>
+    <item href="Kuai Jie Lu You .html" id="html34" media-type="application/xhtml+xml"/>
+    <item href="Kuo Zhan .html" id="html217" media-type="application/xhtml+xml"/>
+    <item href="Lei Ku .html" id="html219" media-type="application/xhtml+xml"/>
+    <item href="Lei Xing Zhuan Huan .html" id="html127" media-type="application/xhtml+xml"/>
+    <item href="Lian Jie Shu Ju Ku .html" id="html69" media-type="application/xhtml+xml"/>
+    <item href="Lian Shi Cao Zuo .html" id="html78" media-type="application/xhtml+xml"/>
+    <item href="Linux Zhu Ji Huan Jing .html" id="html240" media-type="application/xhtml+xml"/>
+    <item href="Lu You .html" id="html25" media-type="application/xhtml+xml"/>
+    <item href="Lu You Bang Ding .html" id="html39" media-type="application/xhtml+xml"/>
+    <item href="Lu You Bie Ming .html" id="html35" media-type="application/xhtml+xml"/>
+    <item href="Lu You Can Shu .html" id="html31" media-type="application/xhtml+xml"/>
+    <item href="Lu You Di Zhi .html" id="html32" media-type="application/xhtml+xml"/>
+    <item href="Lu You Ding Yi .html" id="html27" media-type="application/xhtml+xml"/>
+    <item href="Lu You Fen Zu .html" id="html36" media-type="application/xhtml+xml"/>
+    <item href="Lu You Mo Shi .html" id="html26" media-type="application/xhtml+xml"/>
+    <item href="Ming Ming Fan Wei .html" id="html129" media-type="application/xhtml+xml"/>
+    <item href="Ming Ming Kong Jian .html" id="html12" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban .html" id="html150" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Biao Qian .html" id="html152" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Bu Ju .html" id="html162" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Ding Wei .html" id="html151" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Fu Zhi .html" id="html147" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Ji Cheng .html" id="html163" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Ti Huan .html" id="html149" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Xuan Ran .html" id="html148" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Yin Qing .html" id="html146" media-type="application/xhtml+xml"/>
+    <item href="Mo Ban Zhu Shi .html" id="html161" media-type="application/xhtml+xml"/>
+    <item href="Mo Kuai .html" id="html55" media-type="application/xhtml+xml"/>
+    <item href="Mo Kuai She Ji .html" id="html11" media-type="application/xhtml+xml"/>
+    <item href="Mo Xing Chu Shi Hua .html" id="html116" media-type="application/xhtml+xml"/>
+    <item href="Mo Xing Fen Ceng .html" id="html130" media-type="application/xhtml+xml"/>
+    <item href="Mo Xing Yan Zheng .html" id="html197" media-type="application/xhtml+xml"/>
+    <item href="Mu Lu Jie Gou .html" id="html5" media-type="application/xhtml+xml"/>
+    <item href="Nei Zhi Biao Qian .html" id="html166" media-type="application/xhtml+xml"/>
+    <item href="Nei Zhi Gui Ze .html" id="html198" media-type="application/xhtml+xml"/>
+    <item href="ORM.html" id="html114" media-type="application/xhtml+xml"/>
+    <item href="Pao Chu Yi Chang .html" id="html184" media-type="application/xhtml+xml"/>
+    <item href="Pei Zhi .html" id="html16" media-type="application/xhtml+xml"/>
+    <item href="Pei Zhi Can Kao .html" id="html243" media-type="application/xhtml+xml"/>
+    <item href="Pei Zhi Ge Shi .html" id="html18" media-type="application/xhtml+xml"/>
+    <item href="Pei Zhi Jia Zai .html" id="html19" media-type="application/xhtml+xml"/>
+    <item href="Pei Zhi Mu Lu .html" id="html17" media-type="application/xhtml+xml"/>
+    <item href="Pei Zhi Zuo Yong Yu .html" id="html23" media-type="application/xhtml+xml"/>
+    <item href="Pi Liang Zhu Ce .html" id="html28" media-type="application/xhtml+xml"/>
+    <item href="Qi Ta An Quan Jian Yi .html" id="html205" media-type="application/xhtml+xml"/>
+    <item href="Qian Zhi Cao Zuo .html" id="html46" media-type="application/xhtml+xml"/>
+    <item href="Qing Chu Huan Cun Wen Jian .html" id="html234" media-type="application/xhtml+xml"/>
+    <item href="Qing Qiu Can Shu .html" id="html155" media-type="application/xhtml+xml"/>
+    <item href="Qing Qiu Dui Xiang .html" id="html56" media-type="application/xhtml+xml"/>
+    <item href="Qing Qiu Huan Cun .html" id="html67" media-type="application/xhtml+xml"/>
+    <item href="Qing Qiu Lei Xing .html" id="html59" media-type="application/xhtml+xml"/>
+    <item href="Qing Qiu Wei Zhuang .html" id="html60" media-type="application/xhtml+xml"/>
+    <item href="Qu Dong .html" id="html221" media-type="application/xhtml+xml"/>
+    <item href="RestKong Zhi Qi .html" id="html52" media-type="application/xhtml+xml"/>
+    <item href="Ri Zhi .html" id="html174" media-type="application/xhtml+xml"/>
+    <item href="Ri Zhi Chu Shi Hua .html" id="html175" media-type="application/xhtml+xml"/>
+    <item href="Ri Zhi Qing Kong .html" id="html179" media-type="application/xhtml+xml"/>
+    <item href="Ri Zhi Xie Ru .html" id="html176" media-type="application/xhtml+xml"/>
+    <item href="Ru Kou Wen Jian .html" id="html9" media-type="application/xhtml+xml"/>
+    <item href="Ruan Shan Chu .html" id="html126" media-type="application/xhtml+xml"/>
+    <item href="SQLDiao Shi .html" id="html188" media-type="application/xhtml+xml"/>
+    <item href="SUMMARY.html" id="html" media-type="application/xhtml+xml"/>
+    <item href="San Yuan Yun Suan .html" id="html159" media-type="application/xhtml+xml"/>
+    <item href="Session.html" id="html208" media-type="application/xhtml+xml"/>
+    <item href="Shan Chu .html" id="html119" media-type="application/xhtml+xml"/>
+    <item href="Shan Chu Shu Ju .html" id="html75" media-type="application/xhtml+xml"/>
+    <item href="Shang Chuan .html" id="html212" media-type="application/xhtml+xml"/>
+    <item href="Shang Chuan An Quan .html" id="html204" media-type="application/xhtml+xml"/>
+    <item href="Sheng Cheng Lei Ku Ying She Wen Jian .html" id="html232" media-type="application/xhtml+xml"/>
+    <item href="Sheng Cheng Lu You Huan Cun .html" id="html233" media-type="application/xhtml+xml"/>
+    <item href="Sheng Cheng Pei Zhi Huan Cun Wen Jian .html" id="html235" media-type="application/xhtml+xml"/>
+    <item href="Sheng Cheng Shu Ju Biao Zi Duan Huan Cun .html" id="html236" media-type="application/xhtml+xml"/>
+    <item href="Sheng Ji Zhi Dao .html" id="html246" media-type="application/xhtml+xml"/>
+    <item href="Shi Jian .html" id="html133" media-type="application/xhtml+xml"/>
+    <item href="Shi Jian Cha Xun .html" id="html103" media-type="application/xhtml+xml"/>
+    <item href="Shi Jian Chuo .html" id="html124" media-type="application/xhtml+xml"/>
+    <item href="Shi Tu .html" id="html144" media-type="application/xhtml+xml"/>
+    <item href="Shi Tu Cha Xun .html" id="html105" media-type="application/xhtml+xml"/>
+    <item href="Shi Tu Shi Li Hua .html" id="html145" media-type="application/xhtml+xml"/>
+    <item href="Shi Wu Cao Zuo .html" id="html109" media-type="application/xhtml+xml"/>
+    <item href="Shi Yong Han Shu .html" id="html156" media-type="application/xhtml+xml"/>
+    <item href="Shi Yong Mo Ren Zhi .html" id="html157" media-type="application/xhtml+xml"/>
+    <item href="Shi Yong Yun Suan Fu .html" id="html158" media-type="application/xhtml+xml"/>
+    <item href="Shou Dong Ji Lu .html" id="html177" media-type="application/xhtml+xml"/>
+    <item href="Shu Ju Ji .html" id="html112" media-type="application/xhtml+xml"/>
+    <item href="Shu Ju Ku .html" id="html68" media-type="application/xhtml+xml"/>
+    <item href="Shu Ju Ku An Quan .html" id="html203" media-type="application/xhtml+xml"/>
+    <item href="Shu Ju Ku Qian Yi Gong Ju .html" id="html224" media-type="application/xhtml+xml"/>
+    <item href="Shu Ru An Quan .html" id="html202" media-type="application/xhtml+xml"/>
+    <item href="Shu Ru Bian Liang .html" id="html57" media-type="application/xhtml+xml"/>
+    <item href="Shu Xing Zhu Ru .html" id="html64" media-type="application/xhtml+xml"/>
+    <item href="Shu Zu Fang Wen .html" id="html131" media-type="application/xhtml+xml"/>
+    <item href="Tian Jia Shu Ju .html" id="html73" media-type="application/xhtml+xml"/>
+    <item href="Tiao Jian Pan Duan .html" id="html169" media-type="application/xhtml+xml"/>
+    <item href="Tiao Zhuan He Zhong Ding Xiang .html" id="html47" media-type="application/xhtml+xml"/>
+    <item href="Time.html" id="html223" media-type="application/xhtml+xml"/>
+    <item href="TraitsYin Ru .html" id="html14" media-type="application/xhtml+xml"/>
+    <item href="Tu Xiang Chu Li .html" id="html214" media-type="application/xhtml+xml"/>
+    <item href="URL.html" id="html241" media-type="application/xhtml+xml"/>
+    <item href="URLFang Wen .html" id="html10" media-type="application/xhtml+xml"/>
+    <item href="URLSheng Cheng .html" id="html42" media-type="application/xhtml+xml"/>
+    <item href="Wei Jing Tai .html" id="html62" media-type="application/xhtml+xml"/>
+    <item href="Wei Pi Pei Lu You .html" id="html37" media-type="application/xhtml+xml"/>
+    <item href="Wen Jian Chu Li .html" id="html215" media-type="application/xhtml+xml"/>
+    <item href="Workerman.html" id="html225" media-type="application/xhtml+xml"/>
+    <item href="Xi Tong Bian Liang .html" id="html154" media-type="application/xhtml+xml"/>
+    <item href="Xi Tong Liu Cheng .html" id="html8" media-type="application/xhtml+xml"/>
+    <item href="Xie Ru Shou Quan .html" id="html180" media-type="application/xhtml+xml"/>
+    <item href="Xin Zeng .html" id="html117" media-type="application/xhtml+xml"/>
+    <item href="Xing Neng Diao Shi .html" id="html187" media-type="application/xhtml+xml"/>
+    <item href="Xing Wei .html" id="html220" media-type="application/xhtml+xml"/>
+    <item href="Xiu Gai Qi .html" id="html123" media-type="application/xhtml+xml"/>
+    <item href="Xu Ni Zhu Ji Huan Jing .html" id="html239" media-type="application/xhtml+xml"/>
+    <item href="Xun Huan Shu Chu Biao Qian .html" id="html167" media-type="application/xhtml+xml"/>
+    <item href="Yan Zheng .html" id="html191" media-type="application/xhtml+xml"/>
+    <item href="Yan Zheng Chang Jing .html" id="html195" media-type="application/xhtml+xml"/>
+    <item href="Yan Zheng Gui Ze .html" id="html193" media-type="application/xhtml+xml"/>
+    <item href="Yan Zheng Ma .html" id="html213" media-type="application/xhtml+xml"/>
+    <item href="Yan Zheng Qi .html" id="html192" media-type="application/xhtml+xml"/>
+    <item href="Ye Mian Trace.html" id="html185" media-type="application/xhtml+xml"/>
+    <item href="Yi Chang Chu Li .html" id="html183" media-type="application/xhtml+xml"/>
+    <item href="Yi Dui Duo Guan Lian .html" id="html136" media-type="application/xhtml+xml"/>
+    <item href="Yi Dui Yi Guan Lian .html" id="html135" media-type="application/xhtml+xml"/>
+    <item href="Yi Lai Zhu Ru .html" id="html66" media-type="application/xhtml+xml"/>
+    <item href="Yu Ming Lu You .html" id="html41" media-type="application/xhtml+xml"/>
+    <item href="Yuan Cheng Diao Shi .html" id="html189" media-type="application/xhtml+xml"/>
+    <item href="Yuan Cheng Yi Dui Duo .html" id="html137" media-type="application/xhtml+xml"/>
+    <item href="Yuan Sheng PHP.html" id="html172" media-type="application/xhtml+xml"/>
+    <item href="Yuan Sheng SQL.html" id="html107" media-type="application/xhtml+xml"/>
+    <item href="Yuan Yang Shu Chu .html" id="html160" media-type="application/xhtml+xml"/>
+    <item href="Za Xiang .html" id="html206" media-type="application/xhtml+xml"/>
+    <item href="Zhi Du Zi Duan .html" id="html125" media-type="application/xhtml+xml"/>
+    <item href="Zhu Shou Han Shu .html" id="html245" media-type="application/xhtml+xml"/>
+    <item href="Zi Cha Xun .html" id="html106" media-type="application/xhtml+xml"/>
+    <item href="Zi Ding Yi Ming Ling Xing .html" id="html237" media-type="application/xhtml+xml"/>
+    <item href="Zi Dong Jia Zai .html" id="html13" media-type="application/xhtml+xml"/>
+    <item href="Zi Dong Sou Suo Kong Zhi Qi .html" id="html53" media-type="application/xhtml+xml"/>
+    <item href="Zi Dong Wan Cheng .html" id="html128" media-type="application/xhtml+xml"/>
+    <item href="Zi Yuan Kong Zhi Qi .html" id="html54" media-type="application/xhtml+xml"/>
+    <item href="Zi Yuan Lu You .html" id="html33" media-type="application/xhtml+xml"/>
+    <item href="Zi Yuan Wen Jian Jia Zai .html" id="html170" media-type="application/xhtml+xml"/>
+    <item href="Zu He Bian Liang .html" id="html30" media-type="application/xhtml+xml"/>
+    <item href="alias.html" id="html81" media-type="application/xhtml+xml"/>
+    <item href="bind.html" id="html97" media-type="application/xhtml+xml"/>
+    <item href="cache.html" id="html92" media-type="application/xhtml+xml"/>
+    <item href="comment.html" id="html93" media-type="application/xhtml+xml"/>
+    <item href="consoleZi Dong Sheng Cheng .html" id="html230" media-type="application/xhtml+xml"/>
+    <item href="cover_thinkphp_controller-in-detail.png" id="added6" media-type="image/png"/>
+    <item href="cover_thinkphp_master-database-and-model.png" id="added7" media-type="image/png"/>
+    <item href="cover_thinkphp_route-master.png" id="added5" media-type="image/png"/>
+    <item href="default.html" id="html1" media-type="application/xhtml+xml"/>
+    <item href="distinct.html" id="html90" media-type="application/xhtml+xml"/>
+    <item href="failException.html" id="html100" media-type="application/xhtml+xml"/>
+    <item href="fetchSql.html" id="html94" media-type="application/xhtml+xml"/>
+    <item href="field.html" id="html82" media-type="application/xhtml+xml"/>
+    <item href="force.html" id="html95" media-type="application/xhtml+xml"/>
+    <item href="group.html" id="html86" media-type="application/xhtml+xml"/>
+    <item href="having.html" id="html87" media-type="application/xhtml+xml"/>
+    <item href="join.html" id="html88" media-type="application/xhtml+xml"/>
+    <item href="limit.html" id="html84" media-type="application/xhtml+xml"/>
+    <item href="lock.html" id="html91" media-type="application/xhtml+xml"/>
+    <item href="order.html" id="html83" media-type="application/xhtml+xml"/>
+    <item href="page.html" id="html85" media-type="application/xhtml+xml"/>
+    <item href="page_styles.css" id="page_css" media-type="text/css"/>
+    <item href="partition.html" id="html98" media-type="application/xhtml+xml"/>
+    <item href="qiniu.png" id="added2" media-type="image/png"/>
+    <item href="sae.html" id="html227" media-type="application/xhtml+xml"/>
+    <item href="screenshot_1473560868070.png" id="added11" media-type="image/png"/>
+    <item href="screenshot_1473560923996.png" id="added12" media-type="image/png"/>
+    <item href="sequence.html" id="html101" media-type="application/xhtml+xml"/>
+    <item href="strict.html" id="html99" media-type="application/xhtml+xml"/>
+    <item href="stylesheet.css" id="css" media-type="text/css"/>
+    <item href="table.html" id="html80" media-type="application/xhtml+xml"/>
+    <item href="titlepage.xhtml" id="titlepage" media-type="application/xhtml+xml"/>
+    <item href="union.html" id="html89" media-type="application/xhtml+xml"/>
+    <item href="using.html" id="html96" media-type="application/xhtml+xml"/>
+    <item href="where.html" id="html79" media-type="application/xhtml+xml"/>
+    <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml"/>
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="titlepage"/>
+    <itemref idref="html"/>
+    <itemref idref="html1"/>
+    <itemref idref="html2"/>
+    <itemref idref="html3"/>
+    <itemref idref="html4"/>
+    <itemref idref="html5"/>
+    <itemref idref="html6"/>
+    <itemref idref="html7"/>
+    <itemref idref="html8"/>
+    <itemref idref="html9"/>
+    <itemref idref="html10"/>
+    <itemref idref="html11"/>
+    <itemref idref="html12"/>
+    <itemref idref="html13"/>
+    <itemref idref="html14"/>
+    <itemref idref="html15"/>
+    <itemref idref="html16"/>
+    <itemref idref="html17"/>
+    <itemref idref="html18"/>
+    <itemref idref="html19"/>
+    <itemref idref="html20"/>
+    <itemref idref="html21"/>
+    <itemref idref="html22"/>
+    <itemref idref="html23"/>
+    <itemref idref="html24"/>
+    <itemref idref="html25"/>
+    <itemref idref="html26"/>
+    <itemref idref="html27"/>
+    <itemref idref="html28"/>
+    <itemref idref="html29"/>
+    <itemref idref="html30"/>
+    <itemref idref="html31"/>
+    <itemref idref="html32"/>
+    <itemref idref="html33"/>
+    <itemref idref="html34"/>
+    <itemref idref="html35"/>
+    <itemref idref="html36"/>
+    <itemref idref="html37"/>
+    <itemref idref="html38"/>
+    <itemref idref="html39"/>
+    <itemref idref="html40"/>
+    <itemref idref="html41"/>
+    <itemref idref="html42"/>
+    <itemref idref="html43"/>
+    <itemref idref="html44"/>
+    <itemref idref="html45"/>
+    <itemref idref="html46"/>
+    <itemref idref="html47"/>
+    <itemref idref="html48"/>
+    <itemref idref="html49"/>
+    <itemref idref="html50"/>
+    <itemref idref="html51"/>
+    <itemref idref="html52"/>
+    <itemref idref="html53"/>
+    <itemref idref="html54"/>
+    <itemref idref="html55"/>
+    <itemref idref="html56"/>
+    <itemref idref="html57"/>
+    <itemref idref="html58"/>
+    <itemref idref="html59"/>
+    <itemref idref="html60"/>
+    <itemref idref="html61"/>
+    <itemref idref="html62"/>
+    <itemref idref="html63"/>
+    <itemref idref="html64"/>
+    <itemref idref="html65"/>
+    <itemref idref="html66"/>
+    <itemref idref="html67"/>
+    <itemref idref="html68"/>
+    <itemref idref="html69"/>
+    <itemref idref="html70"/>
+    <itemref idref="html71"/>
+    <itemref idref="html72"/>
+    <itemref idref="html73"/>
+    <itemref idref="html74"/>
+    <itemref idref="html75"/>
+    <itemref idref="html76"/>
+    <itemref idref="html77"/>
+    <itemref idref="html78"/>
+    <itemref idref="html79"/>
+    <itemref idref="html80"/>
+    <itemref idref="html81"/>
+    <itemref idref="html82"/>
+    <itemref idref="html83"/>
+    <itemref idref="html84"/>
+    <itemref idref="html85"/>
+    <itemref idref="html86"/>
+    <itemref idref="html87"/>
+    <itemref idref="html88"/>
+    <itemref idref="html89"/>
+    <itemref idref="html90"/>
+    <itemref idref="html91"/>
+    <itemref idref="html92"/>
+    <itemref idref="html93"/>
+    <itemref idref="html94"/>
+    <itemref idref="html95"/>
+    <itemref idref="html96"/>
+    <itemref idref="html97"/>
+    <itemref idref="html98"/>
+    <itemref idref="html99"/>
+    <itemref idref="html100"/>
+    <itemref idref="html101"/>
+    <itemref idref="html102"/>
+    <itemref idref="html103"/>
+    <itemref idref="html104"/>
+    <itemref idref="html105"/>
+    <itemref idref="html106"/>
+    <itemref idref="html107"/>
+    <itemref idref="html108"/>
+    <itemref idref="html109"/>
+    <itemref idref="html110"/>
+    <itemref idref="html111"/>
+    <itemref idref="html112"/>
+    <itemref idref="html113"/>
+    <itemref idref="html114"/>
+    <itemref idref="html115"/>
+    <itemref idref="html116"/>
+    <itemref idref="html117"/>
+    <itemref idref="html118"/>
+    <itemref idref="html119"/>
+    <itemref idref="html120"/>
+    <itemref idref="html121"/>
+    <itemref idref="html122"/>
+    <itemref idref="html123"/>
+    <itemref idref="html124"/>
+    <itemref idref="html125"/>
+    <itemref idref="html126"/>
+    <itemref idref="html127"/>
+    <itemref idref="html128"/>
+    <itemref idref="html129"/>
+    <itemref idref="html130"/>
+    <itemref idref="html131"/>
+    <itemref idref="html132"/>
+    <itemref idref="html133"/>
+    <itemref idref="html134"/>
+    <itemref idref="html135"/>
+    <itemref idref="html136"/>
+    <itemref idref="html137"/>
+    <itemref idref="html138"/>
+    <itemref idref="html139"/>
+    <itemref idref="html140"/>
+    <itemref idref="html141"/>
+    <itemref idref="html142"/>
+    <itemref idref="html143"/>
+    <itemref idref="html144"/>
+    <itemref idref="html145"/>
+    <itemref idref="html146"/>
+    <itemref idref="html147"/>
+    <itemref idref="html148"/>
+    <itemref idref="html149"/>
+    <itemref idref="html150"/>
+    <itemref idref="html151"/>
+    <itemref idref="html152"/>
+    <itemref idref="html153"/>
+    <itemref idref="html154"/>
+    <itemref idref="html155"/>
+    <itemref idref="html156"/>
+    <itemref idref="html157"/>
+    <itemref idref="html158"/>
+    <itemref idref="html159"/>
+    <itemref idref="html160"/>
+    <itemref idref="html161"/>
+    <itemref idref="html162"/>
+    <itemref idref="html163"/>
+    <itemref idref="html164"/>
+    <itemref idref="html165"/>
+    <itemref idref="html166"/>
+    <itemref idref="html167"/>
+    <itemref idref="html168"/>
+    <itemref idref="html169"/>
+    <itemref idref="html170"/>
+    <itemref idref="html171"/>
+    <itemref idref="html172"/>
+    <itemref idref="html173"/>
+    <itemref idref="html174"/>
+    <itemref idref="html175"/>
+    <itemref idref="html176"/>
+    <itemref idref="html177"/>
+    <itemref idref="html178"/>
+    <itemref idref="html179"/>
+    <itemref idref="html180"/>
+    <itemref idref="html181"/>
+    <itemref idref="html182"/>
+    <itemref idref="html183"/>
+    <itemref idref="html184"/>
+    <itemref idref="html185"/>
+    <itemref idref="html186"/>
+    <itemref idref="html187"/>
+    <itemref idref="html188"/>
+    <itemref idref="html189"/>
+    <itemref idref="html190"/>
+    <itemref idref="html191"/>
+    <itemref idref="html192"/>
+    <itemref idref="html193"/>
+    <itemref idref="html194"/>
+    <itemref idref="html195"/>
+    <itemref idref="html196"/>
+    <itemref idref="html197"/>
+    <itemref idref="html198"/>
+    <itemref idref="html199"/>
+    <itemref idref="html200"/>
+    <itemref idref="html201"/>
+    <itemref idref="html202"/>
+    <itemref idref="html203"/>
+    <itemref idref="html204"/>
+    <itemref idref="html205"/>
+    <itemref idref="html206"/>
+    <itemref idref="html207"/>
+    <itemref idref="html208"/>
+    <itemref idref="html209"/>
+    <itemref idref="html210"/>
+    <itemref idref="html211"/>
+    <itemref idref="html212"/>
+    <itemref idref="html213"/>
+    <itemref idref="html214"/>
+    <itemref idref="html215"/>
+    <itemref idref="html216"/>
+    <itemref idref="html217"/>
+    <itemref idref="html218"/>
+    <itemref idref="html219"/>
+    <itemref idref="html220"/>
+    <itemref idref="html221"/>
+    <itemref idref="html222"/>
+    <itemref idref="html223"/>
+    <itemref idref="html224"/>
+    <itemref idref="html225"/>
+    <itemref idref="html226"/>
+    <itemref idref="html227"/>
+    <itemref idref="html228"/>
+    <itemref idref="html229"/>
+    <itemref idref="html230"/>
+    <itemref idref="html231"/>
+    <itemref idref="html232"/>
+    <itemref idref="html233"/>
+    <itemref idref="html234"/>
+    <itemref idref="html235"/>
+    <itemref idref="html236"/>
+    <itemref idref="html237"/>
+    <itemref idref="html238"/>
+    <itemref idref="html239"/>
+    <itemref idref="html240"/>
+    <itemref idref="html241"/>
+    <itemref idref="html242"/>
+    <itemref idref="html243"/>
+    <itemref idref="html244"/>
+    <itemref idref="html245"/>
+    <itemref idref="html246"/>
+    <itemref idref="html247"/>
+  </spine>
+  <guide>
+    <reference href="titlepage.xhtml" title="Cover" type="cover"/>
+  </guide>
+</package>

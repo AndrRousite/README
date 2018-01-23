@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>图像处理</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_191">图像处理</h1>
+<div class="book-content">
+    <h2 id="%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95" class="calibre15">安装扩展</h2>
+<p class="calibre10">使用<code class="calibre7">Composer</code>安装<code class="calibre7">ThinkPHP5</code>的图像处理类库：</p>
+<pre class="calibre21"><code class="calibre22">composer require topthink/think-image</code></pre>
+<h2 id="%E5%9B%BE%E5%83%8F%E6%93%8D%E4%BD%9C" class="calibre15">图像操作</h2>
+<p class="calibre10">下面来看下图像操作类的基础方法。</p>
+<h3 id="%E6%89%93%E5%BC%80%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6" class="calibre17">打开图像文件</h3>
+<p class="calibre10">假设当前入口文件目录下面有一个<code class="calibre7">image.png</code>文件，如图所示：</p>
+<p class="calibre10"><img src="5785e2b823603.png" alt="" class="calibre11"/></p>
+<p class="calibre10">使用<code class="calibre7">open</code>方法打开图像文件进行相关操作：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');</code></pre>
+<p class="calibre10">也可以从直接获取当前请求中的文件上传对象，例如：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open(request()-&gt;file('image'));</code></pre>
+<h3 id="%E8%8E%B7%E5%8F%96%E5%9B%BE%E5%83%8F%E4%BF%A1%E6%81%AF" class="calibre17">获取图像信息</h3>
+<p class="calibre10">可以获取打开图片的信息，包括图像大小、类型等，例如：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 返回图片的宽度
+$width = $image-&gt;width(); 
+// 返回图片的高度
+$height = $image-&gt;height(); 
+// 返回图片的类型
+$type = $image-&gt;type(); 
+// 返回图片的mime类型
+$mime = $image-&gt;mime(); 
+// 返回图片的尺寸数组 0 图片宽度 1 图片高度
+$size = $image-&gt;size(); </code></pre>
+<h3 id="%E8%A3%81%E5%89%AA%E5%9B%BE%E7%89%87" class="calibre17">裁剪图片</h3>
+<p class="calibre10">使用<code class="calibre7">crop</code>和<code class="calibre7">save</code>方法完成裁剪图片功能。</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+//将图片裁剪为300x300并保存为crop.png
+$image-&gt;crop(300, 300)-&gt;save('./crop.png');</code></pre>
+<p class="calibre10">生成的图片如图：</p>
+<p class="calibre10"><img src="5785e459c8690.jpg" alt="" class="calibre11"/></p>
+<p class="calibre10">支持从某个坐标开始裁剪，例如下面从（100，30）开始裁剪，例如：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+//将图片裁剪为300x300并保存为crop.png
+$image-&gt;crop(300, 300,100,30)-&gt;save('./crop.png');</code></pre>
+<p class="calibre10">生成的图片如图：</p>
+<p class="calibre10"><img src="5785e4b746880.jpg" alt="" class="calibre11"/></p>
+<h3 id="%E7%94%9F%E6%88%90%E7%BC%A9%E7%95%A5%E5%9B%BE" class="calibre17">生成缩略图</h3>
+<p class="calibre10">使用<code class="calibre7">thumb</code>方法生成缩略图，例如：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 按照原图的比例生成一个最大为150*150的缩略图并保存为thumb.png
+$image-&gt;thumb(150, 150)-&gt;save('./thumb.png');</code></pre>
+<p class="calibre10">生成的缩略图如图所示：</p>
+<p class="calibre10"></p>
+<p class="calibre10">我们看到实际生成的缩略图并不是150*150，因为默认采用原图等比例缩放的方式生成缩略图，最大宽度是150。<br class="calibre16"/>
+可以支持其他类型的缩略图生成，设置包括<code class="calibre7">\think\Image</code>的下列常量或者对应的数字：</p>
+<pre class="calibre21"><code class="calibre22">//常量，标识缩略图等比例缩放类型
+const THUMB_SCALING   = 1; 
+//常量，标识缩略图缩放后填充类型
+const THUMB_FILLED    = 2; 
+//常量，标识缩略图居中裁剪类型
+const THUMB_CENTER    = 3; 
+//常量，标识缩略图左上角裁剪类型
+const THUMB_NORTHWEST = 4;
+//常量，标识缩略图右下角裁剪类型
+const THUMB_SOUTHEAST = 5; 
+//常量，标识缩略图固定尺寸缩放类型
+const THUMB_FIXED     = 6; </code></pre>
+<p class="calibre10">比如我们居中裁剪：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 按照原图的比例生成一个最大为150*150的缩略图并保存为thumb.png
+$image-&gt;thumb(150,150,\think\Image::THUMB_CENTER)-&gt;save('./thumb.png');</code></pre>
+<p class="calibre10">后生成的缩略图效果如图：</p>
+<p class="calibre10"><img src="5785e621a44dc.png" alt="" class="calibre11"/></p>
+<p class="calibre10">再比如我们右下角剪裁</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 按照原图的比例生成一个最大为150*150的缩略图并保存为thumb.png
+$image-&gt;thumb(150,150,\think\Image::THUMB_SOUTHEAST)-&gt;save('./thumb.png');</code></pre>
+<p class="calibre10">生成的缩略图效果如图：</p>
+<p class="calibre10"><img src="5785e7472b540.png" alt="" class="calibre11"/></p>
+<p class="calibre10">这里就不再对其他用法一一举例了。</p>
+<h3 id="%E5%9B%BE%E5%83%8F%E7%BF%BB%E8%BD%AC" class="calibre17">图像翻转</h3>
+<p class="calibre10">使用<code class="calibre7">flip</code>可以对图像进行翻转操作，默认是以x轴进行翻转，例如：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 对图像进行以x轴进行翻转操作
+$image-&gt;flip()-&gt;save('./filp_image.png');</code></pre>
+<p class="calibre10">生成的效果如图：</p>
+<p class="calibre10"><img src="5787328a88004.png" alt="" class="calibre11"/></p>
+<p class="calibre10">我们也可以改变参数，以y轴进行翻转，例如：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 对图像进行以y轴进行翻转操作
+$image-&gt;flip(\think\image::FLIP_Y)-&gt;save('./filp_image.png');</code></pre>
+<p class="calibre10">生成的效果如图：</p>
+<p class="calibre10"><img src="578732cb8a296.png" alt="" class="calibre11"/></p>
+<blockquote class="info">
+<p class="calibre14">图像的翻转可以理解为图像的镜面效果与图像旋转有所不同。</p>
+</blockquote>
+<h3 id="%E5%9B%BE%E5%83%8F%E6%97%8B%E8%BD%AC" class="calibre17">图像旋转</h3>
+<p class="calibre10">使用<code class="calibre7">rotate</code>可以对图像进行旋转操作（默认是顺时针旋转90度），我们用默认90度进行旋转举例：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 对图像使用默认的顺时针旋转90度操作
+$image-&gt;rotate()-&gt;save('./rotate_image.png');</code></pre>
+<p class="calibre10">生成的效果如图：</p>
+<p class="calibre10"><img src="5787334e08e03.png" alt="" class="calibre11"/></p>
+<h3 id="%E5%9B%BE%E5%83%8F%E4%BF%9D%E5%AD%98%E5%8F%82%E6%95%B0" class="calibre17">图像保存参数</h3>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28"><code class="calibre7">save</code>方法可以配置的参数</th>
+<th class="calibre28">参数</th>
+<th class="calibre28">默认</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">pathname</td>
+<td class="pcalibre1 calibre31">必填项</td>
+<td class="calibre32 pcalibre1">图像保存路径名称</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">type</td>
+<td class="pcalibre1 calibre31">默认与原图相同</td>
+<td class="pcalibre1 calibre31">图像类型</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">quality</td>
+<td class="pcalibre1 calibre31">80</td>
+<td class="pcalibre1 calibre31">图像质量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">interlace</td>
+<td class="pcalibre1 calibre31">true</td>
+<td class="calibre33 pcalibre1">是否对JPEG类型图像设置隔行扫描</td>
+</tr></tbody></table><blockquote class="info">
+<p class="calibre14">设置隔行扫描的情况下在网页进行浏览时。是从上到下一行一行的显示，否则图片整个显示出来 然后由模糊到清晰显示。</p>
+</blockquote>
+<h3 id="%E6%B7%BB%E5%8A%A0%E6%B0%B4%E5%8D%B0" class="calibre17">添加水印</h3>
+<p class="calibre10">系统支持添加图片及文字水印，下面依次举例说明<br class="calibre16"/>
+添加图片水印，我们下载官网logo文件到根目录进行举例：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 给原图左上角添加水印并保存water_image.png
+$image-&gt;water('./logo.png')-&gt;save('water_image.png'); </code></pre>
+<p class="calibre10"><code class="calibre7">water</code>方法的第二个参数表示水印的位置，默认值是<code class="calibre7">WATER_SOUTH</code>，可以传入下列<code class="calibre7">\think\Image</code>类的常量或者对应的数字： </p>
+<pre class="calibre21"><code class="calibre22">//常量，标识左上角水印
+const WATER_NORTHWEST = 1; 
+//常量，标识上居中水印
+const WATER_NORTH     = 2; 
+//常量，标识右上角水印
+const WATER_NORTHEAST = 3; 
+//常量，标识左居中水印
+const WATER_WEST      = 4; 
+//常量，标识居中水印
+const WATER_CENTER    = 5; 
+//常量，标识右居中水印
+const WATER_EAST      = 6; 
+//常量，标识左下角水印
+const WATER_SOUTHWEST = 7; 
+//常量，标识下居中水印
+const WATER_SOUTH     = 8; 
+//常量，标识右下角水印
+const WATER_SOUTHEAST = 9; </code></pre>
+<p class="calibre10">我们用左上角来进行测试：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 给原图左上角添加水印并保存water_image.png
+$image-&gt;water('./logo.png',\think\Image::WATER_NORTHWEST)-&gt;save('water_image.png');</code></pre>
+<p class="calibre10">生成的图片效果如下：</p>
+<p class="calibre10"><img src="5785ea3065562.png" alt="" class="calibre11"/></p>
+<p class="calibre10">还可以支持水印图片的透明度（0~100，默认值是100），例如：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 给原图左上角添加透明度为50的水印并保存alpha_image.png
+$image-&gt;water('./logo.png',\think\Image::WATER_NORTHWEST,50)-&gt;save('alpha_image.png');</code></pre>
+<p class="calibre10">生成的图片效果如下：</p>
+<p class="calibre10"><img src="5785f58e74945.png" alt="" class="calibre11"/></p>
+<p class="calibre10">也可以支持给图片添加文字水印（我们复制一个字体文件<code class="calibre7">HYQingKongTiJ.ttf</code>到入口目录），我们现在生成一个像素20px，颜色为<code class="calibre7">#ffffff</code>的水印效果：</p>
+<pre class="calibre21"><code class="calibre22">$image = \think\Image::open('./image.png');
+// 给原图左上角添加水印并保存water_image.png
+$image-&gt;text('十年磨一剑 - 为API开发设计的高性能框架','HYQingKongTiJ.ttf',20,'#ffffff')-&gt;save('text_image.png');</code></pre>
+<p class="calibre10">生成的图片效果：</p>
+<p class="calibre10"><img src="5785ef60e524f.png" alt="" class="calibre11"/></p>
+<h3 id="%E6%96%87%E5%AD%97%E6%B0%B4%E5%8D%B0%E5%8F%82%E6%95%B0" class="calibre17">文字水印参数</h3>
+<p class="calibre10">文字水印比较多，在此只做说明不做演示了</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">参数</th>
+<th class="calibre28">默认</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">text</td>
+<td class="pcalibre1 calibre31">不能为空</td>
+<td class="calibre32 pcalibre1">添加的文字</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">font</td>
+<td class="pcalibre1 calibre31">不能为空</td>
+<td class="pcalibre1 calibre31">字体文件路径</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">size</td>
+<td class="pcalibre1 calibre31">不能为空</td>
+<td class="pcalibre1 calibre31">字号，单位是像素</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">color</td>
+<td class="pcalibre1 calibre31">#00000000</td>
+<td class="pcalibre1 calibre31">文字颜色</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">locate</td>
+<td class="pcalibre1 calibre31">WATER_SOUTHEAST</td>
+<td class="pcalibre1 calibre31">文字写入位置</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">offset</td>
+<td class="pcalibre1 calibre31">0</td>
+<td class="pcalibre1 calibre31">文字相对当前位置的偏移量</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">angle</td>
+<td class="pcalibre1 calibre31">0</td>
+<td class="calibre33 pcalibre1">文字倾斜角度</td>
+</tr></tbody></table></div>
+	
+</body></html>

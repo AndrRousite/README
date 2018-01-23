@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>标签扩展</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_205">标签扩展</h1>
+<div class="book-content">
+    <h2 id="%E6%A0%87%E7%AD%BE%E5%BA%93%E5%8A%A0%E8%BD%BD" class="calibre15">标签库加载</h2>
+<p class="calibre10">模板中加载标签库，预加载自定义标签库，扩展内置标签库的加载 请参考:模板/标签库</p>
+<blockquote class="info">
+<p class="calibre14">建议开发者将自定义标签库请放置应用目录中，请勿放在框架系统目录内，以免使用<code class="calibre7">Composer</code>更新框架时导致自定义标签库的丢失</p>
+</blockquote>
+<p class="calibre10">下面以标签库放在<code class="calibre7">common</code>作为一个示例：</p>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+namespace app\common\taglib;
+use think\template\TagLib;
+class Demo extends TagLib{
+    /**
+     * 定义标签列表
+     */
+    protected $tags   =  [
+        // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
+        'close'     =&gt; ['attr' =&gt; 'time,format', 'close' =&gt; 0], //闭合标签，默认为不闭合
+        'open'      =&gt; ['attr' =&gt; 'name,type', 'close' =&gt; 1], 
+
+    ];
+
+    /**
+     * 这是一个闭合标签的简单演示
+     */
+    public function tagClose($tag)
+    {
+        $format = empty($tag['format']) ? 'Y-m-d H:i:s' : $tag['format'];
+        $time = empty($tag['time']) ? time() : $tag['time'];
+        $parse = '&lt;?php ';
+        $parse .= 'echo date("' . $format . '",' . $time . ');';
+        $parse .= ' ?&gt;';
+        return $parse;
+    }
+
+    /**
+     * 这是一个非闭合标签的简单演示
+     */
+    public function tagOpen($tag, $content)
+    {
+        $type = empty($tag['type']) ? 0 : 1; // 这个type目的是为了区分类型，一般来源是数据库
+        $name = $tag['name']; // name是必填项，这里不做判断了
+        $parse = '&lt;?php ';
+        $parse .= '$test_arr=[[1,3,5,7,9],[2,4,6,8,10]];'; // 这里是模拟数据
+        $parse .= '$__LIST__ = $test_arr[' . $type . '];';
+        $parse .= ' ?&gt;';
+        $parse .= '{volist name="__LIST__" id="' . $name . '"}';
+        $parse .= $content;
+        $parse .= '{/volist}';
+        return $parse;
+    }
+
+}</code></pre>
+<p class="calibre10">这时候我们的控制器继承<code class="calibre7">Controller</code>,在配置参数中配置：</p>
+<pre class="calibre21"><code class="calibre22">'template'               =&gt; [
+            // 模板引擎类型 支持 php think 支持扩展
+            'type'         =&gt; 'Think',
+            // 模板路径
+            'view_path'    =&gt; '',
+            // 模板后缀
+            'view_suffix'  =&gt; '.html',
+            // 预先加载的标签库
+            'taglib_pre_load'     =&gt;    'app\common\taglib\Demo', 
+
+        ],</code></pre>
+<p class="calibre10">我们就可以在控制器中对模版赋值：</p>
+<pre class="calibre21"><code class="calibre22">//给模版给以一个当前时间戳的值
+$this-&gt;assign('demo_time',$this-&gt;request-&gt;time());</code></pre>
+<p class="calibre10">在模版中调用我们已经预先加载的标签：</p>
+<pre class="calibre21"><code class="calibre22">&lt;h1&gt;闭合标签&lt;/h1&gt;
+{demo:close time='$demo_time'/}
+&lt;hr&gt;
+&lt;h1&gt;非闭合标签&lt;/h1&gt;
+{demo:open name='demo_name'}
+    {$key}=&gt;{$demo_name}&lt;br&gt;
+{/demo:open}
+&lt;br&gt;
+{demo:open name='demo_name' type='1'}
+    {$key}=&gt;{$demo_name}&lt;br&gt;
+{/demo:open}</code></pre>
+<h2 id="%E5%85%B3%E4%BA%8E%E6%A0%87%E7%AD%BE%E5%BA%93%E5%BC%80%E5%8F%91" class="calibre15">关于标签库开发</h2>
+<p class="calibre10">暂时可以参考3.2的官方手册中关于标签库扩展的部分，建议自己分析内置标签库Cx。</p>
+</div>
+	
+</body></html>

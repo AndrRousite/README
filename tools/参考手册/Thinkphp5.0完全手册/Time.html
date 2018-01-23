@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>Time</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_200">Time</h1>
+<div class="book-content">
+    <h2 id="%E6%97%B6%E9%97%B4%E6%88%B3%E6%93%8D%E4%BD%9C" class="calibre15">时间戳操作</h2>
+<p class="calibre10">首先通过 composer 安装</p>
+<pre class="calibre21"><code class="calibre22">composer require topthink/think-helper</code></pre>
+<p class="calibre10">在文件头部引入</p>
+<pre class="calibre21"><code class="calibre22">use think\helper\Time;</code></pre>
+<p class="calibre10">比如需要获得今天的零点时间戳和23点59分59秒的时间戳</p>
+<pre class="calibre21"><code class="calibre22">list($start, $end) = Time::today();
+
+echo $start; // 零点时间戳
+echo $end; // 23点59分59秒的时间戳</code></pre>
+<p class="calibre10">完整示例如下:</p>
+<pre class="calibre21"><code class="calibre22">// 今日开始和结束的时间戳
+Time::today();
+
+// 昨日开始和结束的时间戳
+Time::yesterday();
+
+// 本周开始和结束的时间戳
+Time::week();
+
+// 上周开始和结束的时间戳
+Time::lastWeek();
+
+// 本月开始和结束的时间戳
+Time::month();
+
+// 上月开始和结束的时间戳
+Time::lastMonth();
+
+// 今年开始和结束的时间戳
+Time::year();
+
+// 去年开始和结束的时间戳
+Time::lastYear();
+
+// 获取7天前零点到现在的时间戳
+Time::dayToNow(7)
+
+// 获取7天前零点到昨日结束的时间戳
+Time::dayToNow(7, true)
+
+// 获取7天前的时间戳
+Time::daysAgo(7)
+
+//  获取7天后的时间戳
+Time::daysAfter(7)
+
+// 天数转换成秒数
+Time::daysToSecond(5)
+
+// 周数转换成秒数
+Time::weekToSecond(5)</code></pre>
+</div>
+	
+</body></html>

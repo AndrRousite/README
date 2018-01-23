@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>模板渲染</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_125">模板渲染</h1>
+<div class="book-content">
+    <h2 id="%E6%A8%A1%E6%9D%BF%E6%B8%B2%E6%9F%93" class="calibre15">模板渲染</h2>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">新增功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.4</td>
+<td class="calibre34 pcalibre1">支持渲染视图根目录的模板文件</td>
+</tr></tbody></table><p class="calibre10">渲染模板最常用的是使用<code class="calibre7">\think\View</code>类的<code class="calibre7">fetch</code>方法，调用格式：</p>
+<blockquote class="info">
+<h3 id="fetch%28%27%5B%E6%A8%A1%E6%9D%BF%E6%96%87%E4%BB%B6%5D%27%5B%2C%27%E6%A8%A1%E6%9D%BF%E5%8F%98%E9%87%8F%EF%BC%88%E6%95%B0%E7%BB%84%EF%BC%89%27%5D%29" class="calibre17">fetch('[模板文件]'[,'模板变量（数组）'])</h3>
+</blockquote>
+<p class="calibre10">模板文件的写法支持下面几种： </p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">用法</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">不带任何参数</td>
+<td class="calibre32 pcalibre1">自动定位当前操作的模板文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">[模块@][控制器/][操作]</td>
+<td class="pcalibre1 calibre31">常用写法，支持跨模块</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">完整的模板文件名</td>
+<td class="calibre33 pcalibre1">直接使用完整的模板文件名（包括模板后缀）</td>
+</tr></tbody></table><p class="calibre10">下面是一个最典型的用法，不带任何参数：</p>
+<pre class="calibre21"><code class="calibre22">// 不带任何参数 自动定位当前操作的模板文件
+$view = new View();
+return $view-&gt;fetch();</code></pre>
+<p class="calibre10">表示系统会按照默认规则自动定位模板文件，其规则是：</p>
+<pre class="calibre21"><code class="calibre22">当前模块/默认视图目录/当前控制器（小写）/当前操作（小写）.html</code></pre>
+<p class="calibre10">如果有更改模板引擎的<code class="calibre7">view_depr</code>设置（假设 <code class="calibre7">'view_depr'=&gt;'_'</code>）的话，则上面的自动定位规则变成： </p>
+<pre class="calibre21"><code class="calibre22">当前模块/默认视图目录/当前控制器（小写）_当前操作（小写）.html
+</code></pre>
+<p class="calibre10">如果没有按照模板定义规则来定义模板文件（或者需要调用其他控制器下面的某个模板），可以使用：</p>
+<pre class="calibre21"><code class="calibre22">// 指定模板输出
+return $view-&gt;fetch('edit'); </code></pre>
+<p class="calibre10">表示调用当前控制器下面的edit模板</p>
+<pre class="calibre21"><code class="calibre22">return $view-&gt;fetch('member/read');</code></pre>
+<p class="calibre10">表示调用Member控制器下面的read模板。</p>
+<p class="calibre10">跨模块渲染模板</p>
+<pre class="calibre21"><code class="calibre22">return $view-&gt;fetch('admin@member/edit');</code></pre>
+<p class="calibre10">渲染输出不需要写模板文件的路径和后缀。这里面的控制器和操作并不一定需要有实际对应的控制器和操作，只是一个目录名称和文件名称而已，例如，你的项目里面可能根本没有Public控制器，更没有Public控制器的menu操作，但是一样可以使用</p>
+<pre class="calibre21"><code class="calibre22">return $view-&gt;fetch('public/menu');</code></pre>
+<p class="calibre10">输出这个模板文件。理解了这个，模板输出就清晰了。</p>
+<p class="calibre10"><code class="calibre7">fetch</code>方法支持在渲染输出的时候传入模板变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">return $view-&gt;fetch('read', ['a'=&gt;'a','b'=&gt;'b']);</code></pre>
+<p class="calibre10"><code class="calibre7">V5.0.4+</code>版本开始，支持从视图根目录开始读取模板，例如：</p>
+<pre class="calibre21"><code class="calibre22">$view-&gt;fetch('/menu');</code></pre>
+<p class="calibre10">表示读取的模板是</p>
+<pre class="calibre21"><code class="calibre22">当前模块/默认视图目录/menu.html</code></pre>
+<h2 id="%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E6%9D%BF%E8%B7%AF%E5%BE%84" class="calibre15">自定义模板路径</h2>
+<p class="calibre10">如果你的模板文件位置比较特殊或者需要自定义模板文件的位置，可以采用下面的几种方式处理。</p>
+<h3 id="%E6%B8%B2%E6%9F%93%E5%AE%8C%E6%95%B4%E6%A8%A1%E6%9D%BF" class="calibre17">渲染完整模板</h3>
+<pre class="calibre21"><code class="calibre22">return $view-&gt;fetch('./template/public/menu.html');</code></pre>
+<p class="calibre10">这种方式需要带模板路径和后缀指定一个完整的模板文件位置，这里的<code class="calibre7">template/public</code>目录是位于当前项目入口文件位置下面。如果是其他的后缀文件，也支持直接输出，例如：</p>
+<pre class="calibre21"><code class="calibre22">return $view-&gt;fetch('./template/public/menu.tpl');</code></pre>
+<p class="calibre10">只要<code class="calibre7">./template/public/menu.tpl</code>是一个实际存在的模板文件。</p>
+<blockquote class="calibre5">
+<p class="calibre14">要注意模板文件位置是相对于应用的入口文件，而不是模板目录。</p>
+</blockquote>
+<h2 id="%E6%B8%B2%E6%9F%93%E5%86%85%E5%AE%B9" class="calibre15">渲染内容</h2>
+<p class="calibre10">如果希望直接解析内容而不通过模板文件的话，可以使用<code class="calibre7">display</code>方法：</p>
+<pre class="calibre21"><code class="calibre22">$view = new View();
+return $view-&gt;display($content,$vars);</code></pre>
+<p class="calibre10">渲染的内容中一样可以使用模板引擎的相关标签。</p>
+</div>
+	
+</body></html>

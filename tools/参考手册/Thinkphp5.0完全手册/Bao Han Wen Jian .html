@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>包含文件</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_141">包含文件</h1>
+<div class="book-content">
+    <p class="calibre10">在当前模版文件中包含其他的模版文件使用include标签，标签用法：</p>
+<pre class="calibre21"><code class="calibre22">{include file='模版文件1,模版文件2,...' /}</code></pre>
+<blockquote class="danger">
+<p class="calibre14">包含的模板文件中不能再使用模板布局或者模板继承。</p>
+</blockquote>
+<h2 id="%E4%BD%BF%E7%94%A8%E6%A8%A1%E7%89%88%E8%A1%A8%E8%BE%BE%E5%BC%8F" class="calibre15">使用模版表达式</h2>
+<p class="calibre10">模版表达式的定义规则为：<strong class="calibre12">模块@控制器/操作</strong></p>
+<p class="calibre10">例如：</p>
+<pre class="calibre21"><code class="calibre22">{include file="public/header" /} // 包含头部模版header
+{include file="public/menu" /} // 包含菜单模版menu
+{include file="blue/public/menu" /} // 包含blue主题下面的menu模版</code></pre>
+<p class="calibre10">可以一次包含多个模版，例如：</p>
+<pre class="calibre21"><code class="calibre22">{include file="public/header,public/menu" /}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">注意，包含模版文件并不会自动调用控制器的方法，也就是说包含的其他模版文件中的变量赋值需要在当前操作中完成。</p>
+</blockquote>
+<h2 id="%E4%BD%BF%E7%94%A8%E6%A8%A1%E7%89%88%E6%96%87%E4%BB%B6" class="calibre15">使用模版文件</h2>
+<p class="calibre10">可以直接包含一个模版文件名（包含完整路径），例如：</p>
+<pre class="calibre21"><code class="calibre22">{include file="../application/view/default/public/header.html" /}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">路径以 项目目录/public/ 路径下为起点</p>
+</blockquote>
+<h2 id="%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0" class="calibre15">传入参数</h2>
+<p class="calibre10">无论你使用什么方式包含外部模板，Include标签支持在包含文件的同时传入参数，例如，下面的例子我们在包含header模板的时候传入了<code class="calibre7">title</code>和<code class="calibre7">keywords</code>参数：</p>
+<pre class="calibre21"><code class="calibre22">{include file="Public/header" title="$title" keywords="开源WEB开发框架" /}</code></pre>
+<p class="calibre10">就可以在包含的header.html文件里面使用title和keywords变量，如下：</p>
+<pre class="calibre21"><code class="calibre22">&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+&lt;title&gt;[title]&lt;/title&gt;
+&lt;meta name="keywords" content="[keywords]" /&gt;
+&lt;/head&gt;</code></pre>
+<p class="calibre10">上面title参数传入的是个变量$title，模板内的[title]最终会替换成$title的值，当然$title这个变量必须要存在。</p>
+<p class="calibre10"><strong class="calibre12">包含文件中可以再使用include标签包含别的文件，但注意不要形成A包含A，或者A包含B而B又包含A这样的死循环。</strong></p>
+<blockquote class="calibre5">
+<p class="calibre14">注意：由于模板解析的特点，从入口模板开始解析，如果外部模板有所更改，模板引擎并不会重新编译模板，除非在调试模式下或者缓存已经过期。如果部署模式下修改了包含的外部模板文件后，需要把模块的缓存目录清空，否则无法生效。</p>
+</blockquote>
+</div>
+	
+</body></html>

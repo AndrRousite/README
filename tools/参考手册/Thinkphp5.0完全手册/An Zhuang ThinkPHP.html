@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>安装ThinkPHP</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_3">安装ThinkPHP</h1>
+<div class="book-content">
+    <p class="calibre10"><code class="calibre7">ThinkPHP5</code>的环境要求如下：</p>
+<blockquote class="info">
+<ul class="calibre19"><li class="calibre20">PHP &gt;= 5.4.0</li>
+<li class="calibre20">PDO PHP Extension</li>
+<li class="calibre20">MBstring PHP Extension</li>
+<li class="calibre20">CURL PHP Extension</li>
+</ul></blockquote>
+<p class="calibre10">严格来说，<code class="calibre7">ThinkPHP</code>无需安装过程，这里所说的安装其实就是把<code class="calibre7">ThinkPHP</code>框架放入<code class="calibre7">WEB</code>运行环境（<strong class="calibre12">前提是你的WEB运行环境已经OK</strong>），可以通过下面几种方式获取和安装ThinkPHP。</p>
+<h3 id="%E4%B8%80%E3%80%81%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85" class="calibre17">一、官网下载安装</h3>
+<p class="calibre10">获取<code class="calibre7">ThinkPHP</code>的方式很多，官方网站（<a href="http://thinkphp.cn" class="pcalibre calibre13">http://thinkphp.cn</a>）提供了<a href="http://thinkphp.cn/down/framework.html" class="pcalibre calibre13">稳定版本</a>或者带扩展完整版本的下载。</p>
+<blockquote class="danger">
+<p class="calibre14">官网的下载版本不一定是最新版本，GIT版本获取的才是保持更新的版本。</p>
+</blockquote>
+<h3 id="%E4%BA%8C%E3%80%81composer%E5%AE%89%E8%A3%85" class="calibre17">二、Composer安装</h3>
+<p class="calibre10"><code class="calibre7">ThinkPHP5</code>支持使用<code class="calibre7">Composer</code>安装，如果还没有安装 <code class="calibre7">Composer</code>，你可以按 <a href="http://www.kancloud.cn/thinkphp/composer/35669" class="pcalibre calibre13">Composer安装</a> 中的方法安装。在 <code class="calibre7">Linux</code> 和 <code class="calibre7">Mac OS X</code> 中可以运行如下命令：</p>
+<pre class="calibre21"><code class="calibre22">curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer</code></pre>
+<p class="calibre10">在 Windows 中，你需要下载并运行 <a href="https://getcomposer.org/Composer-Setup.exe" class="pcalibre calibre13">Composer-Setup.exe</a>。</p>
+<p class="calibre10">如果遇到任何问题或者想更深入地学习 Composer，请参考 <a href="https://getcomposer.org/doc/" class="pcalibre calibre13">Composer 文档（英文）</a>，<a href="http://www.kancloud.cn/thinkphp/composer" class="pcalibre calibre13">Composer 中文</a>。</p>
+<p class="calibre10">如果你已经安装有 <code class="calibre7">Composer</code> 请确保使用的是最新版本，你可以用 <code class="calibre7">composer self-update</code> 命令更新 <code class="calibre7">Composer</code> 为最新版本。</p>
+<p class="calibre10">然后在命令行下面，切换到你的web根目录下面并执行下面的命令： </p>
+<pre class="calibre21"><code class="calibre22">composer create-project topthink/think tp5  --prefer-dist</code></pre>
+<p class="calibre10">如果出现错误提示，请根据提示操作或者参考<a href="http://www.kancloud.cn/thinkphp/composer" class="pcalibre calibre13">Composer中文文档</a>。</p>
+<blockquote class="info">
+<p class="calibre14">如果国内访问<code class="calibre7">composer</code>的速度比较慢，可以参考这里的说明<a href="http://pkg.phpcomposer.com/" class="pcalibre calibre13">使用国内镜像</a></p>
+</blockquote>
+<h2 id="%E4%B8%89%E3%80%81git%E5%AE%89%E8%A3%85" class="calibre15">三、Git安装</h2>
+<p class="calibre10">如果你不太了解<code class="calibre7">Composer</code>或者觉得<code class="calibre7">Composer</code>太慢，也可以使用<code class="calibre7">git</code>版本库安装和更新，<code class="calibre7">ThinkPHP5.0</code>拆分为多个仓库，主要包括：</p>
+<ul class="calibre23"><li class="calibre20">应用项目：<code class="calibre7">https://github.com/top-think/think</code></li>
+<li class="calibre20">核心框架：<code class="calibre7">https://github.com/top-think/framework</code> </li>
+</ul><p class="calibre10">如果你访问github速度比较慢，可以考虑下面两个国内GIT仓库：</p>
+<h3 id="%5B+%E7%A0%81%E4%BA%91+%5D" class="calibre17">[ 码云 ]</h3>
+<ul class="calibre23"><li class="calibre20">应用项目：<code class="calibre7">https://git.oschina.net/liu21st/thinkphp5.git</code></li>
+<li class="calibre20">核心框架：<code class="calibre7">https://git.oschina.net/liu21st/framework.git</code> </li>
+</ul><h3 id="%5B+coding+%5D" class="calibre17">[ Coding ]</h3>
+<ul class="calibre23"><li class="calibre20">应用项目：<code class="calibre7">https://git.coding.net/liu21st/thinkphp5.git</code></li>
+<li class="calibre20">核心框架：<code class="calibre7">https://git.coding.net/liu21st/framework.git</code> </li>
+</ul><blockquote class="info">
+<p class="calibre14">之所以设计为应用和核心仓库分离，是为了支持<code class="calibre7">Composer</code>单独更新核心框架。</p>
+</blockquote>
+<p class="calibre10">首先克隆下载应用项目仓库</p>
+<pre class="calibre21"><code class="calibre22">git clone https://github.com/top-think/think tp5</code></pre>
+<p class="calibre10">然后切换到<code class="calibre7">tp5</code>目录下面，再克隆核心框架仓库：</p>
+<pre class="calibre21"><code class="calibre22">git clone https://github.com/top-think/framework thinkphp</code></pre>
+<p class="calibre10">两个仓库克隆完成后，就完成了<code class="calibre7">ThinkPHP5.0</code>的<code class="calibre7">Git</code>方式下载，如果需要更新核心框架的时候，只需要切换到thinkphp核心目录下面，然后执行：</p>
+<pre class="calibre21"><code class="calibre22">git pull https://github.com/top-think/framework</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">如果不熟悉<code class="calibre7">git</code>命令行，可以使用任何一个GIT客户端进行操作，在此不再详细说明。</p>
+</blockquote>
+<p class="calibre10">无论你采用什么方式获取的<code class="calibre7">ThinkPHP</code>框架，现在只需要做最后一步来验证是否正常运行。</p>
+<p class="calibre10">在浏览器中输入地址：</p>
+<pre class="calibre21"><code class="calibre22">http://localhost/tp5/public/</code></pre>
+<p class="calibre10">如果浏览器输出如图所示：</p>
+<p class="calibre10"><img src="56e2726c5e51e.png" alt="" class="calibre11"/></p>
+<p class="calibre10">恭喜你，现在已经完成<code class="calibre7">ThinkPHP5</code>的安装！</p>
+<p class="calibre10">如果你无法正常运行并显示<code class="calibre7">ThinkPHP</code>的欢迎页面，那么请检查下你的服务器环境：</p>
+<blockquote class="calibre5">
+<ul class="calibre19"><li class="calibre20">PHP<code class="calibre7">5.4</code>以上版本（<strong class="calibre12">注意：PHP5.4dev版本和PHP6均不支持</strong>）</li>
+<li class="calibre20">WEB服务器是否正常启动</li>
+</ul></blockquote>
+<h2 id="" class="calibre15"></h2>
+<blockquote class="danger">
+<p class="calibre14">[推广] <a href="https://www.azure.cn/pricing/1rmb-trial-website-hosting/?wt.mc_id=AzureThinkphpOnlineAdBOITrial0002014" class="pcalibre calibre13">1元享Azure云试用，15分钟轻松建站</a></p>
+</blockquote>
+</div>
+	
+</body></html>

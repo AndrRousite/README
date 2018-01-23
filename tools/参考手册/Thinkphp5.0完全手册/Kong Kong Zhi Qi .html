@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>空控制器</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_49">空控制器</h1>
+<div class="book-content">
+    <p class="calibre10">空控制器的概念是指当系统找不到指定的控制器名称的时候，系统会尝试定位空控制器(Error)，利用这个机制我们可以用来定制错误页面和进行URL的优化。<br class="calibre16"/>
+现在我们把前面的需求进一步，把URL由原来的</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index/city/shanghai/</code></pre>
+<p class="calibre10">变成</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index/shanghai/</code></pre>
+<p class="calibre10">这样更加简单的方式，如果按照传统的模式，我们必须给每个城市定义一个控制器类，然后在每个控制器类的index方法里面进行处理。 可是如果使用空控制器功能，这个问题就可以迎刃而解了。</p>
+<p class="calibre10">我们可以给项目定义一个Error控制器类</p>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+namespace app\index\controller;
+
+use think\Request;
+
+class Error 
+{
+    public function index(Request $request)
+    {
+        //根据当前控制器名来判断要执行那个城市的操作
+        $cityName = $request-&gt;controller();
+        return $this-&gt;city($cityName);
+    }
+
+    //注意 city方法 本身是 protected 方法
+    protected function city($name)
+    {
+        //和$name这个城市相关的处理
+         return '当前城市' . $name;
+    }
+}</code></pre>
+<p class="calibre10">接下来，我们就可以在浏览器里面输入</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index/beijing/
+http://serverName/index/shanghai/
+http://serverName/index/shenzhen/</code></pre>
+<p class="calibre10">由于系统并不存在beijing、shanghai或者shenzhen控制器，因此会定位到空控制器（Error）去执行，会看到依次输出的结果是：</p>
+<pre class="calibre21"><code class="calibre22">当前城市:beijing
+当前城市:shanghai
+当前城市:shenzhen</code></pre>
+<p class="calibre10">空控制器和空操作还可以同时使用，用以完成更加复杂的操作。</p>
+<p class="calibre10">空控制器Error是可以定义的</p>
+<pre class="calibre21"><code class="calibre22">// 更改默认的空控制器名
+'empty_controller'      =&gt; 'MyError',</code></pre>
+<p class="calibre10">当找不到控制器的时候，就会定位到MyError控制器类进行操作。</p>
+</div>
+	
+</body></html>

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>时间戳</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_101">时间戳</h1>
+<div class="book-content">
+    <table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">调整功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.6</td>
+<td class="calibre32 pcalibre1">增加时间字段自动格式输出设置</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">5.0.5</td>
+<td class="pcalibre1 calibre31">时间戳字段支持自动格式化输出</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">5.0.5</td>
+<td class="calibre33 pcalibre1"><code class="calibre7">autoWriteTimestamp</code>属性支持设置为时间日期类名</td>
+</tr></tbody></table><p class="calibre10">系统支持自动写入创建和更新的时间戳字段，有两种方式配置支持。</p>
+<p class="calibre10">第一种方式，是在数据库配置文件中添加全局设置：</p>
+<pre class="calibre21"><code class="calibre22">// 开启自动写入时间戳字段
+'auto_timestamp' =&gt; true,</code></pre>
+<p class="calibre10">第二种是直接在单独的模型类里面设置：</p>
+<pre class="calibre21"><code class="calibre22">protected $autoWriteTimestamp = true;</code></pre>
+<p class="calibre10">如果这两个地方设置为true，默认识别为整型<code class="calibre7">int</code>类型，如果你的时间字段不是<code class="calibre7">int</code>类型的话，例如使用<code class="calibre7">datetime</code>类型的话，可以这样设置：</p>
+<pre class="calibre21"><code class="calibre22">// 开启自动写入时间戳字段
+'auto_timestamp' =&gt; 'datetime',</code></pre>
+<p class="calibre10">或者</p>
+<pre class="calibre21"><code class="calibre22">protected $autoWriteTimestamp = 'datetime';</code></pre>
+<p class="calibre10">字段名默认创建时间字段为<code class="calibre7">create_time</code>，更新时间字段为<code class="calibre7">update_time</code>，支持的字段类型包括<code class="calibre7">timestamp/datetime/int</code>。</p>
+<p class="calibre10">写入数据的时候，系统会自动写入<code class="calibre7">create_time</code>和<code class="calibre7">update_time</code>字段，而不需要定义修改器，例如：</p>
+<pre class="calibre21"><code class="calibre22">$user = new User();
+$user-&gt;name = 'THINKPHP';
+$user-&gt;save();
+echo $user-&gt;create_time; // 输出类似 2016-10-12 14:20:10
+echo $user-&gt;update_time; // 输出类似 2016-10-12 14:20:10</code></pre>
+<blockquote class="danger">
+<p class="calibre14"><code class="calibre7">V5.0.5+</code>版本开始，时间字段输出的时候会自动进行格式转换，如果不希望自动格式化输出，可以把数据库配置文件的 <code class="calibre7">datetime_format</code> 参数值改为<code class="calibre7">false</code>（<code class="calibre7">V5.0.6+</code>版本支持，之前版本可以使用类型转换方式关闭自动格式化）</p>
+</blockquote>
+<p class="calibre10">如果你的数据表字段不是默认值的话，可以按照下面的方式定义：</p>
+<pre class="calibre21"><code class="calibre22">class User extends Model 
+{
+    // 定义时间戳字段名
+    protected $createTime = 'create_at';
+    protected $updateTime = 'update_at';
+}</code></pre>
+<p class="calibre10">下面是修改字段后的输出代码：</p>
+<pre class="calibre21"><code class="calibre22">$user = new User();
+$user-&gt;name = 'THINKPHP';
+$user-&gt;save();
+echo $user-&gt;create_at; // 输出类似 2016-10-12 14:20:10
+echo $user-&gt;update_at; // 输出类似 2016-10-12 14:20:10</code></pre>
+<p class="calibre10">如果你只需要使用<code class="calibre7">create_time</code>字段而不需要自动写入<code class="calibre7">update_time</code>，则可以单独设置关闭某个字段，例如：</p>
+<pre class="calibre21"><code class="calibre22">class User extends Model 
+{
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+}</code></pre>
+<p class="calibre10">如果不需要任何自动写入的时间戳字段的话，可以关闭时间戳自动写入功能，设置如下：</p>
+<pre class="calibre21"><code class="calibre22">class User extends Model 
+{
+    // 关闭自动写入时间戳
+    protected $autoWriteTimestamp = false;
+}</code></pre>
+<p class="calibre10">如果是关闭全局的自动时间写入，则可以使用：</p>
+<pre class="calibre21"><code class="calibre22">// 关闭全局自动写入时间字段
+'auto_timestamp' =&gt; false,</code></pre>
+</div>
+	
+</body></html>

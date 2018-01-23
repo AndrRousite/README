@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>使用默认值</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_134">使用默认值</h1>
+<div class="book-content">
+    <p class="calibre10">我们可以给变量输出提供默认值，例如：</p>
+<pre class="calibre21"><code class="calibre22">{$user.nickname|default="这家伙很懒，什么也没留下"}</code></pre>
+<p class="calibre10">对系统变量依然可以支持默认值输出，例如：</p>
+<pre class="calibre21"><code class="calibre22">{$Think.get.name|default="名称为空"}</code></pre>
+<p class="calibre10">默认值和函数可以同时使用，例如：</p>
+<pre class="calibre21"><code class="calibre22">{$Think.get.name|getName|default="名称为空"}</code></pre>
+</div>
+	
+</body></html>

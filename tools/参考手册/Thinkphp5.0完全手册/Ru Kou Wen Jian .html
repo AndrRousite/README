@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>入口文件</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_9">入口文件</h1>
+<div class="book-content">
+    <p class="calibre10">ThinkPHP采用<strong class="calibre12">单一入口模式</strong>进行项目部署和访问，无论完成什么功能，一个应用都有一个统一（但不一定是唯一）的入口。</p>
+<p class="calibre10">应该说，所有应用都是从入口文件开始的，并且不同应用的入口文件是类似的。</p>
+<h2 id="%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%E5%AE%9A%E4%B9%89" class="calibre15">入口文件定义</h2>
+<p class="calibre10">入口文件主要完成：</p>
+<ul class="calibre23"><li class="calibre20">定义框架路径、项目路径（可选）</li>
+<li class="calibre20">定义系统相关常量（可选）</li>
+<li class="calibre20">载入框架入口文件（必须）</li>
+</ul><p class="calibre10">5.0默认的应用入口文件位于<code class="calibre7">public/index.php</code>，内容如下：</p>
+<pre class="calibre21"><code class="calibre22">// 定义应用目录
+define('APP_PATH', __DIR__ . '/../application/');
+// 加载框架引导文件
+require __DIR__ . '/../thinkphp/start.php';</code></pre>
+<blockquote class="info">
+<p class="calibre14">入口文件位置的设计是为了让应用部署更安全，<code class="calibre7">public</code>目录为web可访问目录，其他的文件都可以放到非WEB访问目录下面。</p>
+</blockquote>
+<p class="calibre10">修改入口文件位置请查看章节&lt;<a href="129746" class="pcalibre calibre13"><strong class="calibre12">部署-虚拟主机环境</strong></a>&gt;</p>
+<blockquote class="calibre5">
+<p class="calibre14">入口文件中还可以定义一些系统变量，用于相关的绑定操作（通常用于多个入口的情况），这个会在后面涉及，暂且不提。</p>
+<p class="calibre14">给<code class="calibre7">APP_PATH</code>定义绝对路径会提高系统的加载效率。</p>
+</blockquote>
+<p class="calibre10">在有些情况下，你可能需要加载框架的基础引导文件<code class="calibre7">base.php</code>，该引导文件和<code class="calibre7">start.php</code>的区别是不会主动执行应用，而是需要自己进行应用执行，下面是一个例子：</p>
+<pre class="calibre21"><code class="calibre22">// 定义应用目录
+define('APP_PATH', __DIR__ . '/../application/');
+// 加载框架基础引导文件
+require __DIR__ . '/../thinkphp/base.php';
+// 添加额外的代码
+// ...
+// 执行应用
+\think\App::run()-&gt;send();</code></pre>
+</div>
+	
+</body></html>

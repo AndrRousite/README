@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>单元测试</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_193">单元测试</h1>
+<div class="book-content">
+    <h2 id="%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95" class="calibre15">单元测试</h2>
+<p class="calibre10">首先安装<code class="calibre7">ThinkPHP5</code>的单元测试扩展，进入命令行，切换到tp5的应用根目录下面，执行：</p>
+<pre class="calibre21"><code class="calibre22">composer require topthink/think-testing</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">由于单元测试扩展的依赖较多，因此安装过程会比较久，请耐心等待。</p>
+</blockquote>
+<p class="calibre10">安装完成后，会在应用根目录下面增加<code class="calibre7">tests</code>目录和<code class="calibre7">phpunit.xml</code>文件。<br class="calibre16"/>
+默认带了一个<code class="calibre7">tests/ExampleTest.php</code>单元测试文件，我们可以直接在命令行下面运行单元测试：</p>
+<pre class="calibre21"><code class="calibre22">php think unit</code></pre>
+<blockquote class="danger">
+<p class="calibre14">请始终使用以上命令进行单元测试，而不是直接用<code class="calibre7">phpunit</code>来运行单元测试。</p>
+</blockquote>
+<h2 id="%E6%B7%BB%E5%8A%A0%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6" class="calibre15">添加单元测试文件</h2>
+<p class="calibre10">我们来添加一个新的单元测试文件，单元测试文件为<code class="calibre7">tests/IndexTest.php</code>，内容如下：</p>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+use tests\TestCase;
+
+class IndexTest extends TestCase
+{
+
+    public function testSomethingIsTrue()
+    {
+        $this-&gt;assertTrue(true);
+    }
+
+}</code></pre>
+<blockquote class="danger">
+<p class="calibre14">注意，单元测试文件中定义的测试类如果不存在冲突，可以不需要使用命名空间。</p>
+</blockquote>
+</div>
+	
+</body></html>

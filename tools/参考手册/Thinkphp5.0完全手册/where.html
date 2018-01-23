@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>where</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">where</h1>
+<div class="book-content">
+    <p class="calibre10">where方法的用法是ThinkPHP查询语言的精髓，也是ThinkPHP ORM的重要组成部分和亮点所在，可以完成包括普通查询、表达式查询、快捷查询、区间查询、组合查询在内的查询操作。where方法的参数支持字符串和数组，虽然也可以使用对象但并不建议。</p>
+<h2 id="%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9F%A5%E8%AF%A2" class="calibre15">表达式查询</h2>
+<p class="calibre10">新版的表达式查询采用全新的方式，查询表达式的使用格式：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')
+    -&gt;where('id','&gt;',1)
+    -&gt;where('name','thinkphp')
+    -&gt;select(); </code></pre>
+<p class="calibre10">更多的表达式查询语法，可以参考<a href="135182" class="pcalibre calibre13">查询语法</a>部分。</p>
+<h2 id="%E6%95%B0%E7%BB%84%E6%9D%A1%E4%BB%B6" class="calibre15">数组条件</h2>
+<p class="calibre10">可以通过数组方式批量设置查询条件。</p>
+<h3 id="%E6%99%AE%E9%80%9A%E6%9F%A5%E8%AF%A2" class="calibre17">普通查询</h3>
+<p class="calibre10">最简单的数组查询方式如下：</p>
+<pre class="calibre21"><code class="calibre22">$map['name'] = 'thinkphp';
+$map['status'] = 1;
+// 把查询条件传入查询方法
+Db::table('think_user')-&gt;where($map)-&gt;select(); 
+
+// 助手函数
+db('user')-&gt;where($map)-&gt;select();</code></pre>
+<p class="calibre10">最后生成的SQL语句是</p>
+<pre class="calibre21"><code class="calibre22">SELECT * FROM think_user WHERE `name`='thinkphp' AND status=1</code></pre>
+<h3 id="%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9F%A5%E8%AF%A2-1" class="calibre17">表达式查询</h3>
+<p class="calibre10">可以在数组条件中使用查询表达式，例如：</p>
+<pre class="calibre21"><code class="calibre22">$map['id']  = ['&gt;',1];
+$map['mail']  = ['like','%thinkphp@qq.com%'];
+Db::table('think_user')-&gt;where($map)-&gt;select(); </code></pre>
+<h2 id="%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A1%E4%BB%B6" class="calibre15">字符串条件</h2>
+<p class="calibre10">使用字符串条件直接查询和操作，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;where('type=1 AND status=1')-&gt;select(); </code></pre>
+<p class="calibre10">最后生成的SQL语句是</p>
+<pre class="calibre21"><code class="calibre22">SELECT * FROM think_user WHERE type=1 AND status=1</code></pre>
+<p class="calibre10">使用字符串条件的时候，建议配合预处理机制，确保更加安全，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;where("id=:id and username=:name")-&gt;bind(['id'=&gt;[1,\PDO::PARAM_INT],'name'=&gt;'thinkphp'])-&gt;select();</code></pre>
+</div>
+	
+</body></html>

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>类库</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_196">类库</h1>
+<div class="book-content">
+    <p class="calibre10">如果你需要在核心之外扩展和使用第三方类库，并且该类库不是通过<code class="calibre7">Composer</code>安装使用，那么可以直接放入应用根目录下面的<code class="calibre7">extend</code>目录下面，该目录是官方建议的第三方扩展类库目录。</p>
+<p class="calibre10">类的命名规范遵循<code class="calibre7">PSR-2</code>及<code class="calibre7">PSR-4</code>规范，例如，如果有一个扩展类库的命名空间是 <code class="calibre7">first.second.Foo</code>，类定义如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace first\second;
+
+class Foo 
+{
+}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">使用第三方类库的时候注意不要和系统的命名空间产生冲突，例如核心的<code class="calibre7">think</code>、<code class="calibre7">app</code>以及<code class="calibre7">Composer</code>类库自身定义的命名空间。</p>
+</blockquote>
+<p class="calibre10">那么实际的类文件位置应该是：</p>
+<pre class="calibre21"><code class="calibre22">extend/first/second/Foo.php</code></pre>
+<p class="calibre10">使用<code class="calibre7">first.second.Foo</code>类的时候，直接实例化即可使用，例如：</p>
+<pre class="calibre21"><code class="calibre22">$foo = new \first\second\Foo();</code></pre>
+<p class="calibre10">或者先</p>
+<pre class="calibre21"><code class="calibre22">use first\second\Foo;</code></pre>
+<p class="calibre10">然后</p>
+<pre class="calibre21"><code class="calibre22">$foo = new Foo();</code></pre>
+<p class="calibre10">你可以在入口文件中随意修改<code class="calibre7">extend</code>目录的名称，例如：</p>
+<pre class="calibre21"><code class="calibre22">define('EXTEND_PATH', '../extension/');</code></pre>
+<p class="calibre10"><code class="calibre7">ThinkPHP5</code>建议所有的扩展类库都使用命名空间定义，如果你的类库没有使用命名空间，则不支持自动加载，必须使用<code class="calibre7">Loader::import</code>方法先导入文件后才能使用。</p>
+<pre class="calibre21"><code class="calibre22">Loader::import('first.second.Foo');
+$foo = new \Foo();</code></pre>
+<blockquote class="danger">
+<h3 id="%E5%BC%BA%E7%83%88%E5%BB%BA%E8%AE%AE%E4%BD%BF%E7%94%A8%60composer%60%E5%AE%89%E8%A3%85%E5%92%8C%E6%9B%B4%E6%96%B0%E6%89%A9%E5%B1%95%E7%B1%BB%E5%BA%93%EF%BC%8C%60thinkphp5.0%60%E7%9A%84%E6%89%A9%E5%B1%95%E7%B1%BB%E5%BA%93%E9%83%BD%E9%87%87%E7%94%A8%60composer%60%E6%96%B9%E5%BC%8F%E8%BF%9B%E8%A1%8C%E5%AE%89%E8%A3%85%E3%80%82" class="calibre17">强烈建议使用<code class="calibre7">Composer</code>安装和更新扩展类库，<code class="calibre7">ThinkPHP5.0</code>的扩展类库都采用<code class="calibre7">Composer</code>方式进行安装。</h3>
+</blockquote>
+</div>
+	
+</body></html>

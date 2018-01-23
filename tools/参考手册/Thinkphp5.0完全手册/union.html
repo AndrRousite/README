@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>union</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">union</h1>
+<div class="book-content">
+    <p class="calibre10">UNION操作用于合并两个或多个 SELECT 语句的结果集。</p>
+<p class="calibre10">使用示例：</p>
+<pre class="calibre21"><code class="calibre22">Db::field('name')
+      -&gt;table('think_user_0')
+      -&gt;union('SELECT name FROM think_user_1')
+      -&gt;union('SELECT name FROM think_user_2')
+      -&gt;select();</code></pre>
+<p class="calibre10">闭包用法：</p>
+<pre class="calibre21"><code class="calibre22">Db::field('name')
+      -&gt;table('think_user_0')
+      -&gt;union(function($query){
+        $query-&gt;field('name')-&gt;table('think_user_1');
+        })
+      -&gt;union(function($query){
+        $query-&gt;field('name')-&gt;table('think_user_2');
+        })
+      -&gt;select();</code></pre>
+<p class="calibre10">或者</p>
+<pre class="calibre21"><code class="calibre22">Db::field('name')
+      -&gt;table('think_user_0')
+      -&gt;union(['SELECT name FROM think_user_1','SELECT name FROM think_user_2'])
+      -&gt;select();</code></pre>
+<p class="calibre10">支持UNION ALL 操作，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::field('name')
+      -&gt;table('think_user_0')
+      -&gt;union('SELECT name FROM think_user_1',true)
+      -&gt;union('SELECT name FROM think_user_2',true)
+      -&gt;select();</code></pre>
+<p class="calibre10">或者</p>
+<pre class="calibre21"><code class="calibre22">Db::field('name')
+      -&gt;table('think_user_0')
+      -&gt;union(['SELECT name FROM think_user_1','SELECT name FROM think_user_2'],true)
+      -&gt;select();</code></pre>
+<p class="calibre10">每个union方法相当于一个独立的SELECT语句。</p>
+<blockquote class="calibre5">
+<p class="calibre14">注意：UNION 内部的 SELECT 语句必须拥有相同数量的列。列也必须拥有相似的数据类型。同时，每条 SELECT 语句中的列的顺序必须相同。</p>
+</blockquote>
+</div>
+	
+</body></html>

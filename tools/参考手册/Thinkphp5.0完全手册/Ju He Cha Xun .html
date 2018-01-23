@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>聚合查询</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_79">聚合查询</h1>
+<div class="book-content">
+    <p class="calibre10">在应用中我们经常会用到一些统计数据，例如当前所有（或者满足某些条件）的用户数、所有用户的最大积分、用户的平均成绩等等，ThinkPHP为这些统计操作提供了一系列的内置方法，包括：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">方法</th>
+<th class="calibre28">说明</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">count</td>
+<td class="calibre32 pcalibre1">统计数量，参数是要统计的字段名（可选）</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">max</td>
+<td class="pcalibre1 calibre31">获取最大值，参数是要统计的字段名（必须）</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">min</td>
+<td class="pcalibre1 calibre31">获取最小值，参数是要统计的字段名（必须）</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">avg</td>
+<td class="pcalibre1 calibre31">获取平均值，参数是要统计的字段名（必须）</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">sum</td>
+<td class="calibre33 pcalibre1">获取总分，参数是要统计的字段名（必须）</td>
+</tr></tbody></table><p class="calibre10">用法示例：</p>
+<p class="calibre10">获取用户数：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;count();
+// 助手函数
+db('user')-&gt;count();</code></pre>
+<p class="calibre10">或者根据字段统计：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;count('id');
+// 助手函数
+db('user')-&gt;count('id');</code></pre>
+<p class="calibre10">获取用户的最大积分：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;max('score');
+// 助手函数
+db('user')-&gt;max('score');</code></pre>
+<p class="calibre10">获取积分大于0的用户的最小积分：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;where('score&gt;0')-&gt;min('score');
+// 助手函数
+db('user')-&gt;where('score&gt;0')-&gt;min('score');</code></pre>
+<p class="calibre10">获取用户的平均积分：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;avg('score');
+// 助手函数
+db('user')-&gt;avg('score');</code></pre>
+<p class="calibre10">统计用户的总成绩：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;sum('score');
+// 助手函数
+db('user')-&gt;sum('score');</code></pre>
+</div>
+	
+</body></html>

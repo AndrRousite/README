@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>failException</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">failException</h1>
+<div class="book-content">
+    <p class="calibre10"><code class="calibre7">failException</code>设置查询数据为空时是否需要抛出异常，如果不传入任何参数，默认为开启，用于<code class="calibre7">select</code>和<code class="calibre7">find</code>方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 数据不存在的话直接抛出异常
+Db:name('blog')-&gt;where(['status' =&gt; 1])-&gt;failException()-&gt;select();
+// 数据不存在返回空数组 不抛异常
+Db:name('blog')-&gt;where(['status' =&gt; 1])-&gt;failException(false)-&gt;select();</code></pre>
+<p class="calibre10">或者可以使用更方便的查空报错</p>
+<pre class="calibre21"><code class="calibre22">// 查询多条
+Db:name('blog')-&gt;where(['status' =&gt; 1])-&gt;selectOrFail();
+
+// 查询单条
+Db:name('blog')-&gt;where(['status' =&gt; 1])-&gt;findOrFail();</code></pre>
+</div>
+	
+</body></html>

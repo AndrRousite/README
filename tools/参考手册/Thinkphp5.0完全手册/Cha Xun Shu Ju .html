@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>查询数据</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_72">查询数据</h1>
+<div class="book-content">
+    <h2 id="%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2" class="calibre15">基本查询</h2>
+<p class="calibre10">查询一个数据使用：</p>
+<pre class="calibre21"><code class="calibre22">// table方法必须指定完整的数据表名
+Db::table('think_user')-&gt;where('id',1)-&gt;find();</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">find 方法查询结果不存在，返回 null</p>
+</blockquote>
+<p class="calibre10">查询数据集使用：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;where('status',1)-&gt;select();</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">select 方法查询结果不存在，返回空数组</p>
+</blockquote>
+<p class="calibre10">如果设置了数据表前缀参数的话，可以使用</p>
+<pre class="calibre21"><code class="calibre22">Db::name('user')-&gt;where('id',1)-&gt;find();
+Db::name('user')-&gt;where('status',1)-&gt;select();</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">如果你的数据表没有使用表前缀功能，那么name和table方法的一样的效果。</p>
+</blockquote>
+<p class="calibre10">在<code class="calibre7">find</code>和<code class="calibre7">select</code>方法之前可以使用所有的链式操作方法。</p>
+<blockquote class="calibre5">
+<p class="calibre14">默认情况下，find和select方法返回的都是数组。</p>
+</blockquote>
+<h3 id="%E5%8A%A9%E6%89%8B%E5%87%BD%E6%95%B0" class="calibre17">助手函数</h3>
+<p class="calibre10">系统提供了一个<code class="calibre7">db</code>助手函数，可以更方便的查询：</p>
+<pre class="calibre21"><code class="calibre22">db('user')-&gt;where('id',1)-&gt;find();
+db('user')-&gt;where('status',1)-&gt;select();</code></pre>
+<blockquote class="danger">
+<p class="calibre14">注意：使用db助手函数默认每次都会重新连接数据库，而使用<code class="calibre7">Db::name</code>或者<code class="calibre7">Db::table</code>方法的话都是单例的。db函数如果需要采用相同的链接，可以传入第三个参数，例如：</p>
+<pre class="calibre21"><code class="calibre22">db('user',[],false)-&gt;where('id',1)-&gt;find();
+db('user',[],false)-&gt;where('status',1)-&gt;select();</code></pre>
+<p class="calibre14">上面的方式会使用同一个数据库连接，第二个参数为数据库的连接参数，留空表示采用数据库配置文件的配置。</p>
+</blockquote>
+<h2 id="%E4%BD%BF%E7%94%A8query%E5%AF%B9%E8%B1%A1%E6%88%96%E9%97%AD%E5%8C%85%E6%9F%A5%E8%AF%A2" class="calibre15">使用Query对象或闭包查询</h2>
+<p class="calibre10">或者使用查询对象进行查询，例如：</p>
+<pre class="calibre21"><code class="calibre22">$query = new \think\db\Query();
+$query-&gt;table('think_user')-&gt;where('status',1);
+Db::find($query);
+Db::select($query);</code></pre>
+<p class="calibre10">或者直接使用闭包函数查询，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::select(function($query){
+    $query-&gt;table('think_user')-&gt;where('status',1);
+});</code></pre>
+<h2 id="%E5%80%BC%E5%92%8C%E5%88%97%E6%9F%A5%E8%AF%A2" class="calibre15">值和列查询</h2>
+<p class="calibre10">查询某个字段的值可以用</p>
+<pre class="calibre21"><code class="calibre22">// 返回某个字段的值
+Db::table('think_user')-&gt;where('id',1)-&gt;value('name');</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">value 方法查询结果不存在，返回 null</p>
+</blockquote>
+<p class="calibre10">查询某一列的值可以用</p>
+<pre class="calibre21"><code class="calibre22">// 返回数组
+Db::table('think_user')-&gt;where('status',1)-&gt;column('name');
+// 指定索引
+Db::table('think_user')-&gt;where('status',1)-&gt;column('name','id');</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">column 方法查询结果不存在，返回空数组</p>
+</blockquote>
+<h2 id="%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%86%E6%89%B9%E5%A4%84%E7%90%86" class="calibre15">数据集分批处理</h2>
+<p class="calibre10">如果你需要处理成千上百条数据库记录，可以考虑使用chunk方法，该方法一次获取结果集的一小块，然后填充每一小块数据到要处理的闭包，该方法在编写处理大量数据库记录的时候非常有用。</p>
+<p class="calibre10">比如，我们可以全部用户表数据进行分批处理，每次处理 100 个用户记录：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;chunk(100, function($users) {
+    foreach ($users as $user) {
+        //
+    }
+});
+// 或者交给回调方法myUserIterator处理
+Db::table('think_user')-&gt;chunk(100, 'myUserIterator');</code></pre>
+<p class="calibre10">你可以通过从闭包函数中返回false来中止对数据集的处理：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;chunk(100, function($users) {
+    // 处理结果集...
+    return false;
+});</code></pre>
+<p class="calibre10">也支持在chunk方法之前调用其它的查询方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')-&gt;where('score','&gt;',80)-&gt;chunk(100, function($users) {
+    foreach ($users as $user) {
+        //
+    }
+});</code></pre>
+<h2 id="json%E7%B1%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%EF%BC%88mysql+%60v5.0.1%60%EF%BC%89" class="calibre15">JSON类型数据查询（mysql <code class="calibre7">V5.0.1</code>）</h2>
+<pre class="calibre21"><code class="calibre22">// 查询JSON类型字段 （info字段为json类型）
+Db::table('think_user')-&gt;where('info$.email','thinkphp@qq.com')-&gt;find();</code></pre>
+</div>
+	
+</body></html>

@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>事件</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_110">事件</h1>
+<div class="book-content">
+    <h2 id="%E6%A8%A1%E5%9E%8B%E4%BA%8B%E4%BB%B6" class="calibre15">模型事件</h2>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">新增功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.4</td>
+<td class="calibre34 pcalibre1">增加模型事件注册快捷方法</td>
+</tr></tbody></table><blockquote class="calibre5">
+<p class="calibre14">模型事件只可以在实例化用 save 方法才能生效，静态方法和查询构造器(insert/update)无效 </p>
+</blockquote>
+<p class="calibre10">模型类支持<code class="calibre7">before_delete</code>、<code class="calibre7">after_delete</code>、<code class="calibre7">before_write</code>、<code class="calibre7">after_write</code>、<code class="calibre7">before_update</code>、<code class="calibre7">after_update</code>、<code class="calibre7">before_insert</code>、<code class="calibre7">after_insert</code>事件行为</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">标签位</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">before_insert</td>
+<td class="calibre32 pcalibre1">新增前</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">after_insert</td>
+<td class="pcalibre1 calibre31">新增后</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">before_update</td>
+<td class="pcalibre1 calibre31">更新前</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">after_update</td>
+<td class="pcalibre1 calibre31">更新后</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">before_write</td>
+<td class="pcalibre1 calibre31">写入前</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">after_write</td>
+<td class="pcalibre1 calibre31">写入后</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">before_delete</td>
+<td class="pcalibre1 calibre31">删除前</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">after_delete</td>
+<td class="calibre33 pcalibre1">删除后</td>
+</tr></tbody></table><p class="calibre10">使用方法如下：</p>
+<pre class="calibre21"><code class="calibre22">User::event('before_insert', function ($user) {
+            if ($user-&gt;status != 1) {
+                return false;
+            }
+        });</code></pre>
+<p class="calibre10">注册的回调方法支持传入一个参数（当前的模型对象实例），并且<code class="calibre7">before_write</code>、<code class="calibre7">before_insert</code>、 <code class="calibre7">before_update</code> 、<code class="calibre7">before_delete</code>事件方法如果返回false，则不会继续执行。</p>
+<p class="calibre10">支持给一个位置注册多个回调方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">        User::event('before_insert', function ($user) {
+            if ($user-&gt;status != 1) {
+                return false;
+            }
+        });
+        // 注册回调到beforeInsert函数
+        User::event('before_insert', 'beforeInsert');</code></pre>
+<p class="calibre10">可以在模型类的init方法里面统一注册模型事件，例如：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class User extends Model
+{
+    protected static function init()
+    {
+        User::event('before_insert', function ($user) {
+            if ($user-&gt;status != 1) {
+                return false;
+            }
+        });
+    }
+}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">调用当前模型也可以写入 self::event('before_insert', ...)</p>
+</blockquote>
+<h2 id="%E5%BF%AB%E6%8D%B7%E6%B3%A8%E5%86%8C%EF%BC%88%60v5.0.4%2B%60%EF%BC%89" class="calibre15">快捷注册（<code class="calibre7">V5.0.4+</code>）</h2>
+<p class="calibre10">V5.0.4+版本开始，系统提供了内置的事件注册的快捷方法，你可以用下面的方式替代</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class User extends Model
+{
+    protected static function init()
+    {
+        User::beforeInsert(function ($user) {
+            if ($user-&gt;status != 1) {
+                return false;
+            }
+        });
+    }
+}</code></pre>
+<p class="calibre10">这些模型类的快捷方法如下：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">标签位</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">beforeInsert</td>
+<td class="calibre32 pcalibre1">新增前</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">afterInsert</td>
+<td class="pcalibre1 calibre31">新增后</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">beforeUpdate</td>
+<td class="pcalibre1 calibre31">更新前</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">afterUpdate</td>
+<td class="pcalibre1 calibre31">更新后</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">beforeWrite</td>
+<td class="pcalibre1 calibre31">写入前</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">afterWrite</td>
+<td class="pcalibre1 calibre31">写入后</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">beforeDelete</td>
+<td class="pcalibre1 calibre31">删除前</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">afterDelete</td>
+<td class="calibre33 pcalibre1">删除后</td>
+</tr></tbody></table></div>
+	
+</body></html>

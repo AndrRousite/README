@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>创建类库文件</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_208">创建类库文件</h1>
+<div class="book-content">
+    <h2 id="%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%8E%A7%E5%88%B6%E5%99%A8%E7%B1%BB" class="calibre15">快速生成控制器类</h2>
+<p class="calibre10">执行下面的指令可以生成<code class="calibre7">index</code>模块的<code class="calibre7">Blog</code>控制器类库文件</p>
+<pre class="calibre21"><code class="calibre22">&gt;php think make:controller index/Blog</code></pre>
+<p class="calibre10">生成的控制器类文件如下：</p>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+
+namespace app\index\controller;
+
+use think\Controller;
+use think\Request;
+
+class Blog extends Controller
+{
+    /**
+     * 显示资源列表
+     *
+     * @return \think\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * 显示创建资源表单页.
+     *
+     * @return \think\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * 保存新建的资源
+     *
+     * @param  \think\Request  $request
+     * @return \think\Response
+     */
+    public function save(Request $request)
+    {
+        //
+    }
+
+    /**
+     * 显示指定的资源
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function read($id)
+    {
+        //
+    }
+
+    /**
+     * 显示编辑资源表单页.
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * 保存更新的资源
+     *
+     * @param  \think\Request  $request
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * 删除指定资源
+     *
+     * @param  int  $id
+     * @return \think\Response
+     */
+    public function delete($id)
+    {
+        //
+    }
+}</code></pre>
+<p class="calibre10">默认生成的控制器类继承<code class="calibre7">\think\Controller</code> ，并且生成了资源操作方法，如果仅仅生成空的控制器则可以使用：</p>
+<pre class="calibre21"><code class="calibre22">&gt;php think make:controller index\Blog --plain</code></pre>
+<h2 id="%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E7%B1%BB" class="calibre15">快速生成模型类</h2>
+<p class="calibre10">执行下面的指令可以生成<code class="calibre7">index</code>模块的<code class="calibre7">Blog</code>模型类库文件</p>
+<pre class="calibre21"><code class="calibre22">&gt;php think make:model index/Blog</code></pre>
+<p class="calibre10">生成的模型类文件如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class Blog extends Model
+{
+
+}</code></pre>
+</div>
+	
+</body></html>

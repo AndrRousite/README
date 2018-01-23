@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>上传</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_189">上传</h1>
+<div class="book-content">
+    <h2 id="%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6" class="calibre15">上传文件</h2>
+<p class="calibre10"><code class="calibre7">ThinkPHP5.0</code>对文件上传的支持更加简单。</p>
+<blockquote class="calibre5">
+<p class="calibre14">内置的上传只是上传到本地服务器，上传到远程或者第三方平台的话需要自己扩展。</p>
+</blockquote>
+<p class="calibre10">假设表单代码如下：</p>
+<pre class="calibre21"><code class="calibre22">&lt;form action="/index/index/upload" enctype="multipart/form-data" method="post"&gt;
+&lt;input type="file" name="image" /&gt; &lt;br&gt; 
+&lt;input type="submit" value="上传" /&gt; 
+&lt;/form&gt; </code></pre>
+<p class="calibre10">然后在控制器中添加如下的代码：</p>
+<pre class="calibre21"><code class="calibre22">public function upload(){
+    // 获取表单上传文件 例如上传了001.jpg
+    $file = request()-&gt;file('image');
+    // 移动到框架应用根目录/public/uploads/ 目录下
+    $info = $file-&gt;move(ROOT_PATH . 'public' . DS . 'uploads');
+    if($info){
+        // 成功上传后 获取上传信息
+        // 输出 jpg
+        echo $info-&gt;getExtension();
+        // 输出 20160820/42a79759f284b767dfcb2a0197904287.jpg
+        echo $info-&gt;getSaveName();
+        // 输出 42a79759f284b767dfcb2a0197904287.jpg
+        echo $info-&gt;getFilename(); 
+    }else{
+        // 上传失败获取错误信息
+        echo $file-&gt;getError();
+    }
+}</code></pre>
+<p class="calibre10"><code class="calibre7">move</code>方法成功的话返回的是一个<code class="calibre7">SplFileInfo</code>对象，你可以对上传后的文件进行后续操作。</p>
+<h2 id="%E5%A4%9A%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0" class="calibre15">多文件上传</h2>
+<p class="calibre10">如果你使用的是多文件上传表单，例如：</p>
+<pre class="calibre21"><code class="calibre22">&lt;form action="/index/index/upload" enctype="multipart/form-data" method="post"&gt;
+&lt;input type="file" name="image[]" /&gt; &lt;br&gt; 
+&lt;input type="file" name="image[]" /&gt; &lt;br&gt; 
+&lt;input type="file" name="image[]" /&gt; &lt;br&gt; 
+&lt;input type="submit" value="上传" /&gt; 
+&lt;/form&gt; </code></pre>
+<p class="calibre10">控制器代码可以改成：</p>
+<pre class="calibre21"><code class="calibre22">public function upload(){
+    // 获取表单上传文件
+    $files = request()-&gt;file('image');
+    foreach($files as $file){
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file-&gt;move(ROOT_PATH . 'public' . DS . 'uploads');
+        if($info){
+            // 成功上传后 获取上传信息
+            // 输出 jpg
+            echo $info-&gt;getExtension(); 
+            // 输出 42a79759f284b767dfcb2a0197904287.jpg
+            echo $info-&gt;getFilename(); 
+        }else{
+            // 上传失败获取错误信息
+            echo $file-&gt;getError();
+        }    
+    }
+}</code></pre>
+<h2 id="%E4%B8%8A%E4%BC%A0%E9%AA%8C%E8%AF%81-1" class="calibre15">上传验证</h2>
+<p class="calibre10">支持对上传文件的验证，包括文件大小、文件类型和后缀：</p>
+<pre class="calibre21"><code class="calibre22">public function upload(){
+    // 获取表单上传文件 例如上传了001.jpg
+    $file = request()-&gt;file('image');
+    // 移动到框架应用根目录/public/uploads/ 目录下
+    $info = $file-&gt;validate(['size'=&gt;15678,'ext'=&gt;'jpg,png,gif'])-&gt;move(ROOT_PATH . 'public' . DS . 'uploads');
+    if($info){
+        // 成功上传后 获取上传信息
+        // 输出 jpg
+        echo $info-&gt;getExtension();
+        // 输出 20160820/42a79759f284b767dfcb2a0197904287.jpg
+        echo $info-&gt;getSaveName();
+        // 输出 42a79759f284b767dfcb2a0197904287.jpg
+        echo $info-&gt;getFilename(); 
+    }else{
+        // 上传失败获取错误信息
+        echo $file-&gt;getError();
+    }
+}</code></pre>
+<p class="calibre10">如果上传文件验证不通过，则<code class="calibre7">move</code>方法返回false。</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">验证参数</th>
+<th class="calibre28">说明</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">size</td>
+<td class="calibre32 pcalibre1">上传文件的最大字节</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">ext</td>
+<td class="pcalibre1 calibre31">文件后缀，多个用逗号分割或者数组</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">type</td>
+<td class="calibre33 pcalibre1">文件MIME类型，多个用逗号分割或者数组</td>
+</tr></tbody></table><blockquote class="calibre5">
+<p class="calibre14">还有一个额外的自动验证规则是，如果上传的文件后缀是图像文件后缀，则会检查该文件是否是一个合法的图像文件。</p>
+</blockquote>
+<h2 id="%E4%B8%8A%E4%BC%A0%E8%A7%84%E5%88%99" class="calibre15">上传规则</h2>
+<p class="calibre10">默认情况下，会在上传目录下面生成以当前日期为子目录，以微秒时间的<code class="calibre7">md5</code>编码为文件名的文件，例如上面生成的文件名可能是：</p>
+<pre class="calibre21"><code class="calibre22">/home/www/upload/20160510/42a79759f284b767dfcb2a0197904287.jpg</code></pre>
+<p class="calibre10">我们可以指定上传文件的命名规则，使用<code class="calibre7">rule</code>方法即可，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 获取表单上传文件 例如上传了001.jpg
+$file = request()-&gt;file('image');
+// 移动到服务器的上传目录 并且使用md5规则
+$file-&gt;rule('md5')-&gt;move('/home/www/upload/');</code></pre>
+<p class="calibre10">最终生成的文件名类似于：</p>
+<pre class="calibre21"><code class="calibre22">/home/www/upload/72/ef580909368d824e899f77c7c98388.jpg</code></pre>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">系统默认提供了几种上传命名规则，包括：</th>
+<th class="calibre28">规则</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">date</td>
+<td class="calibre32 pcalibre1">根据日期和微秒数生成</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">md5</td>
+<td class="pcalibre1 calibre31">对文件使用md5_file散列生成</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">sha1</td>
+<td class="calibre33 pcalibre1">对文件使用sha1_file散列生成</td>
+</tr></tbody></table><blockquote class="calibre5">
+<p class="calibre14">其中md5和sha1规则会自动以散列值的前两个字符作为子目录，后面的散列值作为文件名。</p>
+</blockquote>
+<p class="calibre10">如果需要使用自定义命名规则，可以在<code class="calibre7">rule</code>方法中传入函数或者方法，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 获取表单上传文件 例如上传了001.jpg
+$file = request()-&gt;file('image');
+// 移动到服务器的上传目录 并且使用uniqid规则
+$file-&gt;rule('uniqid')-&gt;move('/home/www/upload/');</code></pre>
+<p class="calibre10">生成的文件名类似于：</p>
+<pre class="calibre21"><code class="calibre22">/home/www/upload/573d3b6d7abe2.jpg</code></pre>
+<p class="calibre10">如果你希望保留原文件名称，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">// 获取表单上传文件 例如上传了001.jpg
+$file = request()-&gt;file('image');
+// 移动到服务器的上传目录 并且使用原文件名
+$file-&gt;move('/home/www/upload/','');</code></pre>
+<p class="calibre10">默认情况下，会覆盖服务器上传目录下的同名文件，如果不希望覆盖，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">// 获取表单上传文件 例如上传了001.jpg
+$file = request()-&gt;file('image');
+// 移动到服务器的上传目录 并且设置不覆盖
+$file-&gt;move('/home/www/upload/',true,false);</code></pre>
+<h2 id="%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6hash%E6%95%A3%E5%88%97%E5%80%BC" class="calibre15">获取文件hash散列值</h2>
+<p class="calibre10">可以获取上传文件的哈希散列值，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 获取表单上传文件
+$file = request()-&gt;file('image');
+// 移动到服务器的上传目录 并且使用原文件名
+$upload = $file-&gt;move('/home/www/upload/');
+// 获取上传文件的hash散列值
+echo $upload-&gt;md5();
+echo $upload-&gt;sha1();</code></pre>
+<p class="calibre10"><code class="calibre7">v5.0.1</code>以上版本可以统一使用hash方法获取文件散列值</p>
+<pre class="calibre21"><code class="calibre22">// 获取表单上传文件
+$file = request()-&gt;file('image');
+// 移动到服务器的上传目录 并且使用原文件名
+$upload = $file-&gt;move('/home/www/upload/');
+// 获取上传文件的hash散列值
+echo $upload-&gt;hash('sha1');
+echo $upload-&gt;hash('md5');</code></pre>
+<h2 id="%E8%BF%94%E5%9B%9E%E5%AF%B9%E8%B1%A1" class="calibre15">返回对象</h2>
+<p class="calibre10">上传成功后返回的仍然是一个<code class="calibre7">File</code>对象，除了File对象自身的方法外，并且可以使用<code class="calibre7">SplFileObject</code>的属性和方法，便于进行后续的文件处理。</p>
+</div>
+	
+</body></html>

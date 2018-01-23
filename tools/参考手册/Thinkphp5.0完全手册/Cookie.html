@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>Cookie</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_186">Cookie</h1>
+<div class="book-content">
+    <h2 id="%E6%A6%82%E8%BF%B0-6" class="calibre15">概述</h2>
+<p class="calibre10">ThinkPHP采用<code class="calibre7">think\Cookie</code>类提供Cookie支持。</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">新增功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.4</td>
+<td class="calibre34 pcalibre1">增加<code class="calibre7">forever</code>方法用于永久保存</td>
+</tr></tbody></table><h2 id="%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C" class="calibre15">基本操作</h2>
+<h3 id="%E5%88%9D%E5%A7%8B%E5%8C%96" class="calibre17">初始化</h3>
+<pre class="calibre21"><code class="calibre22">// cookie初始化
+Cookie::init(['prefix'=&gt;'think_','expire'=&gt;3600,'path'=&gt;'/']);
+// 指定当前前缀
+Cookie::prefix('think_');</code></pre>
+<p class="calibre10">支持的参数及默认值如下：</p>
+<pre class="calibre21"><code class="calibre22">// cookie 名称前缀
+'prefix'    =&gt; '',
+// cookie 保存时间
+'expire'    =&gt; 0,
+// cookie 保存路径
+'path'      =&gt; '/',
+// cookie 有效域名
+'domain'    =&gt; '',
+//  cookie 启用安全传输
+'secure'    =&gt; false,
+// httponly设置
+'httponly'  =&gt; '',
+// 是否使用 setcookie
+'setcookie' =&gt; true,</code></pre>
+<h3 id="%E8%AE%BE%E7%BD%AE-1" class="calibre17">设置</h3>
+<pre class="calibre21"><code class="calibre22">// 设置Cookie 有效期为 3600秒
+Cookie::set('name','value',3600);
+// 设置cookie 前缀为think_
+Cookie::set('name','value',['prefix'=&gt;'think_','expire'=&gt;3600]);
+// 支持数组
+Cookie::set('name',[1,2,3]);</code></pre>
+<h3 id="%E5%88%A4%E6%96%AD" class="calibre17">判断</h3>
+<pre class="calibre21"><code class="calibre22">Cookie::has('name');
+// 判断指定前缀的cookie值是否存在
+Cookie::has('name','think_');</code></pre>
+<h3 id="%E8%8E%B7%E5%8F%96" class="calibre17">获取</h3>
+<pre class="calibre21"><code class="calibre22">Cookie::get('name');
+// 获取指定前缀的cookie值
+Cookie::get('name','think_');</code></pre>
+<h3 id="%E5%88%A0%E9%99%A4" class="calibre17">删除</h3>
+<p class="calibre10">//删除cookie</p>
+<pre class="calibre21"><code class="calibre22">Cookie::delete('name');
+// 删除指定前缀的cookie
+Cookie::delete('name','think_');</code></pre>
+<h3 id="%E6%B8%85%E7%A9%BA" class="calibre17">清空</h3>
+<pre class="calibre21"><code class="calibre22">// 清空指定前缀的cookie
+Cookie::clear('think_');</code></pre>
+<h2 id="%E5%8A%A9%E6%89%8B%E5%87%BD%E6%95%B0-10" class="calibre15">助手函数</h2>
+<p class="calibre10">系统提供了cookie助手函数用于基本的cookie操作，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 初始化
+cookie(['prefix' =&gt; 'think_', 'expire' =&gt; 3600]);
+
+// 设置
+cookie('name', 'value', 3600);
+
+// 获取
+echo cookie('name');
+
+// 删除
+cookie('name', null);
+
+// 清除
+cookie(null, 'think_');</code></pre>
+</div>
+	
+</body></html>

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>跳转和重定向</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_47">跳转和重定向</h1>
+<div class="book-content">
+    <h2 id="%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC" class="calibre15">页面跳转</h2>
+<p class="calibre10">在应用开发中，经常会遇到一些带有提示信息的跳转页面，例如操作成功或者操作错误页面，并且自动跳转到另外一个目标页面。系统的<code class="calibre7">\think\Controller</code>类内置了两个跳转方法<code class="calibre7">success</code>和<code class="calibre7">error</code>，用于页面跳转提示。</p>
+<p class="calibre10">使用方法很简单，举例如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+use think\Controller;
+use app\index\model\User;
+
+class Index extends Controller
+{
+    public function index()
+    {
+        $User = new User; //实例化User对象
+        $result = $User-&gt;save($data); 
+        if($result){
+            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
+            $this-&gt;success('新增成功', 'User/list');
+        } else {
+            //错误页面的默认跳转页面是返回前一页，通常不需要设置
+            $this-&gt;error('新增失败');
+        }
+    }
+}</code></pre>
+<p class="calibre10">跳转地址是可选的，success方法的默认跳转地址是<code class="calibre7">$_SERVER["HTTP_REFERER"]</code>，error方法的默认跳转地址是<code class="calibre7">javascript:history.back(-1);</code>。</p>
+<blockquote class="calibre5">
+<p class="calibre14">默认的等待时间都是3秒</p>
+</blockquote>
+<p class="calibre10"><code class="calibre7">success</code>和<code class="calibre7">error</code>方法都可以对应的模板，默认的设置是两个方法对应的模板都是：</p>
+<pre class="calibre21"><code class="calibre22">THINK_PATH . 'tpl/dispatch_jump.tpl'</code></pre>
+<p class="calibre10">我们可以改变默认的模板：</p>
+<pre class="calibre21"><code class="calibre22">//默认错误跳转对应的模板文件
+'dispatch_error_tmpl' =&gt; APP_PATH . 'tpl/dispatch_jump.tpl',
+//默认成功跳转对应的模板文件
+'dispatch_success_tmpl' =&gt; APP_PATH . 'tpl/dispatch_jump.tpl',</code></pre>
+<p class="calibre10">也可以使用项目内部的模板文件</p>
+<pre class="calibre21"><code class="calibre22">//默认错误跳转对应的模板文件
+'dispatch_error_tmpl' =&gt; 'public/error',
+//默认成功跳转对应的模板文件
+'dispatch_success_tmpl' =&gt; 'public/success',</code></pre>
+<p class="calibre10">模板文件可以使用模板标签，并且可以使用下面的模板变量：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">变量</th>
+<th class="calibre28">含义</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">$data</td>
+<td class="calibre32 pcalibre1">要返回的数据</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">$msg</td>
+<td class="pcalibre1 calibre31">页面提示信息</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">$code</td>
+<td class="pcalibre1 calibre31">返回的code</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">$wait</td>
+<td class="pcalibre1 calibre31">跳转等待时间 单位为秒</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">$url</td>
+<td class="calibre33 pcalibre1">跳转页面地址</td>
+</tr></tbody></table><blockquote class="info">
+<p class="calibre14">error方法会自动判断当前请求是否属于<code class="calibre7">Ajax</code>请求，如果属于<code class="calibre7">Ajax</code>请求则会自动转换为<code class="calibre7">default_ajax_return</code>配置的格式返回信息。 success在<code class="calibre7">Ajax</code>请求下不返回信息，需要开发者自行处理。</p>
+</blockquote>
+<h2 id="%E9%87%8D%E5%AE%9A%E5%90%91" class="calibre15">重定向</h2>
+<p class="calibre10"><code class="calibre7">\think\Controller</code>类的<code class="calibre7">redirect</code>方法可以实现页面的重定向功能。</p>
+<p class="calibre10">redirect方法的参数用法和<code class="calibre7">Url::build</code>方法的用法一致（参考<a href="118041" class="pcalibre calibre13">URL生成</a>部分），例如：</p>
+<pre class="calibre21"><code class="calibre22">//重定向到News模块的Category操作
+$this-&gt;redirect('News/category', ['cate_id' =&gt; 2]);</code></pre>
+<p class="calibre10">上面的用法是跳转到News模块的category操作，重定向后会改变当前的URL地址。</p>
+<p class="calibre10">或者直接重定向到一个指定的外部URL地址，例如：</p>
+<pre class="calibre21"><code class="calibre22">//重定向到指定的URL地址 并且使用302
+$this-&gt;redirect('http://thinkphp.cn/blog/2',302);</code></pre>
+</div>
+	
+</body></html>

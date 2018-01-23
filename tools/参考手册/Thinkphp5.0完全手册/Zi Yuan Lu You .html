@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>资源路由</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_33">资源路由</h1>
+<div class="book-content">
+    <h2 id="%E8%B5%84%E6%BA%90%E8%B7%AF%E7%94%B1" class="calibre15">资源路由</h2>
+<p class="calibre10">5.0支持设置<code class="calibre7">RESTFul</code>请求的资源路由，方式如下：</p>
+<pre class="calibre21"><code class="calibre22">Route::resource('blog','index/blog');</code></pre>
+<p class="calibre10">或者在路由配置文件中使用<code class="calibre7">__rest__</code>添加资源路由定义：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    // 定义资源路由
+    '__rest__'=&gt;[
+        // 指向index模块的blog控制器
+        'blog'=&gt;'index/blog',
+    ],
+    // 定义普通路由
+    'hello/:id'=&gt;'index/hello',
+]</code></pre>
+<p class="calibre10">设置后会自动注册7个路由规则，如下：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">标识</th>
+<th class="calibre28">请求类型</th>
+<th class="calibre28">生成路由规则</th>
+<th class="calibre28">对应操作方法（默认）</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">index</td>
+<td class="pcalibre1 calibre31">GET</td>
+<td class="pcalibre1 calibre31"><code class="calibre7">blog</code></td>
+<td class="calibre32 pcalibre1">index</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">create</td>
+<td class="pcalibre1 calibre31">GET</td>
+<td class="pcalibre1 calibre31"><code class="calibre7">blog/create</code></td>
+<td class="pcalibre1 calibre31">create</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">save</td>
+<td class="pcalibre1 calibre31">POST</td>
+<td class="pcalibre1 calibre31"><code class="calibre7">blog</code></td>
+<td class="pcalibre1 calibre31">save</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">read</td>
+<td class="pcalibre1 calibre31">GET</td>
+<td class="pcalibre1 calibre31"><code class="calibre7">blog/:id</code></td>
+<td class="pcalibre1 calibre31">read</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">edit</td>
+<td class="pcalibre1 calibre31">GET</td>
+<td class="pcalibre1 calibre31"><code class="calibre7">blog/:id/edit</code></td>
+<td class="pcalibre1 calibre31">edit</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">update</td>
+<td class="pcalibre1 calibre31">PUT</td>
+<td class="pcalibre1 calibre31"><code class="calibre7">blog/:id</code></td>
+<td class="pcalibre1 calibre31">update</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">delete</td>
+<td class="pcalibre1 calibre31">DELETE</td>
+<td class="pcalibre1 calibre31"><code class="calibre7">blog/:id</code></td>
+<td class="calibre33 pcalibre1">delete</td>
+</tr></tbody></table><p class="calibre10">具体指向的控制器由路由地址决定，例如上面的设置，会对应index模块的blog控制器，你只需要为Blog控制器创建以上对应的操作方法就可以支持下面的URL访问：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/blog/
+http://serverName/blog/128
+http://serverName/blog/28/edit</code></pre>
+<p class="calibre10">Blog控制器中的对应方法如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+class Blog {
+    public function index(){
+    }
+
+    public function read($id){
+    }    
+
+    public function edit($id){
+    }    
+}</code></pre>
+<p class="calibre10">可以改变默认的id参数名，例如：</p>
+<pre class="calibre21"><code class="calibre22">Route::resource('blog','index/blog',['var'=&gt;['blog'=&gt;'blog_id']]);</code></pre>
+<p class="calibre10">控制器的方法定义需要调整如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+class Blog {
+    public function index(){
+    }
+
+    public function read($blog_id){
+    }    
+
+    public function edit($blog_id){
+    }    
+}</code></pre>
+<p class="calibre10">也可以在定义资源路由的时候限定执行的方法（标识），例如：</p>
+<pre class="calibre21"><code class="calibre22">// 只允许index read edit update 四个操作
+Route::resource('blog','index/blog',['only'=&gt;['index','read','edit','update']]);
+// 排除index和delete操作
+Route::resource('blog','index/blog',['except'=&gt;['index','delete']]);</code></pre>
+<p class="calibre10">资源路由的标识不可更改，但生成的路由规则和对应操作方法可以修改。</p>
+<p class="calibre10">如果需要更改某个资源路由标识的对应操作，可以使用下面方法：</p>
+<pre class="calibre21"><code class="calibre22">Route::rest('create',['GET', '/add','add']);</code></pre>
+<p class="calibre10">设置之后，URL访问变为：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/blog/create
+变成
+http://serverName/blog/add</code></pre>
+<p class="calibre10">创建blog页面的对应的操作方法也变成了add。</p>
+<p class="calibre10">支持批量更改，如下：</p>
+<pre class="calibre21"><code class="calibre22">Route::rest([
+    'save'   =&gt; ['POST', '', 'store'],
+    'update' =&gt; ['PUT', '/:id', 'save'],
+    'delete' =&gt; ['DELETE', '/:id', 'destory'],
+]);</code></pre>
+<h2 id="%E8%B5%84%E6%BA%90%E5%B5%8C%E5%A5%97" class="calibre15">资源嵌套</h2>
+<p class="calibre10">支持资源路由的嵌套，例如：</p>
+<pre class="calibre21"><code class="calibre22">Route::resource('blog.comment','index/comment');</code></pre>
+<p class="calibre10">就可以访问如下地址：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/blog/128/comment/32
+http://serverName/blog/128/comment/32/edit</code></pre>
+<p class="calibre10">生成的路由规则分别是：</p>
+<pre class="calibre21"><code class="calibre22">blog/:blog_id/comment/:id
+blog/:blog_id/comment/:id/edit</code></pre>
+<p class="calibre10">Comment控制器对应的操作方法如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+class Comment{
+    public function edit($id,$blog_id){
+    }
+}</code></pre>
+<p class="calibre10">edit方法中的参数顺序可以随意，但参数名称必须满足定义要求。</p>
+<p class="calibre10">如果需要改变其中的变量名，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">// 更改嵌套资源路由的blog资源的资源变量名为blogId
+Route::resource('blog.comment','index/comment',['var'=&gt;['blog'=&gt;'blogId']]);</code></pre>
+<p class="calibre10">Comment控制器对应的操作方法改变为：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class Comment{
+    public function edit($id,$blogId)
+    {
+    }
+}</code></pre>
+</div>
+	
+</body></html>

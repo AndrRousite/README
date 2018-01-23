@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>比较标签</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_145">比较标签</h1>
+<div class="book-content">
+    <p class="calibre10">比较标签用于简单的变量比较，复杂的判断条件可以用if标签替换，比较标签是一组标签的集合，基本上用法都一致，如下：</p>
+<pre class="calibre21"><code class="calibre22">{比较标签 name="变量" value="值"}
+内容
+{/比较标签}</code></pre>
+<p class="calibre10">系统支持的比较标签以及所表示的含义分别是： </p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">标签</th>
+<th class="calibre28">含义</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">eq或者 equal</td>
+<td class="calibre32 pcalibre1">等于</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">neq 或者notequal</td>
+<td class="pcalibre1 calibre31">不等于</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">gt</td>
+<td class="pcalibre1 calibre31">大于</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">egt</td>
+<td class="pcalibre1 calibre31">大于等于</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">lt</td>
+<td class="pcalibre1 calibre31">小于</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">elt</td>
+<td class="pcalibre1 calibre31">小于等于</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">heq</td>
+<td class="pcalibre1 calibre31">恒等于</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">nheq</td>
+<td class="calibre33 pcalibre1">不恒等于</td>
+</tr></tbody></table><p class="calibre10">他们的用法基本是一致的，区别在于判断的条件不同，并且所有的比较标签都可以和else标签一起使用。</p>
+<p class="calibre10">例如，要求name变量的值等于value就输出，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">{eq name="name" value="value"}value{/eq}</code></pre>
+<p class="calibre10">或者</p>
+<pre class="calibre21"><code class="calibre22">{equal name="name" value="value"}value{/equal}</code></pre>
+<p class="calibre10">也可以支持和else标签混合使用：</p>
+<pre class="calibre21"><code class="calibre22">{eq name="name" value="value"}
+相等
+{else/}
+不相等
+{/eq}</code></pre>
+<p class="calibre10">当 name变量的值大于5就输出</p>
+<pre class="calibre21"><code class="calibre22">{gt name="name" value="5"}value{/gt}</code></pre>
+<p class="calibre10">当name变量的值不小于5就输出</p>
+<pre class="calibre21"><code class="calibre22">{egt name="name" value="5"}value{/egt}</code></pre>
+<p class="calibre10">比较标签中的变量可以支持对象的属性或者数组，甚至可以是系统变量，例如： 当vo对象的属性（或者数组，或者自动判断）等于5就输出</p>
+<pre class="calibre21"><code class="calibre22">{eq name="vo.name" value="5"}
+{$vo.name}
+{/eq}</code></pre>
+<p class="calibre10">当vo对象的属性等于5就输出</p>
+<pre class="calibre21"><code class="calibre22">{eq name="vo:name" value="5"}
+{$vo.name}
+{/eq}</code></pre>
+<p class="calibre10">当$vo['name']等于5就输出</p>
+<pre class="calibre21"><code class="calibre22">{eq name="vo['name']" value="5"}
+{$vo.name}
+{/eq}</code></pre>
+<p class="calibre10">而且还可以支持对变量使用函数 当vo对象的属性值的字符串长度等于5就输出</p>
+<pre class="calibre21"><code class="calibre22">{eq name="vo:name|strlen" value="5"}{$vo.name}{/eq}</code></pre>
+<p class="calibre10">变量名可以支持系统变量的方式，例如：</p>
+<pre class="calibre21"><code class="calibre22">{eq name="Think.get.name" value="value"}相等{else/}不相等{/eq}</code></pre>
+<p class="calibre10">通常比较标签的值是一个字符串或者数字，如果需要使用变量，只需要在前面添加“$”标志： 当vo对象的属性等于$a就输出</p>
+<pre class="calibre21"><code class="calibre22">{eq name="vo:name" value="$a"}{$vo.name}{/eq}</code></pre>
+<p class="calibre10">所有的比较标签可以统一使用compare标签（其实所有的比较标签都是compare标签的别名），例如： 当name变量的值等于5就输出</p>
+<pre class="calibre21"><code class="calibre22">{compare name="name" value="5" type="eq"}value{/compare}</code></pre>
+<p class="calibre10">等效于</p>
+<pre class="calibre21"><code class="calibre22">{eq name="name" value="5" }value{/eq}</code></pre>
+<p class="calibre10">其中type属性的值就是上面列出的比较标签名称</p>
+</div>
+	
+</body></html>

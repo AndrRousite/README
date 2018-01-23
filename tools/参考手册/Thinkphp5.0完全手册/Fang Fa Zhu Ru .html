@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>方法注入</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_63">方法注入</h1>
+<div class="book-content">
+    <p class="calibre10">如果你需要在<code class="calibre7">Request</code>请求对象中添加自己的方法，可以使用<code class="calibre7">Request</code>对象的方法注入功能，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 通过hook方法注入动态方法
+Request::hook('user','getUserInfo');</code></pre>
+<p class="calibre10"><code class="calibre7">getUserInfo</code>函数定义如下</p>
+<pre class="calibre21"><code class="calibre22">function getUserInfo(Request $request, $userId)
+{
+    // 根据$userId获取用户信息
+    return $info;
+}</code></pre>
+<p class="calibre10">接下来，我们可以直接在控制器中使用：</p>
+<pre class="calibre21"><code class="calibre22">public function index()
+{
+    $info = Request::instance()-&gt;user($userId);
+}</code></pre>
+</div>
+	
+</body></html>

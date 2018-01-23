@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>多级控制器</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_50">多级控制器</h1>
+<div class="book-content">
+    <h2 id="%E5%A4%9A%E7%BA%A7%E6%8E%A7%E5%88%B6%E5%99%A8" class="calibre15">多级控制器</h2>
+<p class="calibre10">新版支持任意层次级别的控制器，并且支持路由，例如：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller\one;
+
+use think\Controller;
+
+class Blog extends Controller
+{
+    public function index()
+    {
+        return $this-&gt;fetch();
+    }
+
+    public function add()
+    {
+        return $this-&gt;fetch();
+    }
+
+    public function edit($id)
+    {
+        return $this-&gt;fetch();
+    }
+}</code></pre>
+<p class="calibre10">该控制器类的文件位置为：</p>
+<pre class="calibre21"><code class="calibre22">application/index/controller/one/Blog.php</code></pre>
+<p class="calibre10">访问地址可以使用</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index.php/index/one.blog/index</code></pre>
+<p class="calibre10">如果要在路由定义中使用多级控制器，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">\think\Route::get('blog/add','index/one.blog/add');</code></pre>
+</div>
+	
+</body></html>

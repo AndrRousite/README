@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>伪静态</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_62">伪静态</h1>
+<div class="book-content">
+    <p class="calibre10">URL伪静态通常是为了满足更好的SEO效果，ThinkPHP支持伪静态URL设置，可以通过设置<code class="calibre7">url_html_suffix</code>参数随意在URL的最后增加你想要的静态后缀，而不会影响当前操作的正常执行。例如，我们设置</p>
+<pre class="calibre21"><code class="calibre22">'url_html_suffix' =&gt; 'shtml'</code></pre>
+<p class="calibre10">的话，我们可以把下面的URL <code class="calibre7">http://serverName/Home/Blog/read/id/1</code> 变成 <code class="calibre7">http://serverName/Home/Blog/read/id/1.shtml</code></p>
+<p class="calibre10">后者更具有静态页面的URL特征，但是具有和前面的URL相同的执行效果，并且不会影响原来参数的使用。</p>
+<p class="calibre10">默认情况下，伪静态的设置为<code class="calibre7">html</code>，如果我们设置伪静态后缀为空字符串，</p>
+<pre class="calibre21"><code class="calibre22">'url_html_suffix'=&gt;''</code></pre>
+<p class="calibre10">则支持所有的静态后缀访问，如果要获取当前的伪静态后缀，可以使用<code class="calibre7">Request</code>对象的<code class="calibre7">ext</code>方法。</p>
+<p class="calibre10">例如：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index/blog/3.html
+http://serverName/index/blog/3.shtml
+http://serverName/index/blog/3.xml
+http://serverName/index/blog/3.pdf</code></pre>
+<p class="calibre10">都可以正常访问。</p>
+<p class="calibre10">我们可以在控制器的操作方法中获取当前访问的伪静态后缀，例如：</p>
+<pre class="calibre21"><code class="calibre22">$ext = Request::instance()-&gt;ext();</code></pre>
+<p class="calibre10">如果希望支持多个伪静态后缀，可以直接设置如下：</p>
+<pre class="calibre21"><code class="calibre22">// 多个伪静态后缀设置 用|分割
+'url_html_suffix' =&gt; 'html|shtml|xml' </code></pre>
+<p class="calibre10">那么，当访问 <code class="calibre7">http://serverName/Home/blog/3.pdf</code> 的时候会报系统错误。</p>
+<p class="calibre10">如果要关闭伪静态访问，可以设置</p>
+<pre class="calibre21"><code class="calibre22">// 关闭伪静态后缀访问
+'url_html_suffix' =&gt; false,</code></pre>
+<p class="calibre10">关闭伪静态访问后，不再支持伪静态方式的URL访问，并且伪静态后缀将会被解析为最后一个参数的值，例如：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index/blog/read/id/3.html</code></pre>
+<p class="calibre10">最终的id参数的值将会变成 <code class="calibre7">3.html</code>。</p>
+</div>
+	
+</body></html>

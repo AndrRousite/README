@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>获取器</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_99">获取器</h1>
+<div class="book-content">
+    <h2 id="%E8%8E%B7%E5%8F%96%E5%99%A8" class="calibre15">获取器</h2>
+<p class="calibre10">获取器的作用是在获取数据的字段值后自动进行处理，例如，我们需要对状态值进行转换，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">class User extends Model 
+{
+    public function getStatusAttr($value)
+    {
+        $status = [-1=&gt;'删除',0=&gt;'禁用',1=&gt;'正常',2=&gt;'待审核'];
+        return $status[$value];
+    }
+}</code></pre>
+<p class="calibre10">数据表的字段会自动转换为驼峰法，一般<code class="calibre7">status</code>字段的值采用数值类型，我们可以通过获取器定义，自动转换为字符串描述。</p>
+<pre class="calibre21"><code class="calibre22">$user = User::get(1);
+echo $user-&gt;status; // 例如输出“正常”</code></pre>
+<p class="calibre10">获取器还可以定义数据表中不存在的字段，例如：</p>
+<pre class="calibre21"><code class="calibre22">class User extends Model 
+{
+    public function getStatusTextAttr($value,$data)
+    {
+        $status = [-1=&gt;'删除',0=&gt;'禁用',1=&gt;'正常',2=&gt;'待审核'];
+        return $status[$data['status']];
+    }
+}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">获取器方法的第二个参数传入的是当前的所有数据数组。</p>
+</blockquote>
+<p class="calibre10">我们就可以直接使用status_text字段的值了，例如：</p>
+<pre class="calibre21"><code class="calibre22">$user = User::get(1);
+echo $user-&gt;status_text; // 例如输出“正常”</code></pre>
+<p class="calibre10">获取器只有当获取某个数据属性的时候自动触发，如果你要获取包含修改器处理的全部数据属性的话，可以使用下面的方法：</p>
+<pre class="calibre21"><code class="calibre22">$user = User::get(1);
+// 获取全部获取器数据
+dump($user-&gt;toArray());</code></pre>
+<h2 id="%E8%8E%B7%E5%8F%96%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE" class="calibre15">获取原始数据</h2>
+<p class="calibre10">如果你定义了获取器的情况下，希望获取数据表中的原始数据，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">$user = User::get(1);
+// 通过获取器获取字段
+echo $user-&gt;status;
+// 获取原始字段数据
+echo $user-&gt;getData('status');
+// 获取全部原始数据
+dump($user-&gt;getData());</code></pre>
+</div>
+	
+</body></html>

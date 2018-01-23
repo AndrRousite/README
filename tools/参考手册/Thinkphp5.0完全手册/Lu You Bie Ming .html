@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>路由别名</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_35">路由别名</h1>
+<div class="book-content">
+    <p class="calibre10">路由别名功能可以使用一条规则，批量定义一系列的路由规则。</p>
+<p class="calibre10">例如，我们希望使用<code class="calibre7">user</code>可以访问index模块的User控制器的所有操作，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">// user 别名路由到 index/User 控制器
+Route::alias('user','index/User');</code></pre>
+<p class="calibre10">如果在路由配置文件<code class="calibre7">route.php</code>中定义的话，使用：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    '__alias__' =&gt;  [
+        'user'  =&gt;  'index/User',
+    ],
+];</code></pre>
+<p class="calibre10">和前面的方式是等效的。</p>
+<p class="calibre10">然后可以直接通过URL地址访问User控制器的操作，例如：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index.php/user/add
+http://serverName/index.php/user/edit/id/5
+http://serverName/index.php/user/read/id/5</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">如果URL参数绑定方式使用按顺序绑定的话，URL地址可以进一步简化，参考请求-&gt;方法参数绑定。</p>
+</blockquote>
+<p class="calibre10">路由别名可以指向任意一个有效的路由地址，例如下面指向一个类</p>
+<pre class="calibre21"><code class="calibre22">// user 路由别名指向 User控制器类
+Route::alias('user','\app\index\controller\User');</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">路由别名不支持变量类型和路由条件判断，单纯只是为了缩短URL地址，并且在定义的时候需要注意避免和路由规则产生混淆。</p>
+</blockquote>
+<p class="calibre10">支持给路由别名设置路由条件，例如：</p>
+<pre class="calibre21"><code class="calibre22">// user 别名路由到 index/user 控制器
+Route::alias('user','index/user',['ext'=&gt;'html']);</code></pre>
+<p class="calibre10">或者在路由配置文件中使用：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    '__alias__' =&gt;  [
+        'user'  =&gt;  ['index/user',['ext'=&gt;'html']],
+    ],
+];</code></pre>
+<h3 id="%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95%E9%BB%91%E7%99%BD%E5%90%8D%E5%8D%95%EF%BC%88%60v5.0.2%2B%60%EF%BC%89" class="calibre17">操作方法黑白名单（<code class="calibre7">v5.0.2+</code>）</h3>
+<p class="calibre10">路由别名的操作方法支持白名单或者黑名单机制，例如：</p>
+<pre class="calibre21"><code class="calibre22">// user 别名路由到 index/user 控制器
+Route::alias('user','index/user',[
+    'ext'=&gt;'html'，
+    'allow'=&gt;'index,read,edit,delete',
+]);</code></pre>
+<p class="calibre10">或者使用黑名单机制</p>
+<pre class="calibre21"><code class="calibre22">// user 别名路由到 index/user 控制器
+Route::alias('user','index/user',[
+    'ext'=&gt;'html'，
+    'except'=&gt;'save,delete',
+]);</code></pre>
+<p class="calibre10">并且支持设置操作方法的请求类型，例如：</p>
+<pre class="calibre21"><code class="calibre22">// user 别名路由到 index/user 控制器
+Route::alias('user','index/user',[
+    'ext'=&gt;'html'，
+    'allow'=&gt;'index,save,delete',
+    'method'=&gt;['index'=&gt;'GET','save'=&gt;'POST','delete'=&gt;'DELETE'],
+]);</code></pre>
+</div>
+	
+</body></html>

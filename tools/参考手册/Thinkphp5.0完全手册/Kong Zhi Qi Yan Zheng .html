@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>控制器验证</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_173">控制器验证</h1>
+<div class="book-content">
+    <p class="calibre10">如果你需要在控制器中进行验证，并且继承了<code class="calibre7">\think\Controller</code>的话，可以调用控制器类提供的<code class="calibre7">validate</code>方法进行验证，如下：</p>
+<pre class="calibre21"><code class="calibre22">$result = $this-&gt;validate(
+    [
+        'name'  =&gt; 'thinkphp',
+        'email' =&gt; 'thinkphp@qq.com',
+    ],
+    [
+        'name'  =&gt; 'require|max:25',
+        'email'   =&gt; 'email',
+    ]);
+if(true !== $result){
+    // 验证失败 输出错误信息
+    dump($result);
+}</code></pre>
+<p class="calibre10">如果定义了验证器类的话，例如：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\validate;
+
+use think\Validate;
+
+class User extends Validate
+{
+    protected $rule = [
+        'name'  =&gt;  'require|max:25',
+        'email' =&gt;  'email',
+    ];
+
+    protected $message = [
+        'name.require'  =&gt;  '用户名必须',
+        'email' =&gt;  '邮箱格式错误',
+    ];
+
+    protected $scene = [
+        'add'   =&gt;  ['name','email'],
+        'edit'  =&gt;  ['email'],
+    ];
+}</code></pre>
+<p class="calibre10">控制器中的验证代码可以简化为：</p>
+<pre class="calibre21"><code class="calibre22">$result = $this-&gt;validate($data,'User');
+if(true !== $result){
+    // 验证失败 输出错误信息
+    dump($result);
+}</code></pre>
+<p class="calibre10">如果要使用场景，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">$result = $this-&gt;validate($data,'User.edit');
+if(true !== $result){
+    // 验证失败 输出错误信息
+    dump($result);
+}</code></pre>
+<p class="calibre10">在validate方法中还支持做一些前置的操作回调，使用方式如下：</p>
+<pre class="calibre21"><code class="calibre22">$result = $this-&gt;validate($data,'User.edit',[],[$this,'some']);
+if(true !== $result){
+    // 验证失败 输出错误信息
+    dump($result);
+}</code></pre>
+</div>
+	
+</body></html>

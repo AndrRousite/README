@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>环境变量配置</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_24">环境变量配置</h1>
+<div class="book-content">
+    <h2 id="%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE" class="calibre15">环境变量配置</h2>
+<p class="calibre10"><code class="calibre7">ThinkPHP5.0</code>支持使用环境变量配置。</p>
+<p class="calibre10">在开发过程中，可以在应用根目录下面的<code class="calibre7">.env</code>来模拟环境变量配置，<code class="calibre7">.env</code>文件中的配置参数定义格式采用<code class="calibre7">ini</code>方式，例如：</p>
+<pre class="calibre21"><code class="calibre22">app_debug =  true
+app_trace =  true</code></pre>
+<p class="calibre10">如果你的部署环境单独配置了环境变量，那么请删除<code class="calibre7">.env</code>配置文件，避免冲突。</p>
+<p class="calibre10">环境变量配置的参数会全部转换为大写，值为 <code class="calibre7">null</code>，<code class="calibre7">no</code> 和 <code class="calibre7">false</code> 等效于 <code class="calibre7">""</code>，值为 <code class="calibre7">yes</code> 和 <code class="calibre7">true</code> 等效于 <code class="calibre7">"1"</code>。</p>
+<blockquote class="calibre5">
+<p class="calibre14">ThinkPHP5.0默认的环境变量前缀是<code class="calibre7">PHP_</code>，也可以通过改变<code class="calibre7">ENV_PREFIX</code>常量来重新设置。</p>
+</blockquote>
+<p class="calibre10">注意，环境变量不支持数组参数，如果需要使用数组参数可以，使用下划线分割定义配置参数名：</p>
+<pre class="calibre21"><code class="calibre22">database_username =  root
+database_password =  123456</code></pre>
+<p class="calibre10">或者使用</p>
+<pre class="calibre21"><code class="calibre22">[database]
+username =  root
+password =  123456</code></pre>
+<p class="calibre10">获取环境变量的值可以使用下面的两种方式获取：</p>
+<pre class="calibre21"><code class="calibre22">Env::get('database.username');
+Env::get('database.password');
+// 同时下面的方式也可以获取
+Env::get('database_username');
+Env::get('database_password');</code></pre>
+<p class="calibre10">可以支持默认值，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 获取环境变量 如果不存在则使用默认值root
+Env::get('database.username','root');</code></pre>
+<p class="calibre10">可以直接在应用配置中使用环境变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    'hostname'  =&gt;  Env::get('hostname','127.0.0.1'),
+];</code></pre>
+<blockquote class="danger">
+<p class="calibre14">环境变量中设置的<code class="calibre7">app_debug</code>和<code class="calibre7">app_trace</code>参数会自动生效（优先于应用的配置文件），其它参数则必须通过<code class="calibre7">Env::get</code>方法才能读取。</p>
+</blockquote>
+</div>
+	
+</body></html>

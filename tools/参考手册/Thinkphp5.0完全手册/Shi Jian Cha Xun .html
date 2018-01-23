@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>时间查询</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_80">时间查询</h1>
+<div class="book-content">
+    <h2 id="%E6%97%B6%E9%97%B4%E6%AF%94%E8%BE%83" class="calibre15">时间比较</h2>
+<h3 id="%E4%BD%BF%E7%94%A8%60where%60%E6%96%B9%E6%B3%95" class="calibre17">使用<code class="calibre7">where</code>方法</h3>
+<p class="calibre10"><code class="calibre7">where</code>方法支持时间比较，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 大于某个时间
+where('create_time','&gt; time','2016-1-1');
+// 小于某个时间
+where('create_time','&lt;= time','2016-1-1');
+// 时间区间查询
+where('create_time','between time',['2015-1-1','2016-1-1']);</code></pre>
+<p class="calibre10">第三个参数可以传入任何有效的时间表达式，会自动识别你的时间字段类型，支持的时间类型包括<code class="calibre7">timestamps</code>、<code class="calibre7">datetime</code>、<code class="calibre7">date</code>和<code class="calibre7">int</code>。</p>
+<h3 id="%E4%BD%BF%E7%94%A8%60wheretime%60%E6%96%B9%E6%B3%95" class="calibre17">使用<code class="calibre7">whereTime</code>方法</h3>
+<p class="calibre10"><code class="calibre7">whereTime</code>方法提供了日期和时间字段的快捷查询，示例如下：</p>
+<pre class="calibre21"><code class="calibre22">// 大于某个时间
+db('user')
+    -&gt;whereTime('birthday', '&gt;=', '1970-10-1')
+    -&gt;select();
+// 小于某个时间
+db('user')
+    -&gt;whereTime('birthday', '&lt;', '2000-10-1')
+    -&gt;select();
+// 时间区间查询
+db('user')
+    -&gt;whereTime('birthday', 'between', ['1970-10-1', '2000-10-1'])
+    -&gt;select();
+// 不在某个时间区间
+db('user')
+    -&gt;whereTime('birthday', 'not between', ['1970-10-1', '2000-10-1'])
+    -&gt;select();</code></pre>
+<h2 id="%E6%97%B6%E9%97%B4%E8%A1%A8%E8%BE%BE%E5%BC%8F" class="calibre15">时间表达式</h2>
+<p class="calibre10">还提供了更方便的时间表达式查询，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 获取今天的博客
+db('blog')
+    -&gt;whereTime('create_time', 'today')
+    -&gt;select();
+// 获取昨天的博客
+db('blog')
+    -&gt;whereTime('create_time', 'yesterday')
+    -&gt;select();
+// 获取本周的博客
+db('blog')
+    -&gt;whereTime('create_time', 'week')
+    -&gt;select();   
+// 获取上周的博客
+db('blog')
+    -&gt;whereTime('create_time', 'last week')
+    -&gt;select();    
+// 获取本月的博客
+db('blog')
+    -&gt;whereTime('create_time', 'month')
+    -&gt;select();   
+// 获取上月的博客
+db('blog')
+    -&gt;whereTime('create_time', 'last month')
+    -&gt;select();      
+// 获取今年的博客
+db('blog')
+    -&gt;whereTime('create_time', 'year')
+    -&gt;select();    
+// 获取去年的博客
+db('blog')
+    -&gt;whereTime('create_time', 'last year')
+    -&gt;select();     </code></pre>
+<p class="calibre10">如果查询当天、本周、本月和今年的时间，还可以简化为：</p>
+<pre class="calibre21"><code class="calibre22">// 获取今天的博客
+db('blog')
+    -&gt;whereTime('create_time', 'd')
+    -&gt;select();
+// 获取本周的博客
+db('blog')
+    -&gt;whereTime('create_time', 'w')
+    -&gt;select();   
+// 获取本月的博客
+db('blog')
+    -&gt;whereTime('create_time', 'm')
+    -&gt;select();   
+// 获取今年的博客
+db('blog')
+    -&gt;whereTime('create_time', 'y')
+    -&gt;select();    </code></pre>
+<p class="calibre10"><code class="calibre7">V5.0.5+</code>版本开始，还可以使用下面的方式进行时间查询</p>
+<pre class="calibre21"><code class="calibre22">// 查询两个小时内的博客
+db('blog')
+    -&gt;whereTime('create_time','2 hours')
+    -&gt;select();</code></pre>
+</div>
+	
+</body></html>

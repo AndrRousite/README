@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>远程调试</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_166">远程调试</h1>
+<div class="book-content">
+    <p class="calibre10"><code class="calibre7">ThinkPHP5.0</code>版本开始，提供了<code class="calibre7">Socket</code>日志驱动用于本地和远程调试。</p>
+<h2 id="socket%E8%B0%83%E8%AF%95" class="calibre15">Socket调试</h2>
+<p class="calibre10">只需要在配置文件中设置如下：</p>
+<pre class="calibre21"><code class="calibre22">'log' =&gt;  [
+    'type'                =&gt; 'socket',
+    'host'                =&gt; 'slog.thinkphp.cn',
+    //日志强制记录到配置的client_id
+    'force_client_ids'    =&gt; [],
+    //限制允许读取日志的client_id
+    'allow_client_ids'    =&gt; [],
+]</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">上面的host配置地址是官方提供的公用服务端，首先需要去<a href="http://slog.thinkphp.cn" class="pcalibre calibre13">申请client_id</a> 。</p>
+</blockquote>
+<p class="calibre10">使用Chrome浏览器运行后，打开<code class="calibre7">审查元素-&gt;Console</code>，可以看到如下所示：<br class="calibre16"/><img src="56e274950e6da.png" alt="" class="calibre11"/></p>
+<p class="calibre10"><code class="calibre7">SocketLog</code>通过<code class="calibre7">websocket</code>将调试日志打印到浏览器的<code class="calibre7">console</code>中。你还可以用它来分析开源程序，分析SQL性能，结合taint分析程序漏洞。</p>
+<h3 id="%E5%AE%89%E8%A3%85chrome%E6%8F%92%E4%BB%B6" class="calibre17">安装Chrome插件</h3>
+<p class="calibre10"><code class="calibre7">SocketLog</code>首先需要安装<code class="calibre7">chrome</code>插件，Chrome<a href="https://chrome.google.com/webstore/detail/socketlog/apkmbfpihjhongonfcgdagliaglghcod" class="pcalibre calibre13">插件安装页面</a> （需翻墙）</p>
+<h3 id="%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95" class="calibre17">使用方法</h3>
+<ul class="calibre23"><li class="calibre20">首先，请在chrome浏览器上安装好插件。</li>
+<li class="calibre20">安装服务端<code class="calibre7">npm install -g socketlog-server</code> , 运行命令 <code class="calibre7">socketlog-server</code> 即可启动服务。 将会在本地起一个websocket服务 ，监听端口是1229 。</li>
+<li class="calibre20">如果想服务后台运行： <code class="calibre7">socketlog-server &gt; /dev/null &amp;</code> </li>
+</ul><h3 id="%E5%8F%82%E6%95%B0" class="calibre17">参数</h3>
+<ul class="calibre23"><li class="calibre20"><code class="calibre7">client_id</code>: 在chrome浏览器中，可以设置插件的<code class="calibre7">Client_ID</code> ，<strong class="calibre12">Client_ID</strong>是你任意指定的字符串。 <br class="calibre16"/><img src="573eb53697ab9.png" alt="" class="calibre11"/></li>
+<li class="calibre20">
+<p class="calibre10">设置<code class="calibre7">client_id</code>后能实现以下功能：</p>
+</li>
+<li class="calibre20">
+<p class="calibre10">1，配置<code class="calibre7">allow_client_ids</code> 配置项，让指定的浏览器才能获得日志，这样就可以把调试代码带上线。 普通用户访问不会触发调试，不会发送日志。 开发人员访问就能看的调试日志， 这样利于找线上bug。 <strong class="calibre12">Client_ID</strong> 建议设置为姓名拼音加上随机字符串，这样如果有员工离职可以将其对应的<code class="calibre7">client_id</code>从配置项allow_client_ids中移除。 <code class="calibre7">client_id</code>除了姓名拼音，加上随机字符串的目的，以防别人根据你公司员工姓名猜测出<code class="calibre7">client_id</code>,获取线上的调试日志。</p>
+</li>
+<li class="calibre20">
+<p class="calibre10">设置allow_client_ids示例代码：</p>
+<pre class="calibre21"><code class="calibre22">'allow_client_ids'=&gt;['thinkphp_zfH5NbLn','luofei_DJq0z80H'],</code></pre>
+</li>
+<li class="calibre20">2, 设置<code class="calibre7">force_client_ids</code>配置项，让后台脚本也能输出日志到chrome。 网站有可能用了队列，一些业务逻辑通过后台脚本处理， 如果后台脚本需要调试，你也可以将日志打印到浏览器的console中， 当然后台脚本不和浏览器接触，不知道当前触发程序的是哪个浏览器，所以我们需要强制将日志打印到指定<code class="calibre7">client_id</code>的浏览器上面。 我们在后台脚本中使用SocketLog时设置<code class="calibre7">force_client_ids</code> 配置项指定要强制输出浏览器的<code class="calibre7">client_id</code> 即可。</li>
+</ul></div>
+	
+</body></html>

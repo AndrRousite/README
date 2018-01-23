@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>行为</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_197">行为</h1>
+<div class="book-content">
+    <h2 id="%E6%A6%82%E8%BF%B0-7" class="calibre15">概述</h2>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">新增功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.4</td>
+<td class="calibre32 pcalibre1">行为类的方法采用驼峰法命名</td>
+</tr><tr class="calibre27"><td class="calibre33 pcalibre1">行为绑定支持绑定到类的方法</td>
+</tr></tbody></table><p class="calibre10">行为（Behavior）是ThinkPHP扩展机制中比较关键的一项扩展，行为既可以独立调用，也可以绑定到某个标签中进行侦听，在官方提出的CBD模式中行为也占了主要的地位，可见行为在ThinkPHP框架中意义非凡。</p>
+<p class="calibre10">这里指的行为是一个比较抽象的概念，你可以把行为想象成在应用执行过程中的一个动作或者处理。在框架的执行流程中，例如路由检测是一个行为，静态缓存是一个行为，用户权限检测也是行为，大到业务逻辑，小到浏览器检测、多语言检测等等都可以当做是一个行为，甚至说你希望给你的网站用户的第一次访问弹出Hello，world！这些都可以看成是一种行为，行为的存在让你无需改动框架和应用，而在外围通过扩展或者配置来改变或者增加一些功能。</p>
+<p class="calibre10">而不同的行为之间也具有位置共同性，比如，有些行为的作用位置都是在应用执行前，有些行为都是在模板输出之后，我们把这些行为发生作用的位置称之为标签（位），当应用程序运行到这个标签的时候，就会被拦截下来，统一执行相关的行为，类似于AOP编程中的“切面”的概念，给某一个切面绑定相关行为就成了一种类AOP编程的思想。</p>
+<h2 id="%E8%A1%8C%E4%B8%BA%E6%A0%87%E7%AD%BE%E4%BD%8D" class="calibre15">行为标签位</h2>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">在定义行为之前，我们先来了解下系统有哪些标签位，系统核心提供的标签位置包括下面几个（按照执行顺序排列）：</th>
+<th class="calibre28">标签位</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">app_init</td>
+<td class="calibre32 pcalibre1">应用初始化标签位</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">app_begin</td>
+<td class="pcalibre1 calibre31">应用开始标签位</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">module_init</td>
+<td class="pcalibre1 calibre31">模块初始化标签位</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">action_begin</td>
+<td class="pcalibre1 calibre31">控制器开始标签位</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">view_filter</td>
+<td class="pcalibre1 calibre31">视图输出过滤标签位</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">app_end</td>
+<td class="pcalibre1 calibre31">应用结束标签位</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">log_write</td>
+<td class="pcalibre1 calibre31">日志write方法标签位</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">response_end</td>
+<td class="calibre33 pcalibre1">输出结束标签位（<code class="calibre7">V5.0.1+</code>）</td>
+</tr></tbody></table><p class="calibre10">在每个标签位置，可以配置多个行为定义，行为的执行顺序按照定义的顺序依次执行。除非前面的行为里面中断执行了（某些行为可能需要中断执行，例如检测机器人或者非法执行行为），否则会继续下一个行为的执行。</p>
+<blockquote class="calibre5">
+<p class="calibre14">除了这些系统内置标签之外，开发人员还可以在应用中添加自己的应用标签。</p>
+</blockquote>
+<h2 id="%E6%B7%BB%E5%8A%A0%E8%A1%8C%E4%B8%BA%E6%A0%87%E7%AD%BE%E4%BD%8D" class="calibre15">添加行为标签位</h2>
+<p class="calibre10">可以使用<code class="calibre7">\think\Hook</code>类的<code class="calibre7">listen</code>方法添加自己的行为侦听位置，例如：</p>
+<pre class="calibre21"><code class="calibre22">Hook::listen('action_init');</code></pre>
+<p class="calibre10">可以给侦听方法传入参数（仅能传入一个参数），该参数使用引用传值，因此必须使用变量，例如：</p>
+<pre class="calibre21"><code class="calibre22">Hook::listen('action_init',$params);</code></pre>
+<p class="calibre10">侦听的标签位置可以随意放置。</p>
+<h2 id="%E8%A1%8C%E4%B8%BA%E5%AE%9A%E4%B9%89" class="calibre15">行为定义</h2>
+<p class="calibre10">行为类的定义很简单，定义行为的执行入口方法<code class="calibre7">run</code>即可，例如：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\behavior;
+
+class Test 
+{
+    public function run(&amp;$params)
+    {
+        // 行为逻辑
+    }
+}</code></pre>
+<p class="calibre10">行为类并不需要继承任何类，相对比较灵活。</p>
+<p class="calibre10">如果行为类需要绑定到多个标签，可以采用如下定义：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\behavior;
+
+class Test 
+{
+    public function app_init(&amp;$params)
+    {
+
+    }
+
+    public function app_end(&amp;$params)
+    {
+
+    }    
+}</code></pre>
+<p class="calibre10">绑定到<code class="calibre7">app_init</code>和<code class="calibre7">app_end</code>后 就会调用相关的方法。</p>
+<p class="calibre10"><code class="calibre7">V5.0.4+</code>版本以上，行为类的方法需要采用驼峰法命名，上面的行为类需要改成：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\behavior;
+
+class Test 
+{
+    public function appInit(&amp;$params)
+    {
+
+    }
+
+    public function appEnd(&amp;$params)
+    {
+
+    }    
+}</code></pre>
+<h2 id="%E8%A1%8C%E4%B8%BA%E7%BB%91%E5%AE%9A" class="calibre15">行为绑定</h2>
+<p class="calibre10">行为定义完成后，就需要绑定到某个标签位置才能生效，否则是不会执行的。<br class="calibre16"/>
+使用Hook类的add方法注册行为，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 注册 app\index\behavior\CheckLang行为类到app_init标签位
+Hook::add('app_init','app\\index\\behavior\\CheckLang'); 
+//注册 app\admin\behavior\CronRun行为类到app_init标签位
+Hook::add('app_init','app\\admin\\behavior\\CronRun');</code></pre>
+<p class="calibre10">如果要批量注册行为的话，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">Hook::add('app_init',['app\\index\\behavior\\CheckAuth','app\\index\\behavior\\CheckLang','app\\admin\\behavior\\CronRun']);
+</code></pre>
+<p class="calibre10">当应用运行到<code class="calibre7">app_init</code>标签位的时候，就会依次调用<code class="calibre7">app\index\behavior\CheckAuth</code>、<code class="calibre7">app\index\behavior\CheckLang</code>和<code class="calibre7">app\admin\behavior\CronRun</code>行为。如果其中一个行为中有中止代码的话则后续不会执行，如果返回<code class="calibre7">false</code>则当前标签位的后续行为将不会执行，但应用将继续运行。</p>
+<p class="calibre10">我们也可以直接在<code class="calibre7">APP_PATH</code>目录下面或者模块的目录下面定义<code class="calibre7">tags.php</code>文件来统一定义行为，定义格式如下：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    'app_init'=&gt; [
+        'app\\index\\behavior\\CheckAuth',
+        'app\\index\\behavior\\CheckLang'
+    ],
+    'app_end'=&gt; [
+        'app\\admin\\behavior\\CronRun'
+    ]
+]</code></pre>
+<p class="calibre10">如果<code class="calibre7">APP_PATH</code>目录下面和模块目录下面的<code class="calibre7">tags.php</code>都定义了app_init的行为绑定的话，会采用合并模式，如果希望覆盖，那么可以在模块目录下面的<code class="calibre7">tags.php</code>中定义如下：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    'app_init'=&gt; [
+        'app\\index\\behavior\\CheckAuth',
+        '_overlay'=&gt;true
+    ],
+    'app_end'=&gt; [
+        'app\\admin\\behavior\\CronRun'
+    ]
+]</code></pre>
+<p class="calibre10">如果某个行为标签定义了<code class="calibre7">'_overlay' =&gt;true</code> 就表示覆盖之前的相同标签下面的行为定义。</p>
+<h2 id="%E9%97%AD%E5%8C%85%E6%94%AF%E6%8C%81" class="calibre15">闭包支持</h2>
+<p class="calibre10">可以不用定义行为直接把闭包函数绑定到某个标签位，例如：</p>
+<pre class="calibre21"><code class="calibre22">Hook::add('app_init',function(){ 
+    echo 'Hello,world!';
+});
+</code></pre>
+<p class="calibre10">如果标签位有传入参数的话，闭包也可以支持传入参数，例如：</p>
+<pre class="calibre21"><code class="calibre22">Hook::listen('action_init',$params);
+Hook::add('action_init',function($params){ 
+    var_dump($params);
+});</code></pre>
+<h2 id="%E7%9B%B4%E6%8E%A5%E6%89%A7%E8%A1%8C%E8%A1%8C%E4%B8%BA" class="calibre15">直接执行行为</h2>
+<p class="calibre10">如果需要，你也可以不绑定行为标签，直接调用某个行为，使用：</p>
+<pre class="calibre21"><code class="calibre22">// 执行 app\index\behavior\CheckAuth行为类的run方法 并引用传入params参数
+$result = Hook::exec('app\\index\\behavior\\CheckAuth','run',$params);</code></pre>
+</div>
+	
+</body></html>

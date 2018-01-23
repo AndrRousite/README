@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>Workerman</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_202">Workerman</h1>
+<div class="book-content">
+    <h2 id="workerman" class="calibre15">Workerman</h2>
+<p class="calibre10">Workerman是一款纯PHP开发的开源高性能的PHP socket 服务器框架。被广泛的用于手机app、手游服务端、网络游戏服务器、聊天室服务器、硬件通讯服务器、智能家居、车联网、物联网等领域的开发。 支持TCP长连接，支持Websocket、HTTP等协议，支持自定义协议。基于workerman开发者可以更专注于业务逻辑开发，不必再为PHP Socket底层开发而烦恼。</p>
+<p class="calibre10">首先通过 composer 安装</p>
+<pre class="calibre21"><code class="calibre22">composer require topthink/think-worker</code></pre>
+<p class="calibre10">如果需要在window下做服务端，还需要</p>
+<pre class="calibre21"><code class="calibre22">composer require workerman/workerman-for-win</code></pre>
+<p class="calibre10">服务端使用示例如下:</p>
+<p class="calibre10">新增启动服务文件server.php，在项目根目录</p>
+<pre class="calibre21"><code class="calibre22">#!/usr/bin/env php
+&lt;?php
+define('APP_PATH', __DIR__ . '/application/');
+define('BIND_MODULE','push/Worker');
+// 加载框架引导文件
+require __DIR__ . '/thinkphp/start.php';</code></pre>
+<p class="calibre10">新增服务处理类，push.app是我本地测试域名</p>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+
+namespace app\push\controller;
+
+use think\worker\Server;
+
+class Worker extends Server
+{
+    protected $socket = 'websocket://push.app:2346';
+
+    /**
+     * 收到信息
+     * @param $connection
+     * @param $data
+     */
+    public function onMessage($connection, $data)
+    {
+        $connection-&gt;send('我收到你的信息了');
+    }
+
+    /**
+     * 当连接建立时触发的回调函数
+     * @param $connection
+     */
+    public function onConnect($connection)
+    {
+
+    }
+
+    /**
+     * 当连接断开时触发的回调函数
+     * @param $connection
+     */
+    public function onClose($connection)
+    {
+
+    }
+
+    /**
+     * 当客户端的连接上发生错误时触发
+     * @param $connection
+     * @param $code
+     * @param $msg
+     */
+    public function onError($connection, $code, $msg)
+    {
+        echo "error $code $msg\n";
+    }
+
+    /**
+     * 每个进程启动
+     * @param $worker
+     */
+    public function onWorkerStart($worker)
+    {
+
+    }
+}
+</code></pre>
+<p class="calibre10">在命令行下运行，启动监听服务</p>
+<pre class="calibre21"><code class="calibre22">php server.php</code></pre>
+<p class="calibre10">打开chrome浏览器，先打开push.app域名下的网页（js跨域不能通讯），按F12打开调试控制台，在Console一栏输入(或者把下面代码放入到html页面用js运行)</p>
+<pre class="calibre21"><code class="calibre22">ws = new WebSocket("ws://push.app:2346");
+ws.onopen = function() {
+    alert("连接成功");
+    ws.send('tom');
+    alert("给服务端发送一个字符串：tom");
+};
+ws.onmessage = function(e) {
+    alert("收到服务端的消息：" + e.data);
+};</code></pre>
+<p class="calibre10">继续测试</p>
+<pre class="calibre21"><code class="calibre22">ws.send('保持连接，发第二次信息，查看服务器回应');</code></pre>
+</div>
+	
+</body></html>

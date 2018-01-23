@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>添加数据</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_73">添加数据</h1>
+<div class="book-content">
+    <table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">版本</th>
+<th class="calibre28">调整功能</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">5.0.5</td>
+<td class="calibre34 pcalibre1">添加<code class="calibre7">data</code>/<code class="calibre7">inc</code>/<code class="calibre7">dec</code>/<code class="calibre7">exp</code>方法设置数据</td>
+</tr></tbody></table><h2 id="%E6%B7%BB%E5%8A%A0%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE" class="calibre15">添加一条数据</h2>
+<p class="calibre10">使用 <code class="calibre7">Db</code> 类的 <code class="calibre7">insert</code> 方法向数据库提交数据</p>
+<pre class="calibre21"><code class="calibre22">$data = ['foo' =&gt; 'bar', 'bar' =&gt; 'foo'];
+Db::table('think_user')-&gt;insert($data);
+</code></pre>
+<p class="calibre10">如果你在<code class="calibre7">database.php</code>配置文件中配置了数据库前缀(<code class="calibre7">prefix</code>)，那么可以直接使用 <code class="calibre7">Db</code> 类的 <code class="calibre7">name</code> 方法提交数据</p>
+<pre class="calibre21"><code class="calibre22">Db::name('user')-&gt;insert($data);</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">insert 方法添加数据成功返回添加成功的条数，insert 正常情况返回 1</p>
+</blockquote>
+<p class="calibre10">添加数据后如果需要返回新增数据的自增主键，可以使用<code class="calibre7">getLastInsID</code>方法：</p>
+<pre class="calibre21"><code class="calibre22">Db::name('user')-&gt;insert($data);
+$userId = Db::name('user')-&gt;getLastInsID();</code></pre>
+<p class="calibre10">或者直接使用<code class="calibre7">insertGetId</code>方法新增数据并返回主键值：</p>
+<pre class="calibre21"><code class="calibre22">Db::name('user')-&gt;insertGetId($data);</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">insertGetId 方法添加数据成功返回添加数据的自增主键</p>
+</blockquote>
+<h2 id="%E6%B7%BB%E5%8A%A0%E5%A4%9A%E6%9D%A1%E6%95%B0%E6%8D%AE" class="calibre15">添加多条数据</h2>
+<p class="calibre10">添加多条数据直接向 Db 类的 insertAll 方法传入需要添加的数据即可</p>
+<pre class="calibre21"><code class="calibre22">$data = [
+    ['foo' =&gt; 'bar', 'bar' =&gt; 'foo'],
+    ['foo' =&gt; 'bar1', 'bar' =&gt; 'foo1'],
+    ['foo' =&gt; 'bar2', 'bar' =&gt; 'foo2']
+];
+Db::name('user')-&gt;insertAll($data);</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">insertAll 方法添加数据成功返回添加成功的条数</p>
+</blockquote>
+<h3 id="%E5%8A%A9%E6%89%8B%E5%87%BD%E6%95%B0-1" class="calibre17">助手函数</h3>
+<pre class="calibre21"><code class="calibre22">// 添加单条数据
+db('user')-&gt;insert($data);
+
+// 添加多条数据
+db('user')-&gt;insertAll($list);</code></pre>
+<h3 id="%E5%BF%AB%E6%8D%B7%E6%9B%B4%E6%96%B0" class="calibre17">快捷更新</h3>
+<p class="calibre10"><code class="calibre7">V5.0.5+</code>以上版本封装的快捷更新方法<code class="calibre7">data</code>，可以配合<code class="calibre7">insert</code>使用。</p>
+<p class="calibre10">下面举个例子说明用法：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('data')
+    -&gt;data(['name'=&gt;'tp','score'=&gt;1000])
+    -&gt;insert();</code></pre>
+</div>
+	
+</body></html>

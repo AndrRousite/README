@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>一对多关联</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_113">一对多关联</h1>
+<div class="book-content">
+    <h2 id="%E4%B8%80%E5%AF%B9%E5%A4%9A%E5%85%B3%E8%81%94" class="calibre15">一对多关联</h2>
+<h3 id="%E5%85%B3%E8%81%94%E5%AE%9A%E4%B9%89" class="calibre17">关联定义</h3>
+<p class="calibre10">一对多关联的情况也比较常见，使用<code class="calibre7">hasMany</code>方法定义，<br class="calibre16"/>
+参数包括：</p>
+<blockquote class="info">
+<h3 id="hasmany%28%27%E5%85%B3%E8%81%94%E6%A8%A1%E5%9E%8B%E5%90%8D%27%2C%27%E5%A4%96%E9%94%AE%E5%90%8D%27%2C%27%E4%B8%BB%E9%94%AE%E5%90%8D%27%2C%5B%27%E6%A8%A1%E5%9E%8B%E5%88%AB%E5%90%8D%E5%AE%9A%E4%B9%89%27%5D%29%3B" class="calibre17">hasMany('关联模型名','外键名','主键名',['模型别名定义']);</h3>
+</blockquote>
+<p class="calibre10">例如一篇文章可以有多个评论</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class Article extends Model 
+{
+    public function comments()
+    {
+        return $this-&gt;hasMany('Comment');
+    }
+}</code></pre>
+<p class="calibre10">同样，也可以定义外键的名称</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class Article extends Model 
+{
+    public function comments()
+    {
+        return $this-&gt;hasMany('Comment','art_id');
+    }
+}</code></pre>
+<p class="calibre10">如果需要指定查询字段，可以使用下面的方式：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class Article extends Model 
+{
+    public function comments()
+    {
+        return $this-&gt;hasMany('Comment')-&gt;field('id,author,content');
+    }
+}</code></pre>
+<h3 id="%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2" class="calibre17">关联查询</h3>
+<p class="calibre10">我们可以通过下面的方式获取关联数据</p>
+<pre class="calibre21"><code class="calibre22">$article = Article::get(1);
+// 获取文章的所有评论
+dump($article-&gt;comments);
+// 也可以进行条件搜索
+dump($article-&gt;comments()-&gt;where('status',1)-&gt;select());</code></pre>
+<h3 id="%E6%A0%B9%E6%8D%AE%E5%85%B3%E8%81%94%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2" class="calibre17">根据关联条件查询</h3>
+<p class="calibre10">可以根据关联条件来查询当前模型对象数据，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 查询评论超过3个的文章
+$list = Article::has('comments','&gt;',3)-&gt;select();
+// 查询评论状态正常的文章
+$list = Article::hasWhere('comments',['status'=&gt;1])-&gt;select();</code></pre>
+<h3 id="%E5%85%B3%E8%81%94%E6%96%B0%E5%A2%9E-1" class="calibre17">关联新增</h3>
+<pre class="calibre21"><code class="calibre22">$article = Article::find(1);
+// 增加一个关联数据
+$article-&gt;comments()-&gt;save(['content'=&gt;'test']);
+// 批量增加关联数据
+$article-&gt;comments()-&gt;saveAll([
+    ['content'=&gt;'thinkphp'],
+    ['content'=&gt;'onethink'],
+]);</code></pre>
+<h3 id="%E5%AE%9A%E4%B9%89%E7%9B%B8%E5%AF%B9%E7%9A%84%E5%85%B3%E8%81%94-1" class="calibre17">定义相对的关联</h3>
+<p class="calibre10">要在 Comment 模型定义相对应的关联，可使用 belongsTo 方法：</p>
+<pre class="calibre21"><code class="calibre22">name app\index\model;
+
+use think\Model;
+
+class Comment extends Model 
+{
+    public function article()
+    {
+        return $this-&gt;belongsTo('article');
+    }
+}</code></pre>
+</div>
+	
+</body></html>

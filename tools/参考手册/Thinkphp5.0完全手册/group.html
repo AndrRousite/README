@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>group</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">group</h1>
+<div class="book-content">
+    <p class="calibre10">GROUP方法也是连贯操作方法之一，通常用于结合合计函数，根据一个或多个列对结果集进行分组 。</p>
+<p class="calibre10">group方法只有一个参数，并且只能使用字符串。</p>
+<p class="calibre10">例如，我们都查询结果按照用户id进行分组统计：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')
+    -&gt;field('user_id,username,max(score)')
+    -&gt;group('user_id')
+    -&gt;select();</code></pre>
+<p class="calibre10">生成的SQL语句是： </p>
+<pre class="calibre21"><code class="calibre22">SELECT user_id,username,max(score) FROM think_score GROUP BY user_id</code></pre>
+<p class="calibre10">也支持对多个字段进行分组，例如：</p>
+<pre class="calibre21"><code class="calibre22">Db::table('think_user')
+    -&gt;field('user_id,test_time,username,max(score)')
+    -&gt;group('user_id,test_time')
+    -&gt;select();</code></pre>
+<p class="calibre10">生成的SQL语句是：</p>
+<pre class="calibre21"><code class="calibre22">SELECT user_id,test_time,username,max(score) FROM think_score GROUP BY user_id,test_time</code></pre>
+</div>
+	
+</body></html>

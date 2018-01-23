@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>数据库迁移工具</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_201">数据库迁移工具</h1>
+<div class="book-content">
+    <h2 id="%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%81%E7%A7%BB%E5%B7%A5%E5%85%B7" class="calibre15">数据库迁移工具</h2>
+<p class="calibre10">首先通过 composer 安装</p>
+<pre class="calibre21"><code class="calibre22">composer require topthink/think-migration</code></pre>
+<p class="calibre10">注意事项，不支持修改文件配置目录</p>
+<hr class="calibre8"/><p class="calibre10">在命令行下运行查看帮助，可以看到新增的命令</p>
+<pre class="calibre21"><code class="calibre22">php think </code></pre>
+<pre class="calibre21"><code class="calibre22"> migrate
+  migrate:create     Create a new migration
+  migrate:rollback   Rollback the last or to a specific migration
+  migrate:run        Migrate the database
+  migrate:status     Show migration status
+ optimize
+  optimize:autoload  Optimizes PSR0 and PSR4 packages to be loaded wit
+h classmaps too, good for production.
+  optimize:config    Build config and common file cache.
+  optimize:route     Build route cache.
+  optimize:schema    Build database schema cache.
+ seed
+  seed:create        Create a new database seeder
+  seed:run           Run database seeders
+</code></pre>
+<p class="calibre10">创建迁移类，首字母必须为大写</p>
+<pre class="calibre21"><code class="calibre22">php think migrate:create Users</code></pre>
+<p class="calibre10">可以看到目录下有新文件 .\database\migrations\20161117144043_users.php</p>
+<h4 id="%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B" class="calibre6">使用实例</h4>
+<pre class="calibre21"><code class="calibre22">&lt;?php
+
+use Phinx\Migration\AbstractMigration;
+
+class Users extends AbstractMigration
+{
+    /**
+     * Change Method.
+     */
+    public function change()
+    {
+        // create the table
+        $table = $this-&gt;table('users',array('engine'=&gt;'MyISAM'));
+        $table-&gt;addColumn('username', 'string',array('limit' =&gt; 15,'default'=&gt;'','comment'=&gt;'用户名，登陆使用'))
+            -&gt;addColumn('password', 'string',array('limit' =&gt; 32,'default'=&gt;md5('123456'),'comment'=&gt;'用户密码'))
+            -&gt;addColumn('login_status', 'boolean',array('limit' =&gt; 1,'default'=&gt;0,'comment'=&gt;'登陆状态'))
+            -&gt;addColumn('login_code', 'string',array('limit' =&gt; 32,'default'=&gt;0,'comment'=&gt;'排他性登陆标识'))
+            -&gt;addColumn('last_login_ip', 'integer',array('limit' =&gt; 11,'default'=&gt;0,'comment'=&gt;'最后登录IP'))
+            -&gt;addColumn('last_login_time', 'datetime',array('default'=&gt;0,'comment'=&gt;'最后登录时间'))
+            -&gt;addColumn('is_delete', 'boolean',array('limit' =&gt; 1,'default'=&gt;0,'comment'=&gt;'删除状态，1已删除'))
+            -&gt;addIndex(array('username'), array('unique' =&gt; true))
+            -&gt;create();
+    }
+
+    /**
+     * Migrate Up.
+     */
+    public function up()
+    {
+
+    }
+
+    /**
+     * Migrate Down.
+     */
+    public function down()
+    {
+
+    }
+}
+</code></pre>
+<p class="calibre10">更具体的使用可查看 </p>
+<p class="calibre10"><a href="http://docs.phinx.org/en/latest/" class="pcalibre calibre13">http://docs.phinx.org/en/latest/</a></p>
+</div>
+	
+</body></html>

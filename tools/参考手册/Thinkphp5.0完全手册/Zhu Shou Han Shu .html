@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>助手函数</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_222">助手函数</h1>
+<div class="book-content">
+    <h1 id="%E5%8A%A9%E6%89%8B%E5%87%BD%E6%95%B0-11" class="calibre9">助手函数</h1>
+<p class="calibre10">系统为一些常用的操作方法封装了助手函数，便于使用，包含如下：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">助手函数</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">abort</td>
+<td class="calibre32 pcalibre1">中断执行并发送HTTP状态码</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">action</td>
+<td class="pcalibre1 calibre31">调用控制器类的操作</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">cache</td>
+<td class="pcalibre1 calibre31">缓存管理</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">config</td>
+<td class="pcalibre1 calibre31">获取和设置配置参数</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">controller</td>
+<td class="pcalibre1 calibre31">实例化控制器</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">cookie</td>
+<td class="pcalibre1 calibre31">Cookie管理</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">db</td>
+<td class="pcalibre1 calibre31">实例化数据库类</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">debug</td>
+<td class="pcalibre1 calibre31">调试时间和内存占用</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">dump</td>
+<td class="pcalibre1 calibre31">浏览器友好的变量输出</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">exception</td>
+<td class="pcalibre1 calibre31">抛出异常处理</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">halt</td>
+<td class="pcalibre1 calibre31">变量调试输出并中断执行</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">import</td>
+<td class="pcalibre1 calibre31">导入所需的类库</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">input</td>
+<td class="pcalibre1 calibre31">获取输入数据 支持默认值和过滤</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">json</td>
+<td class="pcalibre1 calibre31">JSON数据输出</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">jsonp</td>
+<td class="pcalibre1 calibre31">JSONP数据输出</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">lang</td>
+<td class="pcalibre1 calibre31">获取语言变量值</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">load_trait</td>
+<td class="pcalibre1 calibre31">快速导入Traits <code class="calibre7">PHP5.5</code>以上无需调用</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">model</td>
+<td class="pcalibre1 calibre31">实例化Model</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">redirect</td>
+<td class="pcalibre1 calibre31">重定向输出</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">request</td>
+<td class="pcalibre1 calibre31">实例化Request对象</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">response</td>
+<td class="pcalibre1 calibre31">实例化Response对象</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">session</td>
+<td class="pcalibre1 calibre31">Session管理</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">trace</td>
+<td class="pcalibre1 calibre31">记录日志信息</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">token</td>
+<td class="pcalibre1 calibre31">生成表单令牌输出</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">url</td>
+<td class="pcalibre1 calibre31">Url生成</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">validate</td>
+<td class="pcalibre1 calibre31">实例化验证器</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">vendor</td>
+<td class="pcalibre1 calibre31">快速导入第三方框架类库</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">view</td>
+<td class="pcalibre1 calibre31">渲染模板输出</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">widget</td>
+<td class="pcalibre1 calibre31">渲染输出Widget</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">xml</td>
+<td class="calibre33 pcalibre1">XML数据输出</td>
+</tr></tbody></table><p class="calibre10">核心框架不依赖任何助手函数，系统只是默认加载了助手函数，配置如下：</p>
+<pre class="calibre21"><code class="calibre22">// 扩展函数文件定义
+'extra_file_list'   =&gt; [THINK_PATH . 'helper' . EXT],</code></pre>
+<p class="calibre10">因此，你可以随意修改助手函数的名称或者添加自己的助手函数，然后修改配置为：</p>
+<pre class="calibre21"><code class="calibre22">// 扩展函数文件定义
+'extra_file_list'   =&gt;  [APP_PATH . 'helper' . EXT],</code></pre>
+<pre class="calibre21"><code class="calibre22">// 使用扩展函数文件
+'extra_file_list'   =&gt; [
+    THINK_PATH . 'helper' . EXT,
+    APP_PATH . 'helper' . EXT
+],</code></pre>
+</div>
+	
+</body></html>

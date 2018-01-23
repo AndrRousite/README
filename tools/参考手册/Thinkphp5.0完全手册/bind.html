@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>bind</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title">bind</h1>
+<div class="book-content">
+    <p class="calibre10">bind方法用于手动参数绑定，大多数情况，无需进行手动绑定，系统会在查询和写入数据的时候自动使用参数绑定。</p>
+<p class="calibre10">bind方法用法如下：</p>
+<pre class="calibre21"><code class="calibre22">// 用于查询
+Db::table('think_user')
+-&gt;where('id',':id')
+-&gt;where('name',':name')
+-&gt;bind(['id'=&gt;[10,\PDO::PARAM_INT],'name'=&gt;'thinkphp'])
+-&gt;select();
+
+// 用于写入
+Db::table('think_user')
+-&gt;bind(['id'=&gt;[10,\PDO::PARAM_INT],'email'=&gt;'thinkphp@qq.com','name'=&gt;'thinkphp'])
+-&gt;where('id',':id')
+-&gt;update(['name'=&gt;':name','email'=&gt;':email');</code></pre>
+</div>
+	
+</body></html>

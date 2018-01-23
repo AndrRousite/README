@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>请求信息</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_56">请求信息</h1>
+<div class="book-content">
+    <p class="calibre10">如果要获取当前的请求信息，可以使用<code class="calibre7">\think\Request</code>类，<br class="calibre16"/>
+除了下文中的</p>
+<pre class="calibre21"><code class="calibre22">$request = Request::instance();</code></pre>
+<p class="calibre10">也可以使用助手函数</p>
+<pre class="calibre21"><code class="calibre22">$request = request();</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">当然，最方便的还是使用注入请求对象的方式来获取变量。</p>
+</blockquote>
+<p class="calibre10">例如：</p>
+<h2 id="%E8%8E%B7%E5%8F%96url%E4%BF%A1%E6%81%AF" class="calibre15">获取URL信息</h2>
+<pre class="calibre21"><code class="calibre22">$request = Request::instance();
+// 获取当前域名
+echo 'domain: ' . $request-&gt;domain() . '&lt;br/&gt;';
+// 获取当前入口文件
+echo 'file: ' . $request-&gt;baseFile() . '&lt;br/&gt;';
+// 获取当前URL地址 不含域名
+echo 'url: ' . $request-&gt;url() . '&lt;br/&gt;';
+// 获取包含域名的完整URL地址
+echo 'url with domain: ' . $request-&gt;url(true) . '&lt;br/&gt;';
+// 获取当前URL地址 不含QUERY_STRING
+echo 'url without query: ' . $request-&gt;baseUrl() . '&lt;br/&gt;';
+// 获取URL访问的ROOT地址
+echo 'root:' . $request-&gt;root() . '&lt;br/&gt;';
+// 获取URL访问的ROOT地址
+echo 'root with domain: ' . $request-&gt;root(true) . '&lt;br/&gt;';
+// 获取URL地址中的PATH_INFO信息
+echo 'pathinfo: ' . $request-&gt;pathinfo() . '&lt;br/&gt;';
+// 获取URL地址中的PATH_INFO信息 不含后缀
+echo 'pathinfo: ' . $request-&gt;path() . '&lt;br/&gt;';
+// 获取URL地址中的后缀信息
+echo 'ext: ' . $request-&gt;ext() . '&lt;br/&gt;';</code></pre>
+<p class="calibre10">输出结果为：</p>
+<pre class="calibre21"><code class="calibre22">domain: http://tp5.com
+file: /index.php
+url: /index/index/hello.html?name=thinkphp
+url with domain: http://tp5.com/index/index/hello.html?name=thinkphp
+url without query: /index/index/hello.html
+root:
+root with domain: http://tp5.com
+pathinfo: index/index/hello.html
+pathinfo: index/index/hello
+ext: html</code></pre>
+<h2 id="%E8%AE%BE%E7%BD%AE%2F%E8%8E%B7%E5%8F%96+%E6%A8%A1%E5%9D%97%2F%E6%8E%A7%E5%88%B6%E5%99%A8%2F%E6%93%8D%E4%BD%9C%E5%90%8D%E7%A7%B0" class="calibre15">设置/获取 模块/控制器/操作名称</h2>
+<pre class="calibre21"><code class="calibre22">$request = Request::instance();
+echo "当前模块名称是" . $request-&gt;module();
+echo "当前控制器名称是" . $request-&gt;controller();
+echo "当前操作名称是" . $request-&gt;action();</code></pre>
+<p class="calibre10">如果当前访问的地址是 <a href="http://serverName/index.php/index/hello_world/index" class="pcalibre calibre13">http://serverName/index.php/index/hello_world/index</a><br class="calibre16"/>
+输出结果为：</p>
+<pre class="calibre21"><code class="calibre22">当前模块名称是index
+当前控制器名称是HelloWorld
+当前操作名称是index</code></pre>
+<p class="calibre10">设置模块名称值需要向module方法中传入名称即可，同样使用于设置控制器名称和操作名称</p>
+<pre class="calibre21"><code class="calibre22">Request::instance()-&gt;module('module_name');</code></pre>
+<h2 id="%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0" class="calibre15">获取请求参数</h2>
+<pre class="calibre21"><code class="calibre22">$request = Request::instance();
+echo '请求方法：' . $request-&gt;method() . '&lt;br/&gt;';
+echo '资源类型：' . $request-&gt;type() . '&lt;br/&gt;';
+echo '访问地址：' . $request-&gt;ip() . '&lt;br/&gt;';
+echo '是否AJax请求：' . var_export($request-&gt;isAjax(), true) . '&lt;br/&gt;';
+echo '请求参数：';
+dump($request-&gt;param());
+echo '请求参数：仅包含name';
+dump($request-&gt;only(['name']));
+echo '请求参数：排除name';
+dump($request-&gt;except(['name']));</code></pre>
+<p class="calibre10">输出结果为：</p>
+<pre class="calibre21"><code class="calibre22">请求方法：GET
+资源类型：html
+访问地址：127.0.0.1
+是否AJax请求：false
+请求参数：
+array (size=2)
+  'test' =&gt; string 'ddd' (length=3)
+  'name' =&gt; string 'thinkphp' (length=8)
+
+请求参数：仅包含name
+array (size=1)
+  'name' =&gt; string 'thinkphp' (length=8)
+
+请求参数：排除name
+array (size=1)
+  'test' =&gt; string 'ddd' (length=3)</code></pre>
+<h2 id="%E8%8E%B7%E5%8F%96%E8%B7%AF%E7%94%B1%E5%92%8C%E8%B0%83%E5%BA%A6%E4%BF%A1%E6%81%AF" class="calibre15">获取路由和调度信息</h2>
+<p class="calibre10">hello方法修改如下：</p>
+<pre class="calibre21"><code class="calibre22">$request = Request::instance();
+echo '路由信息：';
+dump($request-&gt;route());
+echo '调度信息：';
+dump($request-&gt;dispatch());</code></pre>
+<p class="calibre10">路由定义为：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    'hello/:name' =&gt;['index/hello',[],['name'=&gt;'\w+']],
+];</code></pre>
+<p class="calibre10">访问下面的URL地址：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/hello/thinkphp</code></pre>
+<p class="calibre10">输出信息为：</p>
+<pre class="calibre21"><code class="calibre22">路由信息：
+array (size=4)
+  'rule' =&gt; string 'hello/:name' (length=11)
+  'route' =&gt; string 'index/hello' (length=11)
+  'pattern' =&gt; 
+    array (size=1)
+      'name' =&gt; string '\w+' (length=3)
+  'option' =&gt; 
+    array (size=0)
+      empty
+
+调度信息：
+array (size=2)
+  'type' =&gt; string 'module' (length=6)
+  'module' =&gt; 
+    array (size=3)
+      0 =&gt; null
+      1 =&gt; string 'index' (length=5)
+      2 =&gt; string 'hello' (length=5)
+</code></pre>
+<h2 id="%E8%AE%BE%E7%BD%AE%E8%AF%B7%E6%B1%82%E4%BF%A1%E6%81%AF" class="calibre15">设置请求信息</h2>
+<p class="calibre10">如果某些环境下面获取的请求信息有误，可以手动设置这些信息参数，使用下面的方式：</p>
+<pre class="calibre21"><code class="calibre22">$request = Request::instance();
+$request-&gt;root('index.php');
+$request-&gt;pathinfo('index/index/hello');</code></pre>
+</div>
+	
+</body></html>

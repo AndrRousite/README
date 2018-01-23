@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>模型初始化</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_93">模型初始化</h1>
+<div class="book-content">
+    <h2 id="%E6%A8%A1%E5%9E%8B%E5%88%9D%E5%A7%8B%E5%8C%96" class="calibre15">模型初始化</h2>
+<p class="calibre10">模型同样支持初始化，与控制器的初始化不同的是，模型的初始化是重写<code class="calibre7">Model</code>的<code class="calibre7">initialize</code>，具体如下</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class Index extends Model
+{
+
+    //自定义初始化
+    protected function initialize()
+    {
+        //需要调用`Model`的`initialize`方法
+        parent::initialize();
+        //TODO:自定义的初始化
+    }
+}</code></pre>
+<p class="calibre10">同样也可以使用静态<code class="calibre7">init</code>方法，需要注意的是<code class="calibre7">init</code>只在第一次实例化的时候执行，并且方法内需要注意静态调用的规范，具体如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\model;
+
+use think\Model;
+
+class Index extends Model
+{
+
+    //自定义初始化
+    protected static function init()
+    {
+        //TODO:自定义的初始化
+    }
+}</code></pre>
+</div>
+	
+</body></html>

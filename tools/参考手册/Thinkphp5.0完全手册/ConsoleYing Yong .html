@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>命令行</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_206">命令行</h1>
+<div class="book-content">
+    <p class="calibre10">ThinkPHP5.0支持<code class="calibre7">Console</code>应用，通过命令行的方式执行一些URL访问不方便或者安全性较高的操作。</p>
+<p class="calibre10">我们可以在命令行下面，切换到应用根目录，然后执行<code class="calibre7">php think</code>，会出现下面的提示信息：</p>
+<pre class="calibre21"><code class="calibre22">&gt;php think
+Think Console version 0.1
+
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display this help message
+  -V, --version         Display this console version
+  -q, --quiet           Do not output any message
+      --ansi            Force ANSI output
+      --no-ansi         Disable ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Available commands:
+  build              Build Application Dirs
+  clear              Clear runtime file
+  help               Displays help for a command
+  list               Lists commands
+ make
+  make:controller    Create a new resource controller class
+  make:model         Create a new model class
+ optimize
+  optimize:autoload  Optimizes PSR0 and PSR4 packages to be loaded with classmaps too, good for production.
+  optimize:config    Build config and common file cache.
+  optimize:route     Build route cache.</code></pre>
+<p class="calibre10"><code class="calibre7">console</code>命令的执行格式一般为：</p>
+<blockquote class="info">
+<h3 id="%3Ephp+think+%E6%8C%87%E4%BB%A4+%E5%8F%82%E6%95%B0" class="calibre17">&gt;php think 指令 参数</h3>
+</blockquote>
+<p class="calibre10">下面介绍下系统自带的几个命令，包括：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">指令</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">build</td>
+<td class="calibre32 pcalibre1">自动生成目录和文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">help</td>
+<td class="pcalibre1 calibre31">帮助</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">list</td>
+<td class="pcalibre1 calibre31">指令列表</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">clear</td>
+<td class="pcalibre1 calibre31">清除缓存指令</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">make:controller</td>
+<td class="pcalibre1 calibre31">创建控制器文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">make:model</td>
+<td class="pcalibre1 calibre31">创建模型文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">optimize:autoload</td>
+<td class="pcalibre1 calibre31">生成类库映射文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">optimize:config</td>
+<td class="pcalibre1 calibre31">生成配置缓存文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">optimize:route</td>
+<td class="pcalibre1 calibre31">生成路由缓存文件</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">optimize:schema</td>
+<td class="calibre33 pcalibre1">生成数据表字段缓存文件</td>
+</tr></tbody></table><p class="calibre10">更多的指令可以自己扩展。</p>
+</div>
+	
+</body></html>

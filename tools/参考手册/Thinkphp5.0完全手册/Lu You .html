@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>路由</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_25">路由</h1>
+<div class="book-content">
+    <p class="calibre10">路由功能由<code class="calibre7">\think\Route</code>类完成。</p>
+<h2 id="%E6%A6%82%E8%BF%B0-1" class="calibre15">概述</h2>
+<p class="calibre10">由于<code class="calibre7">ThinkPHP5.0</code>默认采用的URL规则是：</p>
+<blockquote class="info">
+<h4 id="http%3A%2F%2Fserver%2Fmodule%2Fcontroller%2Faction%2Fparam%2Fvalue%2F..." class="calibre6"><a href="http://server/module/controller/action/param/value/" class="pcalibre calibre13">http://server/module/controller/action/param/value/</a>...</h4>
+</blockquote>
+<p class="calibre10">路由的作用是简化URL访问地址，并根据定义的路由类型做出正确的解析。</p>
+<p class="calibre10">新版的路由功能做了大量的增强，包括：</p>
+<ul class="calibre23"><li class="calibre20">支持路由到模块的控制器/操作、控制器类的方法、闭包函数和重定向地址，甚至是任何类库的方法；</li>
+<li class="calibre20">闭包路由的增强；</li>
+<li class="calibre20">规则路由支持全局和局部变量规则定义（正则）；</li>
+<li class="calibre20">支持路由到任意层次的控制器；</li>
+<li class="calibre20">子域名路由功能改进；</li>
+<li class="calibre20">支持路由分组并支持分组参数定义；</li>
+<li class="calibre20">增加资源路由和嵌套支持；</li>
+<li class="calibre20">支持使用行为或者自定义函数检测路由规则；</li>
+</ul><p class="calibre10">ThinkPHP5.0的路由支持三种方式的URL解析规则。</p>
+<p class="calibre10">5.0的路由是针对应用而不是针对模块，因此路由的设置也是针对应用下面的所有模块，如果希望不同的模块区分不同的设置（例如某些模块需要关闭路由，某些模块需要强制路由等），需要给该模块增加单独的入口文件，并作如下修改：</p>
+<pre class="calibre21"><code class="calibre22">// 定义项目路径
+define('APP_PATH', __DIR__ . '/../application/');
+// 加载框架基础文件
+require __DIR__ . '/../thinkphp/base.php';
+// 绑定当前入口文件到admin模块
+\think\Route::bind('admin');
+// 关闭admin模块的路由
+\think\App::route(false);
+// 执行应用
+\think\App::run()-&gt;send();</code></pre>
+</div>
+	
+</body></html>

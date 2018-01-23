@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>生成配置缓存文件</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_212">生成配置缓存文件</h1>
+<div class="book-content">
+    <h2 id="%E7%94%9F%E6%88%90%E9%85%8D%E7%BD%AE%E7%BC%93%E5%AD%98%60optimize%3Aconfig%60" class="calibre15">生成配置缓存<code class="calibre7">optimize:config</code></h2>
+<p class="calibre10">可以为应用或者模块生成配置缓存文件</p>
+<pre class="calibre21"><code class="calibre22">php think optimize:config</code></pre>
+<p class="calibre10">默认生成应用的配置缓存文件，调用后会在<code class="calibre7">runtime</code>目录下面生成<code class="calibre7">init.php</code>文件，生成配置缓存文件后，应用目录下面的<code class="calibre7">config.php</code> <code class="calibre7">common.php</code>以及<code class="calibre7">tags.php</code>不会被加载，被<code class="calibre7">runtime/init.php</code>取代。</p>
+<p class="calibre10">如果需要生成某个模块的配置缓存，可以使用：</p>
+<pre class="calibre21"><code class="calibre22">php think optimize:config --module index</code></pre>
+<p class="calibre10">调用后会在<code class="calibre7">runtime/index</code>目录下面生成<code class="calibre7">init.php</code>文件，生成后，<code class="calibre7">index</code>模块目录下面的<code class="calibre7">config.php</code> <code class="calibre7">common.php</code>以及<code class="calibre7">tags.php</code>不会被加载，被<code class="calibre7">runtime/index/init.php</code>取代。</p>
+</div>
+	
+</body></html>

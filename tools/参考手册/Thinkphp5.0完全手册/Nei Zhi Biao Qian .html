@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>内置标签</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_143">内置标签</h1>
+<div class="book-content">
+    <p class="calibre10">变量输出使用普通标签就足够了，但是要完成其他的控制、循环和判断功能，就需要借助模板引擎的标签库功能了，系统内置标签库的所有标签无需引入标签库即可直接使用。</p>
+<p class="calibre10">内置标签包括：</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">标签名</th>
+<th class="calibre28">作用</th>
+<th class="calibre28">包含属性</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">include</td>
+<td class="pcalibre1 calibre31">包含外部模板文件（闭合）</td>
+<td class="calibre32 pcalibre1">file</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">load</td>
+<td class="pcalibre1 calibre31">导入资源文件（闭合 包括js css import别名）</td>
+<td class="pcalibre1 calibre31">file,href,type,value,basepath</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">volist</td>
+<td class="pcalibre1 calibre31">循环数组数据输出</td>
+<td class="pcalibre1 calibre31">name,id,offset,length,key,mod</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">foreach</td>
+<td class="pcalibre1 calibre31">数组或对象遍历输出</td>
+<td class="pcalibre1 calibre31">name,item,key</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">for</td>
+<td class="pcalibre1 calibre31">For循环数据输出</td>
+<td class="pcalibre1 calibre31">name,from,to,before,step</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">switch</td>
+<td class="pcalibre1 calibre31">分支判断输出</td>
+<td class="pcalibre1 calibre31">name</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">case</td>
+<td class="pcalibre1 calibre31">分支判断输出（必须和switch配套使用）</td>
+<td class="pcalibre1 calibre31">value,break</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">default</td>
+<td class="pcalibre1 calibre31">默认情况输出（闭合 必须和switch配套使用）</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">compare</td>
+<td class="pcalibre1 calibre31">比较输出（包括eq neq lt gt egt elt heq nheq等别名）</td>
+<td class="pcalibre1 calibre31">name,value,type</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">range</td>
+<td class="pcalibre1 calibre31">范围判断输出（包括in notin between notbetween别名）</td>
+<td class="pcalibre1 calibre31">name,value,type</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">present</td>
+<td class="pcalibre1 calibre31">判断是否赋值</td>
+<td class="pcalibre1 calibre31">name</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">notpresent</td>
+<td class="pcalibre1 calibre31">判断是否尚未赋值</td>
+<td class="pcalibre1 calibre31">name</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">empty</td>
+<td class="pcalibre1 calibre31">判断数据是否为空</td>
+<td class="pcalibre1 calibre31">name</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">notempty</td>
+<td class="pcalibre1 calibre31">判断数据是否不为空</td>
+<td class="pcalibre1 calibre31">name</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">defined</td>
+<td class="pcalibre1 calibre31">判断常量是否定义</td>
+<td class="pcalibre1 calibre31">name</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">notdefined</td>
+<td class="pcalibre1 calibre31">判断常量是否未定义</td>
+<td class="pcalibre1 calibre31">name</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">define</td>
+<td class="pcalibre1 calibre31">常量定义（闭合）</td>
+<td class="pcalibre1 calibre31">name,value</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">assign</td>
+<td class="pcalibre1 calibre31">变量赋值（闭合）</td>
+<td class="pcalibre1 calibre31">name,value</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">if</td>
+<td class="pcalibre1 calibre31">条件判断输出</td>
+<td class="pcalibre1 calibre31">condition</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">elseif</td>
+<td class="pcalibre1 calibre31">条件判断输出（闭合 必须和if标签配套使用）</td>
+<td class="pcalibre1 calibre31">condition</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">else</td>
+<td class="pcalibre1 calibre31">条件不成立输出（闭合 可用于其他标签）</td>
+<td class="pcalibre1 calibre31">无</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">php</td>
+<td class="pcalibre1 calibre31">使用php代码</td>
+<td class="calibre33 pcalibre1">无</td>
+</tr></tbody></table></div>
+	
+</body></html>

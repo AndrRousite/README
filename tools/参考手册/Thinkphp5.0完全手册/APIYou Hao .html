@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>API友好</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_15">API友好</h1>
+<div class="book-content">
+    <p class="calibre10">新版ThinkPHP针对<code class="calibre7">API</code>开发做了很多的优化，并且不依赖原来的API模式扩展。</p>
+<h2 id="%E6%95%B0%E6%8D%AE%E8%BE%93%E5%87%BA" class="calibre15">数据输出</h2>
+<p class="calibre10">新版的控制器输出采用<code class="calibre7">Response</code>类统一处理，而不是直接在控制器中进行输出，通过设置<code class="calibre7">default_return_type</code>或者动态设置不同类型的<code class="calibre7">Response</code>输出就可以自动进行数据转换处理，一般来说，你只需要在控制器中返回字符串或者数组即可，例如如果我们配置：</p>
+<pre class="calibre21"><code class="calibre22">'default_return_type'=&gt;'json'</code></pre>
+<p class="calibre10">那么下面的控制器方法返回值会自动转换为json格式并返回。</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class Index 
+{
+    public function index()
+    {
+        $data = ['name'=&gt;'thinkphp','url'=&gt;'thinkphp.cn'];
+        return ['data'=&gt;$data,'code'=&gt;1,'message'=&gt;'操作完成'];
+    }
+}</code></pre>
+<p class="calibre10">访问该请求URL地址后，最终可以在浏览器中看到输出结果如下：</p>
+<pre class="calibre21"><code class="calibre22">{"data":{"name":"thinkphp","url":"thinkphp.cn"},"code":1,"message":"\u64cd\u4f5c\u5b8c\u6210"}</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">如果你需要返回其他的数据格式的话，控制器本身的代码无需做任何改变。</p>
+</blockquote>
+<p class="calibre10">支持明确指定输出类型的方式输出，例如下面指定<code class="calibre7">JSON</code>数据输出：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class Index 
+{
+    public function index()
+    {
+        $data = ['name'=&gt;'thinkphp','url'=&gt;'thinkphp.cn'];
+        // 指定json数据输出
+        return json(['data'=&gt;$data,'code'=&gt;1,'message'=&gt;'操作完成']);
+    }
+}</code></pre>
+<p class="calibre10">或者指定输出<code class="calibre7">XML</code>类型数据：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class Index 
+{
+    public function index()
+    {
+        $data = ['name'=&gt;'thinkphp','url'=&gt;'thinkphp.cn'];
+        // 指定xml数据输出
+        return xml(['data'=&gt;$data,'code'=&gt;1,'message'=&gt;'操作完成']);
+    }
+}</code></pre>
+<p class="calibre10">核心支持的数据类型包括<code class="calibre7">view</code>、<code class="calibre7">xml</code>、<code class="calibre7">json</code>和<code class="calibre7">jsonp</code>，其他类型的需要自己扩展。</p>
+<h2 id="%E9%94%99%E8%AF%AF%E8%B0%83%E8%AF%95" class="calibre15">错误调试</h2>
+<p class="calibre10">由于<code class="calibre7">API</code>开发不方便在客户端进行开发调试，但<code class="calibre7">ThinkPHP5</code>的<code class="calibre7">Trace</code>调试功能支持<code class="calibre7">Socket</code>在内的方式，可以实现远程的开发调试。</p>
+<p class="calibre10">设置方式：</p>
+<pre class="calibre21"><code class="calibre22">'app_trace' =&gt; true,
+'trace'     =&gt; [
+    'type'             =&gt; 'socket', 
+    // socket服务器
+    'host'             =&gt; 'slog.thinkphp.cn',
+],</code></pre>
+<p class="calibre10">然后安装<code class="calibre7">chrome</code>浏览器插件后即可进行远程调试，详细参考调试部分。</p>
+</div>
+	
+</body></html>

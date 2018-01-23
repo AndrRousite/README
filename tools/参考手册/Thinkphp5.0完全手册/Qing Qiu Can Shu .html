@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>请求参数</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_132">请求参数</h1>
+<div class="book-content">
+    <p class="calibre10">模板支持直接输出<code class="calibre7">Request</code>请求对象的方法参数，用法如下：</p>
+<blockquote class="info">
+<h3 id="%24request.%E6%96%B9%E6%B3%95%E5%90%8D.%E5%8F%82%E6%95%B0" class="calibre17">$Request.方法名.参数</h3>
+</blockquote>
+<p class="calibre10">例如：</p>
+<pre class="calibre21"><code class="calibre22">{$Request.get.id}
+{$Request.param.name}</code></pre>
+<p class="calibre10">以<code class="calibre7">$Request.</code>开头的变量输出会认为是系统Request请求对象的参数输出。</p>
+<p class="calibre10">支持<code class="calibre7">Request</code>类的大部分方法，但只支持方法的第一个参数。</p>
+<p class="calibre10">下面都是有效的输出：</p>
+<pre class="calibre21"><code class="calibre22">// 调用Request对象的get方法 传入参数为id
+{$Request.get.id}
+// 调用Request对象的param方法 传入参数为name
+{$Request.param.name}
+// 调用Request对象的param方法 传入参数为user.nickname
+{$Request.param.user.nickname}
+// 调用Request对象的root方法
+{$Request.root}
+// 调用Request对象的root方法，并且传入参数true
+{$Request.root.true}
+// 调用Request对象的path方法
+{$Request.path}
+// 调用Request对象的module方法
+{$Request.module}
+// 调用Request对象的controller方法
+{$Request.controller}
+// 调用Request对象的action方法
+{$Request.action}
+// 调用Request对象的ext方法
+{$Request.ext}
+// 调用Request对象的host方法
+{$Request.host}
+// 调用Request对象的ip方法
+{$Request.ip}
+// 调用Request对象的header方法
+{$Request.header.accept-encoding}</code></pre>
+</div>
+	
+</body></html>

@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>生命周期</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_8">生命周期</h1>
+<div class="book-content">
+    <p class="calibre10">本篇内容我们对ThinkPHP<code class="calibre7">5.0</code>的应用请求的生命周期做大致的介绍，以便于开发者了解整个执行流程。</p>
+<h2 id="1%E3%80%81%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6" class="calibre15">1、入口文件</h2>
+<p class="calibre10">用户发起的请求都会经过应用的入口文件，通常是 <code class="calibre7">public/index.php</code>文件。当然，你也可以更改或者增加新的入口文件。</p>
+<p class="calibre10">通常入口文件的代码都比较简单，一个普通的入口文件代码如下：</p>
+<pre class="calibre21"><code class="calibre22">// 应用入口文件
+
+// 定义项目路径
+define('APP_PATH', __DIR__ . '/../application/');
+// 加载框架引导文件
+require __DIR__ . '/../thinkphp/start.php';</code></pre>
+<p class="calibre10">一般入口文件以定义一些常量为主，支持的常量请参考后续的内容或者附录部分。</p>
+<blockquote class="calibre5">
+<p class="calibre14">通常，我们不建议在应用入口文件中加入过多的代码，尤其是和业务逻辑相关的代码。</p>
+</blockquote>
+<h2 id="2%E3%80%81%E5%BC%95%E5%AF%BC%E6%96%87%E4%BB%B6" class="calibre15">2、引导文件</h2>
+<p class="calibre10">接下来就是执行框架的引导文件，<code class="calibre7">start.php</code>文件就是系统默认的一个引导文件。在引导文件中，会依次执行下面操作：</p>
+<ul class="calibre23"><li class="calibre20">加载系统常量定义；</li>
+<li class="calibre20">加载环境变量定义文件；</li>
+<li class="calibre20">注册自动加载机制；</li>
+<li class="calibre20">注册错误和异常处理机制；</li>
+<li class="calibre20">加载惯例配置文件；</li>
+<li class="calibre20">执行应用；</li>
+</ul><p class="calibre10"><code class="calibre7">start.php</code>引导文件首先会调用<code class="calibre7">base.php</code>基础引导文件，某些特殊需求下面可能直接在入口文件中引入基础引导文件。</p>
+<blockquote class="calibre5">
+<p class="calibre14">如果在你的应用入口文件中更改了默认的引导文件，则上述执行流程可能会跟随发生变化。</p>
+</blockquote>
+<h2 id="3%E3%80%81%E6%B3%A8%E5%86%8C%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD" class="calibre15">3、注册自动加载</h2>
+<p class="calibre10">系统会调用<strong class="calibre12"><code class="calibre7">Loader::register()</code></strong>方法注册自动加载，在这一步完成后，所有符合规范的类库（包括<code class="calibre7">Composer</code>依赖加载的第三方类库）都将自动加载。</p>
+<p class="calibre10">系统的自动加载由下面主要部分组成：</p>
+<ol class="calibre18"><li class="calibre20">注册系统的自动加载方法 <strong class="calibre12"><code class="calibre7">\think\Loader::autoload</code></strong></li>
+<li class="calibre20">注册系统命名空间定义</li>
+<li class="calibre20">加载类库映射文件（如果存在）</li>
+<li class="calibre20">如果存在<code class="calibre7">Composer</code>安装，则注册<strong class="calibre12"><code class="calibre7">Composer</code></strong>自动加载</li>
+<li class="calibre20">注册<code class="calibre7">extend</code>扩展目录</li>
+</ol><p class="calibre10">一个类库的自动加载检测顺序为：</p>
+<ol class="calibre18"><li class="calibre20">是否定义类库映射；</li>
+<li class="calibre20"><code class="calibre7">PSR-4</code>自动加载检测；</li>
+<li class="calibre20"><code class="calibre7">PSR-0</code>自动加载检测；</li>
+</ol><p class="calibre10">可以看到，定义类库映射的方式是最高效的。</p>
+<h2 id="4%E3%80%81%E6%B3%A8%E5%86%8C%E9%94%99%E8%AF%AF%E5%92%8C%E5%BC%82%E5%B8%B8%E6%9C%BA%E5%88%B6" class="calibre15">4、注册错误和异常机制</h2>
+<p class="calibre10">执行<code class="calibre7">Error::register()</code>注册错误和异常处理机制。</p>
+<p class="calibre10">由三部分组成：</p>
+<ul class="calibre23"><li class="calibre20">应用关闭方法：<code class="calibre7">think\Error::appShutdown</code></li>
+<li class="calibre20">错误处理方法：<code class="calibre7">think\Error::appError</code></li>
+<li class="calibre20">异常处理方法：<code class="calibre7">think\Error::appException</code></li>
+</ul><blockquote class="calibre5">
+<p class="calibre14">注册应用关闭方法是为了便于拦截一些系统错误。</p>
+</blockquote>
+<p class="calibre10">在整个应用请求的生命周期过程中，如果抛出了异常或者严重错误，均会导致应用提前结束，并响应输出异常和错误信息。</p>
+<h2 id="5%E3%80%81%E5%BA%94%E7%94%A8%E5%88%9D%E5%A7%8B%E5%8C%96" class="calibre15">5、应用初始化</h2>
+<p class="calibre10">执行应用的第一步操作就是对应用进行初始化，包括：</p>
+<ul class="calibre23"><li class="calibre20">加载应用（公共）配置；</li>
+<li class="calibre20">加载扩展配置文件（由<code class="calibre7">extra_config_list</code>定义）；</li>
+<li class="calibre20">加载应用状态配置；</li>
+<li class="calibre20">加载别名定义；</li>
+<li class="calibre20">加载行为定义；</li>
+<li class="calibre20">加载公共（函数）文件；</li>
+<li class="calibre20">注册应用命名空间；</li>
+<li class="calibre20">加载扩展函数文件（由<code class="calibre7">extra_file_list</code>定义）；</li>
+<li class="calibre20">设置默认时区；</li>
+<li class="calibre20">加载系统语言包；</li>
+</ul><h2 id="6%E3%80%81url%E8%AE%BF%E9%97%AE%E6%A3%80%E6%B5%8B" class="calibre15">6、URL访问检测</h2>
+<p class="calibre10">应用初始化完成后，就会进行URL的访问检测，包括<code class="calibre7">PATH_INFO</code>检测和URL后缀检测。</p>
+<p class="calibre10">5.0的URL访问必须是<code class="calibre7">PATH_INFO</code>方式（包括兼容方式）的URL地址，例如：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index.php/index/index/hello/val/value</code></pre>
+<p class="calibre10">所以，如果你的环境只能支持普通方式的URL参数访问，那么必须使用</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index.php?s=/index/index/hello&amp;val=value</code></pre>
+<p class="calibre10">如果是命令行下面访问入口文件的话，则通过</p>
+<pre class="calibre21"><code class="calibre22">$php index.php index/index/hello/val/value...</code></pre>
+<p class="calibre10">获取到正常的<code class="calibre7">$_SERVER['PATH_INFO']</code>参数后才能继续。</p>
+<h2 id="7%E3%80%81%E8%B7%AF%E7%94%B1%E6%A3%80%E6%B5%8B" class="calibre15">7、路由检测</h2>
+<p class="calibre10">如果开启了<code class="calibre7">url_route_on</code>参数的话，会首先进行URL的路由检测。</p>
+<p class="calibre10">如果一旦检测到匹配的路由，根据定义的路由地址会注册到相应的URL调度。<br class="calibre16"/>
+5.0的路由地址支持如下方式：</p>
+<ul class="calibre23"><li class="calibre20">路由到模块/控制器/操作；</li>
+<li class="calibre20">路由到外部重定向地址；</li>
+<li class="calibre20">路由到控制器方法；</li>
+<li class="calibre20">路由到闭包函数；</li>
+<li class="calibre20">路由到类的方法；</li>
+</ul><blockquote class="calibre5">
+<p class="calibre14">路由地址可能会受域名绑定的影响。</p>
+</blockquote>
+<p class="calibre10">如果关闭路由或者路由检测无效则进行默认的<strong class="calibre12">模块/控制器/操作</strong>的分析识别。</p>
+<blockquote class="calibre5">
+<p class="calibre14">如果在应用初始化的时候指定了应用调度方式，那么路由检测是可选的。<br class="calibre16"/>
+可以使用 \think\App::dispatch() 进行应用调度，例如：<br class="calibre16"/>
+App::dispatch(['type' =&gt; 'module', 'module' =&gt; 'index/index']);</p>
+</blockquote>
+<h2 id="8%E3%80%81%E5%88%86%E5%8F%91%E8%AF%B7%E6%B1%82" class="calibre15">8、分发请求</h2>
+<p class="calibre10">在完成了URL检测和路由检测之后，路由器会分发请求到对应的路由地址，这也是应用请求的生命周期中最重要的一个环节。</p>
+<p class="calibre10">在这一步骤中，完成应用的业务逻辑及数据返回。</p>
+<p class="calibre10">建议统一使用<code class="calibre7">return</code>返回数据，而不是<code class="calibre7">echo</code>输出，如非必要，请不要使用<code class="calibre7">exit</code>或者<code class="calibre7">die</code>中断执行。</p>
+<blockquote class="calibre5">
+<p class="calibre14">直接<code class="calibre7">echo</code>输出的数据将无法进行自动转换响应输出的便利。</p>
+</blockquote>
+<p class="calibre10">下面是系统支持的分发请求机制，可以根据情况选择：</p>
+<h3 id="%E6%A8%A1%E5%9D%97%2F%E6%8E%A7%E5%88%B6%E5%99%A8%2F%E6%93%8D%E4%BD%9C" class="calibre17">模块/控制器/操作</h3>
+<p class="calibre10">这是默认的分发请求机制，系统会根据URL或者路由地址来判断当前请求的模块、控制器和操作名，并自动调用相应的访问控制器类，执行操作对应的方法。<br class="calibre16"/>
+该机制下面，首先会判断当前模块，并进行模块的初始化操作（和应用的初始化操作类似），模块的配置参数会覆盖应用的尚未生效的配置参数。</p>
+<p class="calibre10">支持模块映射、URL参数绑定到方法，以及操作绑定到类等一些功能。</p>
+<h3 id="%E6%8E%A7%E5%88%B6%E5%99%A8%E6%96%B9%E6%B3%95" class="calibre17">控制器方法</h3>
+<p class="calibre10">和前一种方式类似，只是无需判断模块、控制器和操作，直接分发请求到一个指定的控制器类的方法，因此没有进行模块的初始化操作。</p>
+<h3 id="%E5%A4%96%E9%83%A8%E9%87%8D%E5%AE%9A%E5%90%91" class="calibre17">外部重定向</h3>
+<p class="calibre10">可以直接分发请求到一个外部的重定向地址，支持指定重定向代码，默认为301重定向。</p>
+<h3 id="%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0" class="calibre17">闭包函数</h3>
+<p class="calibre10">路由地址定义的时候可以直接采用闭包函数，完成一些相对简单的逻辑操作和输出。</p>
+<h3 id="%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95" class="calibre17">类的方法</h3>
+<p class="calibre10">除了以上方式外，还支持分发请求到类的方法，包括：<br class="calibre16"/>
+静态方法： <code class="calibre7">'blog/:id'=&gt;'\org\util\Blog::read'</code><br class="calibre16"/>
+类的方法：<code class="calibre7">'blog/:id'=&gt;'\app\index\controller\Blog@read'</code></p>
+<h2 id="9%E3%80%81%E5%93%8D%E5%BA%94%E8%BE%93%E5%87%BA" class="calibre15">9、响应输出</h2>
+<p class="calibre10">控制器的所有操作方法都是<code class="calibre7">return</code>返回而不是直接输出，系统会调用<code class="calibre7">Response::send</code>方法将最终的应用返回的数据输出到页面或者客户端，并自动转换成<code class="calibre7">default_return_type</code>参数配置的格式。所以，应用执行的数据输出只需要返回一个正常的PHP数据即可。</p>
+<h2 id="10%E3%80%81%E5%BA%94%E7%94%A8%E7%BB%93%E6%9D%9F" class="calibre15">10、应用结束</h2>
+<p class="calibre10">事实上，在应用的数据响应输出之后，应用并没真正的结束，系统会在应用输出或者中断后进行日志保存写入操作。</p>
+<p class="calibre10">系统的日志包括用户调试输出的和系统自动生成的日志，统一会在应用结束的时候进行写入操作。</p>
+<p class="calibre10">而日志的写入操作受日志初始化的影响。</p>
+</div>
+	
+</body></html>

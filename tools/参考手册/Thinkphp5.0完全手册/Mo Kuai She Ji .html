@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>模块设计</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_11">模块设计</h1>
+<div class="book-content">
+    <p class="calibre10">5.0版本对模块的功能做了灵活设计，默认采用多模块的架构，并且支持单一模块设计，所有模块的命名空间均以<code class="calibre7">app</code>作为根命名空间（可配置更改）。</p>
+<h2 id="%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84" class="calibre15">目录结构</h2>
+<p class="calibre10">标准的应用和模块目录结构如下：</p>
+<pre class="calibre21"><code class="calibre22">├─application           应用目录（可设置）
+│  ├─common             公共模块目录（可选）
+│  ├─common.php         公共函数文件
+│  ├─route.php          路由配置文件
+│  ├─database.php       数据库配置文件
+│  ├─config.php         应用配置文件
+│  ├─module1            模块1目录
+│  │  ├─config.php      模块配置文件
+│  │  ├─common.php      模块函数文件
+│  │  ├─controller      控制器目录
+│  │  ├─model           模型目录（可选）
+│  │  ├─view            视图目录（可选）
+│  │  └─ ...            更多类库目录
+│  │ 
+│  ├─module2            模块2目录
+│  │  ├─config.php      模块配置文件
+│  │  ├─common.php      模块函数文件
+│  │  ├─controller      控制器目录
+│  │  ├─model           模型目录（可选）
+│  │  ├─view            视图目录（可选）
+│  │  └─ ...            更多类库目录</code></pre>
+<p class="calibre10">遵循ThinkPHP<code class="calibre7">5.0</code>的命名规范，模块目录全部采用<strong class="calibre12">小写和下划线</strong>命名。</p>
+<blockquote class="danger">
+<p class="calibre14">模块名称请避免使用PHP保留关键字（保留字列表参见 <a href="http://php.net/manual/zh/reserved.keywords.php" class="pcalibre calibre13">http://php.net/manual/zh/reserved.keywords.php</a> ），否则会造成系统错误。</p>
+</blockquote>
+<p class="calibre10">其中<code class="calibre7">common</code>模块是一个特殊的模块，默认是禁止直接访问的，一般用于放置一些公共的类库用于其他模块的继承。</p>
+<h2 id="%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%BA%93" class="calibre15">模块类库</h2>
+<p class="calibre10">一个模块下面的类库文件的命名空间统一以<code class="calibre7">app\模块名</code>开头，例如：</p>
+<pre class="calibre21"><code class="calibre22">// index模块的Index控制器类
+app\index\controller\Index
+// index模块的User模型类
+app\index\model\User</code></pre>
+<p class="calibre10">其中<code class="calibre7">app</code>可以通过定义的方式更改，例如我们在应用配置文件中修改：</p>
+<pre class="calibre21"><code class="calibre22">'app_namespace' =&gt; 'application',</code></pre>
+<p class="calibre10">那么，index模块的类库命名空间则变成：</p>
+<pre class="calibre21"><code class="calibre22">// index模块的Index控制器类
+application\index\controller\Index
+// index模块的User模型类
+application\index\model\User</code></pre>
+<p class="calibre10">更多的关于类库和命名空间的关系可以参考下一章节：命名空间。</p>
+<h2 id="%E6%A8%A1%E5%9D%97%E5%92%8C%E6%8E%A7%E5%88%B6%E5%99%A8%E9%9A%90%E8%97%8F" class="calibre15">模块和控制器隐藏</h2>
+<p class="calibre10">由于默认是采用多模块的支持，所以多个模块的情况下必须在URL地址中标识当前模块，如果只有一个模块的话，可以进行模块绑定，方法是应用的入口文件中添加如下代码：</p>
+<pre class="calibre21"><code class="calibre22">// 绑定当前访问到index模块
+define('BIND_MODULE','index');</code></pre>
+<p class="calibre10">绑定后，我们的URL访问地址则变成：</p>
+<blockquote class="info">
+<h4 id="http%3A%2F%2Fservername%2Findex.php%2F%E6%8E%A7%E5%88%B6%E5%99%A8%2F%E6%93%8D%E4%BD%9C%2F%5B%E5%8F%82%E6%95%B0%E5%90%8D%2F%E5%8F%82%E6%95%B0%E5%80%BC...%5D" class="calibre6"><a href="http://serverName/index.php/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%93%8D%E4%BD%9C/%5B%E5%8F%82%E6%95%B0%E5%90%8D/%E5%8F%82%E6%95%B0%E5%80%BC" class="pcalibre calibre13">http://serverName/index.php/控制器/操作/[参数名/参数值</a>...]</h4>
+</blockquote>
+<p class="calibre10">访问的模块是<code class="calibre7">index</code>模块。</p>
+<p class="calibre10">如果你的应用比较简单，模块和控制器都只有一个，那么可以在应用公共文件中绑定模块和控制器，如下：</p>
+<pre class="calibre21"><code class="calibre22">// 绑定当前访问到index模块的index控制器
+define('BIND_MODULE','index/index');</code></pre>
+<p class="calibre10">设置后，我们的URL访问地址则变成：</p>
+<blockquote class="info">
+<h4 id="http%3A%2F%2Fservername%2Findex.php%2F%E6%93%8D%E4%BD%9C%2F%5B%E5%8F%82%E6%95%B0%E5%90%8D%2F%E5%8F%82%E6%95%B0%E5%80%BC...%5D" class="calibre6"><a href="http://serverName/index.php/%E6%93%8D%E4%BD%9C/%5B%E5%8F%82%E6%95%B0%E5%90%8D/%E5%8F%82%E6%95%B0%E5%80%BC" class="pcalibre calibre13">http://serverName/index.php/操作/[参数名/参数值</a>...]</h4>
+</blockquote>
+<p class="calibre10">访问的模块是<code class="calibre7">index</code>模块，控制器是<code class="calibre7">Index</code>控制器。</p>
+<h2 id="%E5%8D%95%E4%B8%80%E6%A8%A1%E5%9D%97" class="calibre15">单一模块</h2>
+<p class="calibre10">如果你的应用比较简单，只有唯一一个模块，那么可以进一步简化成使用单一模块结构，方法如下：</p>
+<p class="calibre10">首先在应用配置文件中定义：</p>
+<pre class="calibre21"><code class="calibre22">// 关闭多模块设计
+'app_multi_module'  =&gt;  false,</code></pre>
+<p class="calibre10">然后，调整应用目录的结构为如下：</p>
+<pre class="calibre21"><code class="calibre22">├─application        应用目录（可设置）
+│  ├─controller      控制器目录
+│  ├─model           模型目录
+│  ├─view            视图目录
+│  ├─ ...            更多类库目录
+│  ├─common.php      函数文件
+│  ├─route.php       路由配置文件
+│  ├─database.php    数据库配置文件
+│  └─config.php      配置文件</code></pre>
+<p class="calibre10">URL访问地址变成</p>
+<blockquote class="info">
+<h4 id="http%3A%2F%2Fservername%2Findex.php%EF%BC%88%E6%88%96%E8%80%85%E5%85%B6%E5%AE%83%E5%BA%94%E7%94%A8%E5%85%A5%E5%8F%A3%EF%BC%89%2F%E6%8E%A7%E5%88%B6%E5%99%A8%2F%E6%93%8D%E4%BD%9C%2F%5B%E5%8F%82%E6%95%B0%E5%90%8D%2F%E5%8F%82%E6%95%B0%E5%80%BC...%5D" class="calibre6"><a href="http://serverName/index.php%EF%BC%88%E6%88%96%E8%80%85%E5%85%B6%E5%AE%83%E5%BA%94%E7%94%A8%E5%85%A5%E5%8F%A3%EF%BC%89/%E6%8E%A7%E5%88%B6%E5%99%A8/%E6%93%8D%E4%BD%9C/%5B%E5%8F%82%E6%95%B0%E5%90%8D/%E5%8F%82%E6%95%B0%E5%80%BC" class="pcalibre calibre13">http://serverName/index.php（或者其它应用入口）/控制器/操作/[参数名/参数值</a>...]</h4>
+</blockquote>
+<p class="calibre10">同时，单一模块设计下的应用类库的命名空间也有所调整，例如：</p>
+<p class="calibre10">原来的</p>
+<pre class="calibre21"><code class="calibre22">app\index\controller\Index
+app\index\model\User</code></pre>
+<p class="calibre10">变成</p>
+<pre class="calibre21"><code class="calibre22">app\controller\Index
+app\model\User</code></pre>
+<p class="calibre10">更多的URL简化和定制还可以通过URL路由功能实现。</p>
+</div>
+	
+</body></html>

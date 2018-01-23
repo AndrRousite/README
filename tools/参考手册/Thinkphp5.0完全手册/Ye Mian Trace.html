@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>Trace调试</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_162">Trace调试</h1>
+<div class="book-content">
+    <p class="calibre10">调试模式并不能完全满足我们调试的需要，有时候我们需要手动的输出一些调试信息。除了本身可以借助一些开发工具进行调试外，ThinkPHP还提供了一些内置的调试工具和函数。例如，<code class="calibre7">Trace</code>调试功能就是ThinkPHP提供给开发人员的一个用于开发调试的辅助工具。可以实时显示当前页面的操作的请求信息、运行情况、SQL执行、错误提示等，并支持自定义显示，5.0版本的Trace调试支持没有页面输出的操作调试。</p>
+<blockquote class="info">
+<p class="calibre14">Trace调试功能对调试模式和部署模式都有效，可以单独开启和关闭。<br class="calibre16"/>
+只是在部署模式下面，显示的调试信息没有调试模式完整，通常我们建议Trace配合调试模式一起使用。</p>
+</blockquote>
+<h2 id="%E5%BC%80%E5%90%AFtrace%E8%B0%83%E8%AF%95" class="calibre15">开启Trace调试</h2>
+<p class="calibre10">默认关闭Trace调试功能，要开启Trace调试功能，只需要配置下面参数：</p>
+<pre class="calibre21"><code class="calibre22">// 开启应用Trace调试
+'app_trace' =&gt;  true,</code></pre>
+<blockquote class="info">
+<p class="calibre14">如果定义了环境变量<code class="calibre7">app_trace</code>，那么以环境变量配置为准。</p>
+</blockquote>
+<h2 id="%E9%A1%B5%E9%9D%A2trace%E6%98%BE%E7%A4%BA" class="calibre15">页面Trace显示</h2>
+<p class="calibre10">要开启页面Trace功能，需要配置<code class="calibre7">trace</code>参数为：</p>
+<pre class="calibre21"><code class="calibre22">// Trace信息
+'trace'     =&gt;  [
+    //支持Html,Console
+    'type'  =&gt;  'html',
+] </code></pre>
+<p class="calibre10">设置后并且你的页面有输出的话，页面右下角会显示<code class="calibre7">ThinkPHP</code>的LOGO：<br class="calibre16"/><img src="56e3b14589919.png" alt="" class="calibre11"/></p>
+<p class="calibre10">我们看到的LOGO后面的数字就是当前页面的执行时间（单位是秒） 点击该图标后，会展开详细的Trace信息，如图：</p>
+<p class="calibre10"><img src="56e3b15ca5299.png" alt="" class="calibre11"/></p>
+<p class="calibre10">Trace框架有6个选项卡，分别是基本、文件、流程、错误、SQL和调试，点击不同的选项卡会切换到不同的Trace信息窗口。</p>
+<table class="calibre25"><thead class="calibre26"><tr class="calibre27"><th class="calibre28">选项卡</th>
+<th class="calibre28">描述</th>
+</tr></thead><tbody class="calibre29"><tr class="calibre27"><td class="pcalibre1 calibre30">基本</td>
+<td class="calibre32 pcalibre1">当前页面的基本摘要信息，例如执行时间、内存开销、文件加载数、查询次数等等</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">文件</td>
+<td class="pcalibre1 calibre31">详细列出当前页面执行过程中加载的文件及其大小</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">流程</td>
+<td class="pcalibre1 calibre31">会列出当前页面执行到的行为和相关流程</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">错误</td>
+<td class="pcalibre1 calibre31">当前页面执行过程中的一些错误信息，包括警告错误</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">SQL</td>
+<td class="pcalibre1 calibre31">当前页面执行到的SQL语句信息</td>
+</tr><tr class="calibre27"><td class="pcalibre1 calibre31">调试</td>
+<td class="calibre33 pcalibre1">开发人员在程序中进行的调试输出</td>
+</tr></tbody></table><p class="calibre10">Trace的选项卡是可以定制和扩展的，默认的配置为：</p>
+<pre class="calibre21"><code class="calibre22">// 显示Trace信息
+'trace' =&gt;[
+    'type'       =&gt;  'Html',
+    'trace_tabs' =&gt;  [
+         'base'=&gt;'基本',
+         'file'=&gt;'文件',
+         'info'=&gt;'流程',
+         'error|notice'=&gt;'错误',
+         'sql'=&gt;'SQL',
+         'debug|log'=&gt;'调试'
+     ]
+]</code></pre>
+<p class="calibre10">也就是我们看到的默认情况下显示的选项卡，如果你希望增加新的选项卡：用户，则可以修改配置如下：</p>
+<pre class="calibre21"><code class="calibre22">// 显示Trace信息
+'trace' =&gt;[
+    'type'       =&gt;  'Html',
+    'trace_tabs' =&gt;  [
+         'base'=&gt;'基本',
+         'file'=&gt;'文件',
+         'info'=&gt;'流程',
+         'error'=&gt;'错误',
+         'sql'=&gt;'SQL',
+         'debug'=&gt;'调试',
+         'user'=&gt;'用户'
+     ]
+]</code></pre>
+<p class="calibre10">也可以把某几个选项卡合并，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 显示Trace信息
+'trace' =&gt;[
+    'type'       =&gt;  'Html',
+    'trace_tabs' =&gt;  [
+         'base'=&gt;'基本',
+         'file'=&gt;'文件',
+         'error|notice'=&gt;'错误',
+         'sql'=&gt;'SQL',
+         'debug|log|info'=&gt;'调试',
+     ]
+]</code></pre>
+<p class="calibre10">更改后的Trace显示效果如图：<br class="calibre16"/><img src="56e3b416c8978.png" alt="" class="calibre11"/></p>
+<h2 id="%E6%B5%8F%E8%A7%88%E5%99%A8trace%E6%98%BE%E7%A4%BA" class="calibre15">浏览器Trace显示</h2>
+<p class="calibre10">trace功能支持在浏览器的<code class="calibre7">console</code>直接输出，这样可以方便没有页面输出的操作功能调试，只需要设置：</p>
+<pre class="calibre21"><code class="calibre22">// Trace信息
+'trace' =&gt;[
+    // 使用浏览器console输出trace信息
+    'type'  =&gt;  'console',
+] </code></pre>
+<p class="calibre10">运行后打开浏览器的console控制台可以看到如图所示的信息：</p>
+<p class="calibre10"><img src="5773d218790c4.png" alt="" class="calibre11"/></p>
+<p class="calibre10">浏览器Trace输出仍然支持<code class="calibre7">trace_tabs</code>设置。</p>
+</div>
+	
+</body></html>

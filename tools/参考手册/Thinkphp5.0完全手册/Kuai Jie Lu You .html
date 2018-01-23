@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>快捷路由</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_34">快捷路由</h1>
+<div class="book-content">
+    <p class="calibre10">快捷路由允许你快速给控制器注册路由，并且针对不同的请求类型可以设置方法前缀，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 给User控制器设置快捷路由
+Route::controller('user','index/User');</code></pre>
+<p class="calibre10">User控制器定义如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller;
+
+class User {
+    public function getInfo()
+    {
+    }
+
+    public function getPhone()
+    {
+    }
+
+    public function postInfo()
+    {
+    }
+
+    public function putInfo()
+    {
+    }
+
+    public function deleteInfo()
+    {
+    }
+}</code></pre>
+<p class="calibre10">我们可以通过下面的URL访问</p>
+<pre class="calibre21"><code class="calibre22">get http://localhost/user/info
+get http://localhost/user/phone
+post http://localhost/user/info
+put http://localhost/user/info
+delete http://localhost/user/info</code></pre>
+</div>
+	
+</body></html>

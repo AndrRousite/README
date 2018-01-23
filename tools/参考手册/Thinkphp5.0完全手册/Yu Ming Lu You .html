@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>域名路由</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_41">域名路由</h1>
+<div class="book-content">
+    <p class="calibre10">ThinkPHP支持完整域名、子域名和IP部署的路由和绑定功能，同时还可以起到简化URL的作用。</p>
+<p class="calibre10">要启用域名部署路由功能，首先需要开启：</p>
+<pre class="calibre21"><code class="calibre22">'url_domain_deploy' =&gt;  true</code></pre>
+<p class="calibre10">定义域名部署规则支持两种方式：动态注册和配置定义。</p>
+<h2 id="%E5%8A%A8%E6%80%81%E6%B3%A8%E5%86%8C-1" class="calibre15">动态注册</h2>
+<p class="calibre10">可以在应用的公共文件或者配置文件中动态注册域名部署规则，例如：</p>
+<pre class="calibre21"><code class="calibre22">// blog子域名绑定到blog模块
+Route::domain('blog','blog');
+// 完整域名绑定到admin模块
+Route::domain('admin.thinkphp.cn','admin');
+// IP绑定到admin模块
+Route::domain('114.23.4.5','admin');</code></pre>
+<p class="calibre10">blog子域名绑定后，URL访问规则变成：</p>
+<pre class="calibre21"><code class="calibre22">// 原来的URL访问
+http://www.thinkphp.cn/blog/article/read/id/5
+// 绑定到blog子域名访问
+http://blog.thinkphp.cn/article/read/id/5</code></pre>
+<p class="calibre10">支持绑定的时候添加默认参数，例如：</p>
+<pre class="calibre21"><code class="calibre22">// blog子域名绑定到blog模块
+Route::domain('blog','blog?var=thinkphp');</code></pre>
+<p class="calibre10">除了绑定到模块之外，还隐式传入了一个<code class="calibre7">$_GET['var'] = 'thinkphp'</code> 变量。</p>
+<p class="calibre10">支持直接绑定到控制器，例如：</p>
+<pre class="calibre21"><code class="calibre22">// blog子域名绑定到index模块的blog控制器
+Route::domain('blog','index/blog');</code></pre>
+<p class="calibre10">URL访问地址变化为：</p>
+<pre class="calibre21"><code class="calibre22">// 原来的URL访问
+http://www.thinkphp.cn/index/blog/read/id/5
+// 绑定到blog子域名访问
+http://blog.thinkphp.cn/read/id/5</code></pre>
+<p class="calibre10">如果你的域名后缀比较特殊，例如是<code class="calibre7">com.cn</code>或者<code class="calibre7">net.cn</code> 之类的域名，需要配置：</p>
+<pre class="calibre21"><code class="calibre22">'url_domain_root'=&gt;'thinkphp.com.cn'</code></pre>
+<h3 id="%E6%B3%9B%E5%9F%9F%E5%90%8D%E9%83%A8%E7%BD%B2" class="calibre17">泛域名部署</h3>
+<p class="calibre10">可以支持泛域名部署规则，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 绑定泛二级域名域名到book模块
+Route::domain('*','book?name=*');</code></pre>
+<p class="calibre10">下面的URL访问都会直接访问book模块</p>
+<pre class="calibre21"><code class="calibre22">http://hello.thinkphp.cn
+http://quickstart.thinkphp.cn</code></pre>
+<p class="calibre10">并且可以直接通过$_GET['name']变量 获取当前的泛域名。</p>
+<p class="calibre10">支持三级泛域名部署，例如：</p>
+<pre class="calibre21"><code class="calibre22">// 绑定泛三级域名到user模块
+Route::domain('*.user','user?name=*');</code></pre>
+<p class="calibre10">如果我们访问如下URL地址：</p>
+<pre class="calibre21"><code class="calibre22">http://hello.user.thinkphp.cn</code></pre>
+<p class="calibre10">的同时，除了会访问user模块之外，还会默认传入 <code class="calibre7">$_GET['name'] = 'hello'</code></p>
+<p class="calibre10">在配置传入参数的时候，如果需要使用当前的泛域名作为参数，可以直接设置为“*”即可。</p>
+<blockquote class="calibre5">
+<p class="calibre14">目前只支持二级域名和三级域名的泛域名部署。</p>
+</blockquote>
+<h2 id="%E9%85%8D%E7%BD%AE%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F" class="calibre15">配置定义方式</h2>
+<p class="calibre10">除了动态注册之外，还支持直接在路由配置文件中定义域名部署规则，例如：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    '__domain__'=&gt;[
+        'blog'      =&gt; 'blog',
+        // 泛域名规则建议在最后定义
+        '*.user'    =&gt;  'user',
+        '*'         =&gt; 'book',
+    ],
+    // 下面是路由规则定义
+]</code></pre>
+<h2 id="%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9A%E5%9C%B0%E5%9D%80" class="calibre15">域名绑定地址</h2>
+<p class="calibre10">前面我们看到的域名部署规则：</p>
+<pre class="calibre21"><code class="calibre22">// blog子域名绑定到blog模块
+Route::domain('blog','blog');</code></pre>
+<p class="calibre10">其实是把域名绑定到模块的方式，其实还有其他的绑定方式。</p>
+<h3 id="%E7%BB%91%E5%AE%9A%E5%88%B0%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4-1" class="calibre17">绑定到命名空间</h3>
+<pre class="calibre21"><code class="calibre22">// blog子域名绑定命名空间
+Route::domain('blog','\app\blog\controller');</code></pre>
+<h3 id="%E7%BB%91%E5%AE%9A%E5%88%B0%E7%B1%BB-1" class="calibre17">绑定到类</h3>
+<pre class="calibre21"><code class="calibre22">// blog子域名绑定到类
+Route::domain('blog','@\app\blog\controller\Article');</code></pre>
+<h3 id="%E7%BB%91%E5%AE%9A%E5%88%B0%E9%97%AD%E5%8C%85%E5%87%BD%E6%95%B0" class="calibre17">绑定到闭包函数</h3>
+<p class="calibre10">如果需要，你也可以直接把域名绑定到一个闭包函数，例如：</p>
+<pre class="calibre21"><code class="calibre22">// blog子域名绑定闭包函数
+Route::domain('blog',function(){
+    echo 'hello';
+    return ['bind'=&gt;'module','module'=&gt;'blog'];
+});</code></pre>
+<p class="calibre10">域名绑定到闭包函数其实是一种劫持，可以在闭包函数里面动态注册其它的绑定机制或者注册新的路由，例如：</p>
+<pre class="calibre21"><code class="calibre22">Route::domain('www', function(){
+    // 动态注册域名的路由规则
+    Route::rule('new/:id', 'index/news/read');
+    Route::rule(':user', 'index/user/info');
+});</code></pre>
+<p class="calibre10">如果你不希望继续，可以直接在闭包函数里面中止执行。</p>
+<pre class="calibre21"><code class="calibre22">// blog子域名绑定到闭包函数
+Route::domain('blog',function(){
+    exit('hello');
+});</code></pre>
+<h3 id="%E7%BB%91%E5%AE%9A%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99" class="calibre17">绑定路由规则</h3>
+<p class="calibre10">可以把域名绑定到一系列指定的路由规则，例如：</p>
+<pre class="calibre21"><code class="calibre22">Route::domain('blog',[
+    // 动态注册域名的路由规则
+    ':id' =&gt; ['blog/read',['method'=&gt;'GET'],['id'=&gt;'\d+']],
+    ':name'=&gt;'blog/read',
+]);</code></pre>
+<p class="calibre10">如果使用配置文件配置的话，可以按照下面的方式：</p>
+<pre class="calibre21"><code class="calibre22">return [
+    '__domain__'=&gt;[
+        'blog'      =&gt; [
+            // 动态注册域名的路由规则
+            ':id' =&gt; ['blog/read',['method'=&gt;'GET'],['id'=&gt;'\d+']],
+            ':name'=&gt;'blog/read',
+        ],
+    ],
+    // 下面是其它的路由规则定义
+]</code></pre>
+<p class="calibre10">更详细的绑定功能请参考路由绑定一章内容。</p>
+</div>
+	
+</body></html>

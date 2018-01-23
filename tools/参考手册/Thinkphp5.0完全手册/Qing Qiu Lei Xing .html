@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>请求类型</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_59">请求类型</h1>
+<div class="book-content">
+    <h2 id="%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E7%B1%BB%E5%9E%8B" class="calibre15">获取请求类型</h2>
+<p class="calibre10">在很多情况下面，我们需要判断当前操作的请求类型是<code class="calibre7">GET</code>、<code class="calibre7">POST</code>、<code class="calibre7">PUT</code>、<code class="calibre7">DELETE</code>或者<code class="calibre7">HEAD</code>，一方面可以针对请求类型作出不同的逻辑处理，另外一方面有些情况下面需要验证安全性，过滤不安全的请求。 </p>
+<p class="calibre10">ThinkPHP5.0 取消了用于判断请求类型的系统常量(如IS_GET，IS_POST等)，统一采用 <code class="calibre7">think\Request</code>类 处理请求类型。</p>
+<p class="calibre10">用法如下</p>
+<pre class="calibre21"><code class="calibre22">// 是否为 GET 请求
+if (Request::instance()-&gt;isGet()) echo "当前为 GET 请求";
+// 是否为 POST 请求
+if (Request::instance()-&gt;isPost()) echo "当前为 POST 请求";
+// 是否为 PUT 请求
+if (Request::instance()-&gt;isPut()) echo "当前为 PUT 请求";
+// 是否为 DELETE 请求
+if (Request::instance()-&gt;isDelete()) echo "当前为 DELETE 请求";
+// 是否为 Ajax 请求
+if (Request::instance()-&gt;isAjax()) echo "当前为 Ajax 请求";
+// 是否为 Pjax 请求
+if (Request::instance()-&gt;isPjax()) echo "当前为 Pjax 请求";
+// 是否为手机访问
+if (Request::instance()-&gt;isMobile()) echo "当前为手机访问";
+// 是否为 HEAD 请求
+if (Request::instance()-&gt;isHead()) echo "当前为 HEAD 请求";
+// 是否为 Patch 请求
+if (Request::instance()-&gt;isPatch()) echo "当前为 PATCH 请求";
+// 是否为 OPTIONS 请求
+if (Request::instance()-&gt;isOptions()) echo "当前为 OPTIONS 请求";
+// 是否为 cli
+if (Request::instance()-&gt;isCli()) echo "当前为 cli";
+// 是否为 cgi
+if (Request::instance()-&gt;isCgi()) echo "当前为 cgi";</code></pre>
+<p class="calibre10">助手函数</p>
+<pre class="calibre21"><code class="calibre22">// 是否为 GET 请求
+if (request()-&gt;isGet()) echo "当前为 GET 请求";
+……</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">通过注入请求对象的功能，可以更简单的实现。请参考后面的注入请求对象一节的内容。</p>
+</blockquote>
+</div>
+	
+</body></html>

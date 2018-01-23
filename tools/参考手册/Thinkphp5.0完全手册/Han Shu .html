@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>函数</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_195">函数</h1>
+<div class="book-content">
+    <p class="calibre10">你可以方便的在<code class="calibre7">ThinkPHP5</code>中添加自定义函数，包括替换已有的助手函数。</p>
+<h2 id="%E6%89%A9%E5%B1%95%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0" class="calibre15">扩展系统函数</h2>
+<p class="calibre10">这里指的系统函数是对系统自带的函数进行替换或者增加，具体方式如下：</p>
+<p class="calibre10">在应用目录下面增加一个助手函数文件（文件名随意，例如<code class="calibre7">application/helper.php</code>），添加：</p>
+<pre class="calibre21"><code class="calibre22">// 增加一个新的table助手函数
+function table($table, $config = [])
+{
+    return \think\Db::connect($config)-&gt;setTable($table);
+}
+
+// 替换已有的db助手函数
+function db($name, $config= [])
+{
+    return \think\Db::connect($config)-&gt;name($name); 
+}</code></pre>
+<p class="calibre10">然后，在应用配置文件中设置：</p>
+<pre class="calibre21"><code class="calibre22">// 扩展函数文件
+'extra_file_list'        =&gt; [ APP_PATH . 'helper.php', THINK_PATH . 'helper.php'],</code></pre>
+<p class="calibre10"><code class="calibre7">extra_file_list</code> 定义的顺序不能反，否则就不能替换已有的助手函数。</p>
+<blockquote class="calibre5">
+<p class="calibre14">注意，尽量避免直接修改核心的<code class="calibre7">helper.php</code>文件。</p>
+</blockquote>
+<h2 id="%E6%B7%BB%E5%8A%A0%E5%BA%94%E7%94%A8%E5%87%BD%E6%95%B0" class="calibre15">添加应用函数</h2>
+<p class="calibre10">如果需要给当前应用添加函数，只需要在应用的公共文件（<code class="calibre7">application/common.php</code>）中定义需要的函数即可，系统会自动加载，如果你需要增加新的函数文件，例如需要增加一个<code class="calibre7">sys.php</code>，那么就需要和上面一样设置<code class="calibre7">extra_file_list</code>配置：</p>
+<pre class="calibre21"><code class="calibre22">// 扩展函数文件
+'extra_file_list'        =&gt; [ APP_PATH . 'helper.php', THINK_PATH . 'helper.php', APP_PATH . 'sys.php'],</code></pre>
+</div>
+	
+</body></html>

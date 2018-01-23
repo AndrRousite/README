@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>SQL调试</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_165">SQL调试</h1>
+<div class="book-content">
+    <h2 id="%E6%9F%A5%E7%9C%8Bsql%E8%AE%B0%E5%BD%95" class="calibre15">查看SQL记录</h2>
+<p class="calibre10">如果开启了数据库的调试模式的话，可以在日志文件（或者设置的日志输出类型）中看到详细的SQL执行记录以及性能分析。</p>
+<p class="calibre10">下面是一个典型的SQL日志：</p>
+<pre class="calibre21"><code class="calibre22">[ SQL ] SHOW COLUMNS FROM `think_action` [ RunTime:0.001339s ]
+[ EXPLAIN : array ( 'id' =&gt; '1', 'select_type' =&gt; 'SIMPLE', 'table' =&gt; 'think_action', 'partitions' =&gt; NULL, 'type' =&gt; 'ALL', 'possible_keys' =&gt; NULL, 'key' =&gt; NULL, 'key_len' =&gt; NULL, 'ref' =&gt; NULL, 'rows' =&gt; '82', 'filtered' =&gt; '100.00', 'extra' =&gt; NULL, ) ]
+[ SQL ] SELECT * FROM `think_action` LIMIT 1 [ RunTime:0.000539s ]</code></pre>
+<h2 id="%E7%9B%91%E5%90%ACsql" class="calibre15">监听SQL</h2>
+<p class="calibre10">如果开启数据库的调试模式的话，你可以对数据库执行的任何SQL操作进行监听，使用如下方法：</p>
+<pre class="calibre21"><code class="calibre22">Db::listen(function($sql,$time,$explain){
+    // 记录SQL
+    echo $sql. ' ['.$time.'s]';
+    // 查看性能分析结果
+    dump($explain);
+});</code></pre>
+<blockquote class="calibre5">
+<p class="calibre14">默认如果没有注册任何监听操作的话，这些SQL执行会被根据不同的日志类型记录到日志中。</p>
+</blockquote>
+<h2 id="%E8%B0%83%E8%AF%95%E6%89%A7%E8%A1%8C%E7%9A%84sql%E8%AF%AD%E5%8F%A5" class="calibre15">调试执行的SQL语句</h2>
+<p class="calibre10">在模型操作中 ，为了更好的查明错误，经常需要查看下最近使用的SQL语句，我们可以用<code class="calibre7">getLastsql</code>方法来输出上次执行的sql语句。例如：</p>
+<pre class="calibre21"><code class="calibre22">User::get(1);
+echo User::getLastSql();</code></pre>
+<p class="calibre10">输出结果是 <code class="calibre7">SELECT * FROM 'think_user' WHERE 'id' = '1'</code></p>
+<p class="calibre10">也可以使用<code class="calibre7">fetchSql</code>方法直接返回当前的查询SQL而不执行，例如：</p>
+<pre class="calibre21"><code class="calibre22">echo User::fetchSql()-&gt;find(1);</code></pre>
+<p class="calibre10">输出的结果是一样的。</p>
+<p class="calibre10"><code class="calibre7">getLastSql</code>方法只能获取最后执行的<code class="calibre7">SQL</code>记录，如果需要了解更多的<code class="calibre7">SQL</code>日志，可以通过查看当前的<code class="calibre7">Trace</code>信息或者日志文件。</p>
+</div>
+	
+</body></html>

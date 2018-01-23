@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+  <head>
+    <title>自动定位控制器</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+        <h1 class="book-title" id="calibre_toc_53">自动定位控制器</h1>
+<div class="book-content">
+    <p class="calibre10">如果你使用了多级控制器的话，可以设置<code class="calibre7">controller_auto_search</code>参数开启自动定位控制器，便于URL访问，例如首先在配置文件中添加：</p>
+<pre class="calibre21"><code class="calibre22">'controller_auto_search' =&gt; true,</code></pre>
+<p class="calibre10">然后定义控制器如下：</p>
+<pre class="calibre21"><code class="calibre22">namespace app\index\controller\one;
+
+use think\Controller;
+
+class Blog extends Controller
+{
+    public function index()
+    {
+        return $this-&gt;fetch();
+    }
+
+    public function add()
+    {
+        return $this-&gt;fetch();
+    }
+
+    public function edit($id)
+    {
+        return $this-&gt;fetch('edit:'.$id);
+    }
+}</code></pre>
+<p class="calibre10">我们就可以直接访问下面的URL地址了：</p>
+<pre class="calibre21"><code class="calibre22">http://serverName/index.php/index/one/Blog</code></pre>
+</div>
+	
+</body></html>
