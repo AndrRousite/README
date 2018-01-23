@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 - FileZilla FTP Client
 - Node.js
 - PremiumSoft Navicat
@@ -23,3 +24,6 @@
 - [HiJson](/tools/HiJson%202.1.2_jdk64.exe)
 - [Shadowsocks](/tools/Shadowsocks.exe)
 - [参考手册](/tools/参考手册)
+=======
+new request pull.
+>>>>>>> origin/master
