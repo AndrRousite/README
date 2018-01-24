@@ -66,22 +66,22 @@
         - 元素选择器：$('p')
         - id选择器：$("#id")
         - class选择器：$('.class'')
-        - more：        
-        
-        | 语法        | 描述    |
-        | ----------- | ------- |
-        | $('*')      | 选取所有元素 |
-        | $(this)      | 选取当前 HTML 元素 |
-        | $("p.intro")    | ```选取 class 为 intro 的 <p> 元素``` |
-        | $("p:first")      | ```选取第一个 <p> 元素``` |
-        | $("ul li:first")    | ```选取第一个 <ul> 元素的第一个 <li> 元素``` |
-        | $("ul li:first-child")      | ```选取每个 <ul> 元素的第一个 <li> 元素``` |
-        | $("[href]")     | 选取带有 href 属性的元素 |
-        | $("a[target='_blank']")      | 选取所有 target 属性值等于 "_blank" 的 <a> 元素 |
-        | $("a[target!='_blank']")      | 选取所有 target 属性值不等于 "_blank" 的 <a> 元素 |
-        | $(":button")      | 选取所有 type="button" 的 <input> 元素 和 <button> 元素 |
-        | $("tr:even")     | 选取偶数位置的 <tr> 元素 |
-        | $("tr:odd")     | 选取奇数位置的 <tr> 元素 |
+        - more：更多实例   
+
+            |语法        |描述   |
+            |-----------|-------|
+            | $('*')      | 选取所有元素 |
+            | $(this)      | 选取当前 HTML 元素 |
+            | $("p.intro")    | ```选取 class 为 intro 的 <p> 元素``` |
+            | $("p:first")      | ```选取第一个 <p> 元素``` |
+            | $("ul li:first")    | ```选取第一个 <ul> 元素的第一个 <li> 元素``` |
+            | $("ul li:first-child")      | ```选取每个 <ul> 元素的第一个 <li> 元素``` |
+            | $("[href]")     | 选取带有 href 属性的元素 |
+            | $("a[target='_blank']")      | 选取所有 target 属性值等于 "_blank" 的 <a> 元素 |
+            | $("a[target!='_blank']")      | 选取所有 target 属性值不等于 "_blank" 的 <a> 元素 |
+            | $(":button")      | 选取所有 type="button" 的 <input> 元素 和 <button> 元素 |
+            | $("tr:even")     | 选取偶数位置的 <tr> 元素 |
+            | $("tr:odd")     | 选取奇数位置的 <tr> 元素 |
     - jQuery事件:  
     常见的DOM事件
     
@@ -91,3 +91,54 @@
         |dbclick|keydown|change|resize|
         |mouseenter|keyup|focus|scroll|
         |mouseleave| |blur|upload|
+    - jQuery效果
+        - 隐藏/显示：show()、hide()、toggle()
+        - 淡入/淡出：fadeIn()、fadeOut()、fadeToggle()、fadeTo()
+        - 滑动：slideDown()、slideUp()、slideToggle()
+        - 动画/停止动画：animate()/stop(stopAll,goToEnd)
+    - jQuery元素
+        - 设置或获取内容：
+            ```html
+            text() - 设置或返回所选元素的文本内容
+            html() - 设置或返回所选元素的内容（包括 HTML 标记）
+            val() - 设置或返回表单字段的值
+            ```
+        - 设置或获取属性：
+            ```html
+            attr(): 
+              实例
+              $("button").click(function(){
+                alert($("#a").attr("href"));
+              });
+            ```
+        - 添加元素: 
+            ```html
+            append() - 在被选元素的结尾插入元素
+            prepend() - 在被选元素的开头插入元素
+            after() - 在被选元素之后插入元素
+            before() - 在被选元素之前插入元素
+            总结：
+                append/prepend 是在选择元素内部嵌入。
+                after/before 是在元素外面追加。
+            ```
+        - 删除元素：
+            ```html
+            remove() - 删除被选元素（及其子元素）
+            empty() - 从被选元素中删除子元素
+            ```
+        - 操作css：
+            ```html
+            addClass() - 向被选元素添加一个或多个类
+            removeClass() - 从被选元素删除一个或多个类
+            toggleClass() - 对被选元素进行添加/删除类的切换操作
+            css() - 设置或返回样式属性
+            ```
+        - 操作尺寸：
+            ```html
+            width()
+            height():元素高度
+            innerWidth()
+            innerHeight():height+padding
+            outerWidth(default:false):
+            outerHeight(default:false):if true?height+padding+border+margin：height+padding+border
+            ```
