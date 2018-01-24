@@ -41,6 +41,14 @@
         $('#button2').click(function () {
             $('#p').toggle()
         })
+        $.ajax({
+            url: 'http://phpexample.cn/1-15/ajax.php',
+            type: 'GET',
+            dataType: 'JSONP',
+            success: function (result) {
+                console.log(result)
+            }
+        })
     })
 </script>
 </body>

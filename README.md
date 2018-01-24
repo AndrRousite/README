@@ -7,6 +7,7 @@
 - VMware Workstation 
 - Xshell 
 - Apache/Tomcat/Nginx
+- Composer
 
 
 ###### TOOLS
@@ -142,3 +143,66 @@
             outerWidth(default:false):
             outerHeight(default:false):if true?height+padding+border+margin：height+padding+border
             ```
+    - jQuery遍历
+        - 祖先：
+            ```html
+            parent()
+            parents()
+            parentsUntil():回介于两个给定元素之间的所有祖先元素
+            实例
+                $(document).ready(function(){
+                  $("span").parentsUntil("div");
+                });
+            ```
+        - 后代：
+            ```html
+            children():返回被选元素的所有直接子元素
+            find():被选元素的所有后代元素
+            ```
+        - 同胞：
+            ```html
+            siblings():返回被选元素的所有同胞元素
+            next()
+            nextAll()
+            nextUntil()
+            prev()
+            prevAll()
+            prevUntil()
+            ```
+        - 过滤方法：
+            ```html
+            三个最基本的过滤方法是:
+            first():返回被选元素集合的首个元素
+            last():返回被选元素集合的最后一个元素
+            eq():返回被选元素列表中带有指定索引号的元素
+            其它：
+            filter():不匹配这个标准的元素会被从集合中删除，匹配的元素会被返回
+            not():返回不匹配标准的所有元素
+            ```
+- AJAX = 异步 Javascript 和 XML(Asynchronous Javascript and XML)
+    - load():从服务器加载数据，并把返回的数据放入被选元素中
+        ```html
+        语法：$(selector).load(URL,data,callback);
+        实例：$("#div1").load("demo_test.txt")
+        ```
+    - $.get(URL,callback) 和 $.post(URL,data,callback)
+    - $.ajax({
+        url:'',
+        type:'GET',
+        dataType:'JSONP',
+        success:function(result){
+            console.log(result)
+        }
+    })
+    - 问题：Ajax跨域的问题?
+- Others
+    - $.noConflict()：释放对$标识符的控制，可以使用jQuery代替$符,也可以自定义变量代替$
+        ```html
+        var jq = $.noConflict()
+        jq(document).ready(function(){
+              // todo list 
+        })
+        jq(function(){
+              // todo list
+        })
+        ```
