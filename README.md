@@ -72,8 +72,8 @@
         | ----------- | ------- |
         | $('*')      | 选取所有元素 |
         | $(this)      | 选取当前 HTML 元素 |
-        | $("p.intro")    | 选取 class 为 intro 的 <p> 元素 |
-        | $("p:first")      | 选取第一个 <p> 元素 |
+        | $("p.intro")    | ```选取 class 为 intro 的 <p> 元素``` |
+        | $("p:first")      | ```选取第一个 <p> 元素``` |
         | $("ul li:first")    | 选取第一个 <ul> 元素的第一个 <li> 元素 |
         | $("ul li:first-child")      | 选取每个 <ul> 元素的第一个 <li> 元素 |
         | $("[href]")     | 选取带有 href 属性的元素 |
