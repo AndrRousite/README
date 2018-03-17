@@ -25,3 +25,10 @@
     - 安装nodejs
     - 安装hexo
     ...
+    
+    
+#### 3-16 重构云货宝驿站端
+> 预计估计一个月内完成(3.16-4.16)
+1. UI采用[QMUI](https://github.com/QMUI/QMUI_Android)风格
+2. 架构采用MVP [Miracle](https://github.com/AndrRousite/Miracle.git) 做底层支持
+3. 采用[kotlin](https://github.com/JetBrains/kotlin)进行编写代码
