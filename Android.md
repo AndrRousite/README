@@ -85,3 +85,43 @@ task javadoc(type: Javadoc) {
 ```apple js
 
 ```
+
+## 移除某个第三方的依赖
+```
+debugImplementation ('me.ele:uetool:1.0.15'){
+  exclude group: 'com.android.support', module: 'support-v7'
+}
+
+debugImplementation ('me.ele:uetool:1.0.15'){
+  exclude group: 'com.android.support'
+}
+```
+
+#### 更加方便的方式
+> 有时候，乱七八糟的依赖过多，可以使用如下方案：
+```
+在 app的module中：
+
+android{
+	configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (requested.name.startsWith("appcompat-v7")) {
+                    details.useVersion '25.3.0'
+                }
+                if (requested.name.startsWith("appcompat-v4")) {
+                    details.useVersion '25.3.0'
+                }
+
+                if (requested.name.startsWith("recyclerview-v7")) {
+                    details.useVersion '25.3.0'
+                }
+            }
+        }
+    }
+
+}
+
+这样可以强制使用某个版本，不用再一个个去过滤了。
+```
